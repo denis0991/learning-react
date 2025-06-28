@@ -20,6 +20,7 @@ export class Search extends React.Component<Props> {
         <button
           onClick={() => {
             this.handleSearch();
+            this.saveToLocalStorage(this.props.value, this.props.value);
           }}
         >
           Search
@@ -60,5 +61,9 @@ export class Search extends React.Component<Props> {
       console.error('Search error:', error);
       this.props.setStatus('error');
     }
+  }
+
+  saveToLocalStorage(key: string, value: string): void {
+    localStorage.setItem(key, JSON.stringify(value));
   }
 }
