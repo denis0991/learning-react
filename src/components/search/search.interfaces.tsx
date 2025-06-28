@@ -1,9 +1,9 @@
-export interface State {
-  value: string;
-}
-
 export interface Props {
   value: string;
+  setSearchState: (result: React.ReactElement) => void;
+  status: string;
+  setStatus: (value: string) => void;
+  setInputValue: (value: string) => void;
 }
 export interface Page {
   pageNumber: number;
