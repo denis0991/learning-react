@@ -21,14 +21,19 @@ export class Search extends React.Component<Props> {
         ></input>
         {(() => {
           switch (this.props.status) {
-            case 'peace':
-              return <div className="peace"></div>;
+            case 'default':
+              return <div className="default"></div>;
             case 'search':
               return <div className="loader"></div>;
             case 'success':
               return <div className="success"></div>;
-            default:
-              return <div className="peace"></div>;
+            case 'missing':
+              return (
+                <div className="missing">
+                  <span className="line line-1"></span>
+                  <span className="line line-2"></span>
+                </div>
+              );
           }
         })()}
         <button
@@ -56,8 +61,8 @@ export class Search extends React.Component<Props> {
         }
       );
       const data: ApiResponse = await response.json();
-      this.props.setStatus('success');
       if (data.animals && data.animals.length > 0) {
+        this.props.setStatus('success');
         this.props.setSearchState(
           <div>
             {data.animals.map((elem) => (
@@ -65,6 +70,8 @@ export class Search extends React.Component<Props> {
             ))}
           </div>
         );
+      } else {
+        this.props.setStatus('missing');
       }
     } catch (error) {
       console.error('Search error:', error);
