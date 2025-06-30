@@ -8,7 +8,7 @@ export class App extends React.Component<Record<string, never>, AppState> {
     super(props);
     this.state = {
       result: <div>Нажмите поиск для результата</div>,
-      status: 'search',
+      status: 'peace',
       inputValue: '',
     };
     this.setSearchState = this.setSearchState.bind(this);

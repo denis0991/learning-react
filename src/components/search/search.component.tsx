@@ -1,5 +1,6 @@
 import React, { type ReactNode } from 'react';
 import type { Props, ApiResponse } from './search.interfaces';
+import './index.css';
 
 export class Search extends React.Component<Props> {
   constructor(props: Props) {
@@ -9,14 +10,27 @@ export class Search extends React.Component<Props> {
   }
   render(): ReactNode {
     return (
-      <>
+      <section className="search-component">
         <input
+          id="search-input"
           value={this.props.value}
           placeholder="search.."
           onChange={(e) => {
             this.props.setInputValue(e.target.value);
           }}
         ></input>
+        {(() => {
+          switch (this.props.status) {
+            case 'peace':
+              return <div className="peace"></div>;
+            case 'search':
+              return <div className="loader"></div>;
+            case 'success':
+              return <div className="success"></div>;
+            default:
+              return <div className="peace"></div>;
+          }
+        })()}
         <button
           onClick={() => {
             this.handleSearch();
@@ -25,12 +39,7 @@ export class Search extends React.Component<Props> {
         >
           Search
         </button>
-        {this.props.status === 'search' ? (
-          <div className="status"></div>
-        ) : (
-          <div className="status_success"></div>
-        )}
-      </>
+      </section>
     );
   }
   async handleSearch(): Promise<void> {
