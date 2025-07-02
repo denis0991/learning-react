@@ -6,10 +6,17 @@ import type { AppState } from './types/app.interfaces';
 export class App extends React.Component<Record<string, never>, AppState> {
   constructor(props: Record<string, never>) {
     super(props);
+    let initialValue = '';
+    try {
+      const savedValue = localStorage.getItem('request');
+      initialValue = savedValue ? JSON.parse(savedValue) : '';
+    } catch (e) {
+      console.error('Ошибка доступа к localStorage:', e);
+    }
     this.state = {
-      result: <div>Нажмите поиск для результата</div>,
+      result: <div>Waiting for the result</div>,
       status: 'default',
-      inputValue: '',
+      inputValue: initialValue,
     };
     this.setSearchState = this.setSearchState.bind(this);
     this.setStatus = this.setStatus.bind(this);

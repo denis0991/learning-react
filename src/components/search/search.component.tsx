@@ -39,7 +39,7 @@ export class Search extends React.Component<Props> {
         <button
           onClick={() => {
             this.handleSearch();
-            this.saveToLocalStorage(this.props.value, this.props.value);
+            this.saveToLocalStorage('request', this.props.value);
           }}
         >
           Search
@@ -47,11 +47,14 @@ export class Search extends React.Component<Props> {
       </section>
     );
   }
+  componentDidMount(): void {
+    this.handleSearch();
+  }
   async handleSearch(): Promise<void> {
     try {
       this.props.setStatus('search');
       const response = await fetch(
-        'https://stapi.co/api/v1/rest/animal/search',
+        'https://stapi.co/api/v1/rest/animal/search?pageNumber=0&pageSize=10',
         {
           method: 'POST',
           headers: {
@@ -64,14 +67,27 @@ export class Search extends React.Component<Props> {
       if (data.animals && data.animals.length > 0) {
         this.props.setStatus('success');
         this.props.setSearchState(
-          <div>
+          <>
             {data.animals.map((elem) => (
-              <div key={elem.uid}>{elem.name}</div>
+              <ul key={elem.uid} className="card">
+                <li className="card-item">{elem.name}</li>
+                <li className="card-item">{elem.uid}</li>
+                <li className="card-item">
+                  Avian: {elem.avian ? 'yes' : 'no'}
+                </li>
+                <li className="card-item">
+                  Earth animal: {elem.earthAnimal ? 'yes' : 'no'}
+                </li>
+                <li className="card-item">
+                  Feline: {elem.feline ? 'yes' : 'no'}
+                </li>
+              </ul>
             ))}
-          </div>
+          </>
         );
       } else {
         this.props.setStatus('missing');
+        this.props.setSearchState(<div>Nothing found</div>);
       }
     } catch (error) {
       console.error('Search error:', error);

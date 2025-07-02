@@ -1,8 +1,5 @@
 import React, { type ReactNode } from 'react';
-
-export interface ResultType {
-  result: React.ReactElement;
-}
+import { Card } from './card.component';
 
 interface PropsType {
   result: React.ReactElement;
@@ -13,7 +10,7 @@ export class Result extends React.Component<PropsType> {
     return (
       <section className="result">
         <h2>Results</h2>
-        <div>{this.props.result}</div>
+        <Card result={this.props.result}></Card>
       </section>
     );
   }
