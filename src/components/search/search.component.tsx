@@ -27,6 +27,13 @@ export class Search extends React.Component<Props> {
               return <div className="loader"></div>;
             case 'success':
               return <div className="success"></div>;
+            case 'error':
+              return (
+                <div className="missing">
+                  <span className="line line-1"></span>
+                  <span className="line line-2"></span>
+                </div>
+              );
             case 'missing':
               return (
                 <div className="missing">
@@ -92,6 +99,7 @@ export class Search extends React.Component<Props> {
     } catch (error) {
       console.error('Search error:', error);
       this.props.setStatus('error');
+      this.props.setSearchState(<div>Request error</div>);
     }
   }
 
