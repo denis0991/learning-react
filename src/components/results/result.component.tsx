@@ -1,15 +1,8 @@
 import React, { type ReactNode } from 'react';
 import { Card } from './card.component';
+import type { PropsType, ResultState } from './result.types';
 
-interface PropsType {
-  result: React.ReactElement;
-}
-
-interface State {
-  hasError: boolean;
-}
-
-export class Result extends React.Component<PropsType, State> {
+export class Result extends React.Component<PropsType, ResultState> {
   constructor(props: PropsType) {
     super(props);
     this.state = { hasError: false };

@@ -1,8 +1,5 @@
 import React, { type ReactNode } from 'react';
-
-interface PropsCard {
-  result: React.ReactElement;
-}
+import type { PropsCard } from './result.types';
 
 export class Card extends React.Component<PropsCard> {
   render(): ReactNode {

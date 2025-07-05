@@ -1,14 +1,5 @@
 import React, { type ErrorInfo, type ReactNode } from 'react';
-
-interface Props {
-  children: ReactNode;
-}
-
-interface State {
-  hasError: boolean;
-  errorMessage: string;
-  errorInfo?: ErrorInfo | null;
-}
+import type { Props, State } from './error.types';
 
 export class ErrorBoundary extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -38,7 +29,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
     this.setState({ hasError: false, errorMessage: '' });
   }
 
-  render() {
+  render(): ReactNode {
     if (this.state.errorMessage) {
       return (
         <>
