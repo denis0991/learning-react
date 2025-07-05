@@ -2,6 +2,7 @@ import './App.css';
 import React, { type ReactNode } from 'react';
 import { Header, Search, Result } from './index';
 import type { AppState } from './types/app.interfaces';
+import { ErrorBoundary } from './error-boundary/error-boundary';
 
 export class App extends React.Component<Record<string, never>, AppState> {
   constructor(props: Record<string, never>) {
@@ -34,7 +35,9 @@ export class App extends React.Component<Record<string, never>, AppState> {
             status={this.state.status}
             value={this.state.inputValue}
           ></Search>
-          <Result result={this.state.result}></Result>
+          <ErrorBoundary>
+            <Result result={this.state.result}></Result>
+          </ErrorBoundary>
         </main>
       </>
     );
