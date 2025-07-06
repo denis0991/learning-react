@@ -1,8 +1,8 @@
 export interface Props {
   value: string;
   setSearchState: (result: React.ReactElement) => void;
-  status: string;
-  setStatus: (value: string) => void;
+  status: Status;
+  setStatus: (value: Status) => void;
   setInputValue: (value: string) => void;
 }
 export interface Page {
@@ -30,3 +30,5 @@ export interface ApiResponse {
   sort: { clauses: string[] };
   animals: Animals[];
 }
+
+export type Status = 'default' | 'search' | 'success' | 'error' | 'missing';

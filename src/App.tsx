@@ -3,6 +3,7 @@ import React, { type ReactNode } from 'react';
 import { Header, Search, Result } from './index';
 import type { AppState } from './types/app.interfaces';
 import { ErrorBoundary } from './error-boundary/error-boundary';
+import type { Status } from './components/search/search.interfaces';
 
 export class App extends React.Component<Record<string, never>, AppState> {
   constructor(props: Record<string, never>) {
@@ -12,7 +13,7 @@ export class App extends React.Component<Record<string, never>, AppState> {
       const savedValue = localStorage.getItem('request');
       initialValue = savedValue ? JSON.parse(savedValue) : '';
     } catch (e) {
-      console.error('Ошибка доступа к localStorage:', e);
+      console.error('Error accessing localStorage:', e);
     }
     this.state = {
       result: <div>Waiting for the result</div>,
@@ -47,7 +48,7 @@ export class App extends React.Component<Record<string, never>, AppState> {
     this.setState({ result: value });
   }
 
-  setStatus(status: string): void {
+  setStatus(status: Status): void {
     this.setState({ status: status });
   }
 
