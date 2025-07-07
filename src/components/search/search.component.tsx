@@ -1,5 +1,5 @@
 import React, { type ReactNode } from 'react';
-import type { Props, ApiResponse, Status, Animals } from './search.interfaces';
+import type { Props, ApiResponse, Status } from './search.interfaces';
 import './index.css';
 
 export class Search extends React.Component<Props> {
@@ -8,7 +8,6 @@ export class Search extends React.Component<Props> {
     this.state = { value: '' };
     this.handleSearch = this.handleSearch.bind(this);
     this.renderSpinner = this.renderSpinner.bind(this);
-    this.renderAnimalCards = this.renderAnimalCards.bind(this);
   }
 
   render(): ReactNode {
@@ -55,15 +54,17 @@ export class Search extends React.Component<Props> {
       const data: ApiResponse = await response.json();
       if (data.animals && data.animals.length > 0) {
         this.props.setStatus('success');
-        this.props.setSearchState(<>{this.renderAnimalCards(data.animals)}</>);
+        this.props.setError(false);
+        this.props.setSearchError(false);
+        this.props.setSearchState(data.animals);
       } else {
         this.props.setStatus('missing');
-        this.props.setSearchState(<div>Nothing found</div>);
+        this.props.setError(true);
       }
     } catch (error) {
       console.error('Search error:', error);
       this.props.setStatus('error');
-      this.props.setSearchState(<div>Request error</div>);
+      this.props.setSearchError(true);
     }
   }
 
@@ -90,19 +91,5 @@ export class Search extends React.Component<Props> {
       default:
         return <div className="default"></div>;
     }
-  }
-
-  renderAnimalCards(animals: Animals[]): ReactNode {
-    return animals.map((animal) => (
-      <ul key={animal.uid} className="card">
-        <li className="card-item">{animal.name}</li>
-        <li className="card-item">{animal.uid}</li>
-        <li className="card-item">Avian: {animal.avian ? 'yes' : 'no'}</li>
-        <li className="card-item">
-          Earth animal: {animal.earthAnimal ? 'yes' : 'no'}
-        </li>
-        <li className="card-item">Feline: {animal.feline ? 'yes' : 'no'}</li>
-      </ul>
-    ));
   }
 }

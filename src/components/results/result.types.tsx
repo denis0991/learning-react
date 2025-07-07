@@ -1,5 +1,8 @@
+import type { Animals } from '../search/search.interfaces';
+
 export interface PropsType {
-  result: React.ReactElement;
+  result: Animals[];
+  lackOfResult: boolean;
 }
 
 export interface ResultState {
@@ -7,5 +10,6 @@ export interface ResultState {
 }
 
 export interface PropsCard {
-  result: React.ReactElement;
+  result: Animals[];
+  lackOfResult: boolean;
 }
