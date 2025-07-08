@@ -36,7 +36,3 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
-
-.card-item {
-  list-style-type: none;
-}

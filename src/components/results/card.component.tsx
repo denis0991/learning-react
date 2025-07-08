@@ -1,7 +1,7 @@
 import React, { type ReactNode } from 'react';
 import type { PropsCard } from './result.types';
 import type { Animals } from '../search/search.interfaces';
-
+import './card.styles.css';
 export class Card extends React.Component<PropsCard> {
   render(): ReactNode {
     if (!this.props.lackOfResult) {
@@ -17,13 +17,25 @@ export class Card extends React.Component<PropsCard> {
   renderAnimalsCards(result: Animals[]): ReactNode {
     return result.map((animal) => (
       <ul key={animal.uid} className="card">
-        <li className="card-item">{animal.name}</li>
-        <li className="card-item">{animal.uid}</li>
-        <li className="card-item">Avian: {animal.avian ? 'yes' : 'no'}</li>
+        <li className="card-item animal-name">{animal.name}</li>
         <li className="card-item">
-          Earth animal: {animal.earthAnimal ? 'yes' : 'no'}
+          Avian:{' '}
+          <span className="animal-propertyes">
+            {animal.avian ? 'yes' : 'no'}
+          </span>
         </li>
-        <li className="card-item">Feline: {animal.feline ? 'yes' : 'no'}</li>
+        <li className="card-item">
+          Earth animal:{' '}
+          <span className="animal-propertyes">
+            {animal.earthAnimal ? 'yes' : 'no'}
+          </span>
+        </li>
+        <li className="card-item">
+          Feline:{' '}
+          <span className="animal-propertyes">
+            {animal.feline ? 'yes' : 'no'}
+          </span>
+        </li>
       </ul>
     ));
   }
