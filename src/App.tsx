@@ -21,12 +21,14 @@ export class App extends React.Component<Record<string, never>, AppState> {
       inputValue: initialValue,
       lackOfResult: false,
       searchError: false,
+      errorResetTrigger: 0,
     };
     this.setSearchState = this.setSearchState.bind(this);
     this.setStatus = this.setStatus.bind(this);
     this.setInputValue = this.setInputValue.bind(this);
     this.setError = this.setError.bind(this);
     this.setSearchError = this.setSearchError.bind(this);
+    this.resetErrorBoundary = this.resetErrorBoundary.bind(this);
   }
   render(): ReactNode {
     return (
@@ -42,7 +44,7 @@ export class App extends React.Component<Record<string, never>, AppState> {
             setError={this.setError}
             setSearchError={this.setSearchError}
           ></Search>
-          <ErrorBoundary>
+          <ErrorBoundary resetTrigger={this.state.errorResetTrigger}>
             <Result
               result={this.state.result}
               lackOfResult={this.state.lackOfResult}
@@ -59,6 +61,7 @@ export class App extends React.Component<Record<string, never>, AppState> {
 
   setStatus(status: Status): void {
     this.setState({ status: status });
+    this.resetErrorBoundary();
   }
 
   setInputValue(value: string): void {
@@ -71,5 +74,11 @@ export class App extends React.Component<Record<string, never>, AppState> {
 
   setSearchError(status: boolean): void {
     this.setState({ searchError: status });
+  }
+
+  resetErrorBoundary(): void {
+    this.setState((prev: AppState) => ({
+      errorResetTrigger: prev.errorResetTrigger + 1,
+    }));
   }
 }

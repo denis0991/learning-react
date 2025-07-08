@@ -2,6 +2,7 @@ import type { ReactNode, ErrorInfo } from 'react';
 
 export interface Props {
   children: ReactNode;
+  resetTrigger: number;
 }
 
 export interface State {

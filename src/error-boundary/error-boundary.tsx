@@ -25,6 +25,12 @@ export class ErrorBoundary extends React.Component<Props, State> {
 
   logErrorToServices = console.log;
 
+  componentDidUpdate(prevProps: Props) {
+    if (this.props.resetTrigger !== prevProps.resetTrigger) {
+      this.resetError();
+    }
+  }
+
   resetError(): void {
     this.setState({ hasError: false, errorMessage: '' });
   }
