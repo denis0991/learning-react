@@ -1,9 +1,14 @@
 import './App.css';
 import React, { type ReactNode } from 'react';
-import { Header, Search, Result } from './index';
-import type { AppState } from './types/app.interfaces';
-import { ErrorBoundary } from './error-boundary/error-boundary';
-import type { Status, Animals } from './components/search/search.interfaces';
+import {
+  Header,
+  Search,
+  Result,
+  ErrorBoundary,
+  type AppState,
+  type Status,
+  type Animals,
+} from './index';
 
 export class App extends React.Component<Record<string, never>, AppState> {
   constructor(props: Record<string, never>) {
