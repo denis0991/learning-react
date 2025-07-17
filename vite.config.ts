@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [react()],
   test: {
     globals: true,
+    environment: 'jsdom',
     coverage: {
       include: ['src/**/*.{js,jsx,ts,tsx}'],
       exclude: [
