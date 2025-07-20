@@ -4,7 +4,7 @@ import { Header } from './header.component';
 import '@testing-library/jest-dom/vitest';
 
 describe('test', () => {
-  test('should display a header with h1 heading', async () => {
+  test('should display a header with h1 heading', () => {
     render(<Header></Header>);
     const h1 = screen.getByRole('heading', {
       level: 1,
@@ -13,7 +13,7 @@ describe('test', () => {
     expect(h1).toBeInTheDocument();
   });
 
-  test('should display a header with h2 heading', async () => {
+  test('should display a header with h2 heading', () => {
     render(<Header></Header>);
     const h1 = screen.getByRole('heading', {
       level: 2,
