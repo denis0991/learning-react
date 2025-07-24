@@ -5,10 +5,6 @@ export interface PropsType {
   lackOfResult: boolean;
 }
 
-export interface ResultState {
-  hasError: boolean;
-}
-
 export interface PropsCard {
   result: Animals[];
   lackOfResult: boolean;
