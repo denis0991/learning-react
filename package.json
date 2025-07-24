@@ -20,7 +20,7 @@
     "**/*.{js,jsx,ts,tsx}": [
       "eslint --fix",
       "prettier --write",
-      "vitest",
+      "vitest related",
       "git add"
     ],
     "**/*.{css,scss,less}": [
