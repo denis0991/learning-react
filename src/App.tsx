@@ -1,88 +1,58 @@
 import './App.css';
-import React, { type ReactNode } from 'react';
+import { useState, useCallback } from 'react';
+import { type ReactElement } from 'react';
 import {
   Header,
   Search,
   Result,
   ErrorBoundary,
-  type AppState,
   type Status,
   type Animals,
 } from './index';
 
-export class App extends React.Component<Record<string, never>, AppState> {
-  constructor(props: Record<string, never>) {
-    super(props);
-    let initialValue = '';
-    try {
-      const savedValue = localStorage.getItem('request');
-      initialValue = savedValue ? JSON.parse(savedValue) : '';
-    } catch (e) {
-      console.error('Error accessing localStorage:', e);
-    }
-    this.state = {
-      result: [],
-      status: 'default',
-      inputValue: initialValue,
-      lackOfResult: false,
-      searchError: false,
-      errorResetTrigger: 0,
-    };
-    this.setSearchState = this.setSearchState.bind(this);
-    this.setStatus = this.setStatus.bind(this);
-    this.setInputValue = this.setInputValue.bind(this);
-    this.setError = this.setError.bind(this);
-    this.setSearchError = this.setSearchError.bind(this);
-    this.resetErrorBoundary = this.resetErrorBoundary.bind(this);
-  }
-  render(): ReactNode {
-    return (
-      <>
-        <Header></Header>
-        <main>
-          <Search
-            setSearchState={this.setSearchState}
-            setStatus={this.setStatus}
-            status={this.state.status}
-            value={this.state.inputValue}
-            setError={this.setError}
-            setSearchError={this.setSearchError}
-          ></Search>
-          <ErrorBoundary resetTrigger={this.state.errorResetTrigger}>
-            <Result
-              result={this.state.result}
-              lackOfResult={this.state.lackOfResult}
-            ></Result>
-          </ErrorBoundary>
-        </main>
-      </>
-    );
-  }
+export function App(): ReactElement {
+  const [result, setResult] = useState<Animals[]>([]);
+  const [status, setStatus] = useState<Status>('default');
+  const [lackOfResult, setLackOfResult] = useState<boolean>(false);
+  const [searchError, setSearchError] = useState<boolean>(false);
+  const [errorResetTrigger, setErrorResetTrigger] = useState<number>(0);
 
-  setSearchState(result: Animals[]): void {
-    this.setState({ result: result });
-  }
+  const handleSetSearchState = useCallback((result: Animals[]) => {
+    setResult(result);
+  }, []);
 
-  setStatus(status: Status): void {
-    this.setState({ status: status });
-    this.resetErrorBoundary();
-  }
+  const handleSetStatus = useCallback((status: Status) => {
+    setStatus(status);
+    setErrorResetTrigger((prev) => prev + 1);
+  }, []);
 
-  setInputValue(value: string): void {
-    this.setState({ inputValue: value });
-  }
+  const handleSetError = useCallback((error: boolean) => {
+    setLackOfResult(error);
+  }, []);
 
-  setError(status: boolean): void {
-    this.setState({ lackOfResult: status });
-  }
+  const handleSetSearchError = useCallback((error: boolean) => {
+    setSearchError(error);
+  }, []);
 
-  setSearchError(status: boolean): void {
-    this.setState({ searchError: status });
-  }
-
-  resetErrorBoundary(): void {
-    this.setState((prev: AppState) => ({
-      errorResetTrigger: prev.errorResetTrigger + 1,
-    }));
-  }
+  return (
+    <>
+      <Header></Header>
+      <main>
+        <Search
+          setStatus={handleSetStatus}
+          status={status}
+          setError={handleSetError}
+          setSearchError={handleSetSearchError}
+          setSearchState={handleSetSearchState}
+        ></Search>
+        <ErrorBoundary resetTrigger={errorResetTrigger}>
+          <Result
+            result={result}
+            lackOfResult={lackOfResult}
+            searchError={searchError}
+          ></Result>
+        </ErrorBoundary>
+      </main>
+    </>
+  );
 }

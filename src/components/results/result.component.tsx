@@ -10,7 +10,11 @@ export function Result(props: PropsType): JSX.Element {
   return (
     <section className="result">
       <h2>Results</h2>
-      <Card result={props.result} lackOfResult={props.lackOfResult}></Card>
+      {props.searchError ? (
+        <p>Search error</p>
+      ) : (
+        <Card result={props.result} lackOfResult={props.lackOfResult} />
+      )}
       <button
         onClick={() => {
           setError(true);
