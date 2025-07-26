@@ -5,11 +5,11 @@ import type { Props, ApiResponse } from './search.interfaces';
 import './index.css';
 
 export function Search(props: Props): ReactElement {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState<string>('');
 
   const handleSearch = useCallback(
     async (query?: string) => {
-      const searchValue = query ?? value;
+      const searchValue: string = query ?? value;
       try {
         props.setStatus('search');
         const response = await fetch(
@@ -47,9 +47,9 @@ export function Search(props: Props): ReactElement {
   );
 
   useEffect(() => {
-    const saved = localStorage.getItem('request');
+    const saved: string | null = localStorage.getItem('request');
     if (saved) {
-      const parsed = JSON.parse(saved);
+      const parsed: string = JSON.parse(saved);
       setValue(parsed);
       handleSearch(parsed);
     }
