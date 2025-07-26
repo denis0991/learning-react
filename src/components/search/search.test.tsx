@@ -6,12 +6,9 @@ import { Search } from './search.component';
 import type { Props } from './search.interfaces';
 
 describe('Search input field', () => {
-  test('should render input and call setInputValue on change', async () => {
-    const mockSetInputValue = vi.fn();
-
+  test('should render input and allow typing', async () => {
     const props: Props = {
       value: '',
-      setInputValue: mockSetInputValue,
       status: 'default',
       setStatus: vi.fn(),
       setError: vi.fn(),
@@ -25,6 +22,6 @@ describe('Search input field', () => {
     expect(input).toBeInTheDocument();
 
     await userEvent.type(input, 'Abalone');
-    expect(mockSetInputValue).toHaveBeenCalledTimes('Abalone'.length);
+    expect((input as HTMLInputElement).value).toBe('Abalone');
   });
 });

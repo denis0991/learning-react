@@ -43,7 +43,6 @@ export class App extends React.Component<Record<string, never>, AppState> {
           <Search
             setSearchState={this.setSearchState}
             setStatus={this.setStatus}
-            setInputValue={this.setInputValue}
             status={this.state.status}
             value={this.state.inputValue}
             setError={this.setError}

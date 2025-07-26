@@ -3,7 +3,6 @@ export interface Props {
   setSearchState: (result: Animals[]) => void;
   status: Status;
   setStatus: (value: Status) => void;
-  setInputValue: (value: string) => void;
   setError: (value: boolean) => void;
   setSearchError: (value: boolean) => void;
 }
