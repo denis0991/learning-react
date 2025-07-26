@@ -6,7 +6,13 @@ import { MockAnimals } from './test.constants';
 
 describe('when the error is not active', () => {
   test('should display a title and a button', () => {
-    render(<Result result={MockAnimals} lackOfResult={false}></Result>);
+    render(
+      <Result
+        result={MockAnimals}
+        lackOfResult={false}
+        searchError={false}
+      ></Result>
+    );
     const heading: HTMLElement = screen.getByRole('heading');
     expect(heading).toBeInTheDocument();
     expect(heading).toHaveTextContent(/Results/i);

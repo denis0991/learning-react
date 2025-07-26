@@ -1,8 +1,8 @@
-import { useState, type JSX } from 'react';
+import { useState, type ReactElement } from 'react';
 import { Card } from './card.component';
 import type { PropsType } from './result.types';
 
-export function Result(props: PropsType): JSX.Element {
+export function Result(props: PropsType): ReactElement {
   const [hasError, setError] = useState(false);
   if (hasError) {
     throw new Error('Congratulations! You have caused an error!');
