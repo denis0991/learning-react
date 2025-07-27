@@ -1,11 +1,11 @@
 import './App.css';
+import { Routes, Route } from 'react-router-dom';
 import { useState, useCallback } from 'react';
 import { type ReactElement } from 'react';
 import {
   Header,
-  Search,
-  Result,
-  ErrorBoundary,
+  NotFound,
+  ResultPage,
   type Status,
   type Animals,
 } from './index';
@@ -36,22 +36,27 @@ export function App(): ReactElement {
 
   return (
     <>
-      <Header></Header>
+      <Header />
       <main>
-        <Search
-          setStatus={handleSetStatus}
-          status={status}
-          setError={handleSetError}
-          setSearchError={handleSetSearchError}
-          setSearchState={handleSetSearchState}
-        ></Search>
-        <ErrorBoundary resetTrigger={errorResetTrigger}>
-          <Result
-            result={result}
-            lackOfResult={lackOfResult}
-            searchError={searchError}
-          ></Result>
-        </ErrorBoundary>
+        <Routes>
+          <Route
+            path="/search"
+            element={
+              <ResultPage
+                status={status}
+                setStatus={handleSetStatus}
+                setSearchState={handleSetSearchState}
+                setError={handleSetError}
+                setSearchError={handleSetSearchError}
+                result={result}
+                lackOfResult={lackOfResult}
+                searchError={searchError}
+                errorResetTrigger={errorResetTrigger}
+              />
+            }
+          />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </main>
     </>
   );
