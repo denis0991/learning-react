@@ -14,11 +14,14 @@ export interface PropsCard {
 export interface ResultPageProps {
   status: Status;
   setStatus: (status: Status) => void;
-  setSearchState: (animals: Animals[]) => void;
+  setSearchState: (animals: Animals[], total: number) => void;
   setError: (error: boolean) => void;
   setSearchError: (error: boolean) => void;
   result: Animals[];
   lackOfResult: boolean;
   searchError: boolean;
   errorResetTrigger: number;
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
 }

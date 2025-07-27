@@ -1,5 +1,5 @@
 import './App.css';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useSearchParams } from 'react-router-dom';
 import { useState, useCallback } from 'react';
 import { type ReactElement } from 'react';
 import {
@@ -16,10 +16,17 @@ export function App(): ReactElement {
   const [lackOfResult, setLackOfResult] = useState<boolean>(false);
   const [searchError, setSearchError] = useState<boolean>(false);
   const [errorResetTrigger, setErrorResetTrigger] = useState<number>(0);
+  const [totalPages, setTotalPages] = useState<number>(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = Number(searchParams.get('page')) || 1;
 
-  const handleSetSearchState = useCallback((result: Animals[]) => {
-    setResult(result);
-  }, []);
+  const handleSetSearchState = useCallback(
+    (result: Animals[], total: number) => {
+      setResult(result);
+      setTotalPages(total);
+    },
+    []
+  );
 
   const handleSetStatus = useCallback((status: Status) => {
     setStatus(status);
@@ -33,6 +40,13 @@ export function App(): ReactElement {
   const handleSetSearchError = useCallback((error: boolean) => {
     setSearchError(error);
   }, []);
+
+  const handlePageChange = useCallback(
+    (page: number) => {
+      setSearchParams({ page: page.toString() });
+    },
+    [setSearchParams]
+  );
 
   return (
     <>
@@ -52,6 +66,9 @@ export function App(): ReactElement {
                 lackOfResult={lackOfResult}
                 searchError={searchError}
                 errorResetTrigger={errorResetTrigger}
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
               />
             }
           />

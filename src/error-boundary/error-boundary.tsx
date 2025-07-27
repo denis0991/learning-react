@@ -23,11 +23,21 @@ export class ErrorBoundary extends React.Component<Props, State> {
     this.logErrorToServices(error.toString(), errorInfo.componentStack);
   }
 
+  shouldComponentUpdate(nextProps: Props, nextState: State): boolean {
+    if (this.state.hasError !== nextState.hasError) return true;
+    if (this.props.resetTrigger !== nextProps.resetTrigger) return true;
+    if (this.props.children !== nextProps.children) return true;
+    return false;
+  }
+
   logErrorToServices = console.log;
 
-  componentDidUpdate(prevProps: Props) {
-    if (this.props.resetTrigger !== prevProps.resetTrigger) {
-      this.resetError();
+  componentDidUpdate(prevProps: Props): void {
+    if (
+      this.props.resetTrigger !== prevProps.resetTrigger &&
+      this.state.hasError
+    ) {
+      this.setState({ hasError: false, errorMessage: '' });
     }
   }
 

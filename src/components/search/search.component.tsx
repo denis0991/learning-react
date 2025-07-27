@@ -8,12 +8,12 @@ export function Search(props: Props): ReactElement {
   const [value, setValue] = useState<string>('');
 
   const handleSearch = useCallback(
-    async (query?: string) => {
+    async (query?: string, page: number = 1) => {
       const searchValue: string = query ?? value;
       try {
         props.setStatus('search');
         const response = await fetch(
-          'https://stapi.co/api/v1/rest/animal/search?pageNumber=0&pageSize=10',
+          `https://stapi.co/api/v1/rest/animal/search?pageNumber=${page - 1}&pageSize=10`,
           {
             method: 'POST',
             headers: {
@@ -27,7 +27,10 @@ export function Search(props: Props): ReactElement {
           props.setStatus('success');
           props.setError(false);
           props.setSearchError(false);
-          props.setSearchState(data.animals);
+          props.setSearchState(
+            data.animals,
+            Math.ceil(data.page.totalPages / 10)
+          );
         } else {
           props.setStatus('missing');
           props.setError(true);
@@ -51,9 +54,9 @@ export function Search(props: Props): ReactElement {
     if (saved) {
       const parsed: string = JSON.parse(saved);
       setValue(parsed);
-      handleSearch(parsed);
+      handleSearch(parsed, props.currentPage);
     }
-  }, [handleSearch]);
+  }, [props.currentPage]);
 
   return (
     <section className="search-component">
@@ -69,7 +72,7 @@ export function Search(props: Props): ReactElement {
       <button
         onClick={() => {
           saveToLocalStorage('request', value);
-          handleSearch(value);
+          handleSearch(value, 1);
         }}
       >
         Search

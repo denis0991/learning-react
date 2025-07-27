@@ -1,9 +1,11 @@
 export interface Props {
-  setSearchState: (result: Animals[]) => void;
+  setSearchState: (result: Animals[], total: number) => void;
   status: Status;
   setStatus: (value: Status) => void;
   setError: (value: boolean) => void;
   setSearchError: (value: boolean) => void;
+  currentPage: number;
+  onPageChange: (page: number) => void;
 }
 export interface Page {
   pageNumber: number;
