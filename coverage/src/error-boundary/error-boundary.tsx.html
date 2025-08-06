@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">57.5% </span>
+                <span class="strong">53.06% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>23/40</span>
+                <span class='fraction'>26/49</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.71% </span>
+                <span class="strong">55.55% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/7</span>
+                <span class='fraction'>5/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.42% </span>
+                <span class="strong">62.5% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/7</span>
+                <span class='fraction'>5/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">57.5% </span>
+                <span class="strong">53.06% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>23/40</span>
+                <span class='fraction'>26/49</span>
             </div>
         
             
@@ -112,7 +112,17 @@
 <a name='L47'></a><a href='#L47'>47</a>
 <a name='L48'></a><a href='#L48'>48</a>
 <a name='L49'></a><a href='#L49'>49</a>
-<a name='L50'></a><a href='#L50'>50</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -138,19 +148,29 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">19x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -158,8 +178,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">22x</span>
-<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { type ErrorInfo, type ReactNode } from 'react';
 import type { Props, State } from './error.types';
@@ -186,17 +206,27 @@ export class ErrorBoundary extends React.Component&lt;Props, State&gt; {
 <span class="cstat-no" title="statement not covered" >    this.logErrorToServices(error.toString(), errorInfo.componentStack);</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
+  shouldComponentUpdate(nextProps: Props, nextState: State): boolean {
+    if (this.state.hasError !== nextState.hasError) <span class="branch-0 cbranch-no" title="branch not covered" >return true;</span>
+    if (this.props.resetTrigger !== nextProps.resetTrigger) return <span class="branch-0 cbranch-no" title="branch not covered" >true;</span>
+<span class="cstat-no" title="statement not covered" >    if (this.props.children !== nextProps.children) return true;</span>
+<span class="cstat-no" title="statement not covered" >    return false;</span>
+  }
+&nbsp;
   logErrorToServices = console.log;
 &nbsp;
-  componentDidUpdate(prevProps: Props) {
-    if (this.props.resetTrigger !== prevProps.resetTrigger) {
-      this.resetError();
-    }
+  componentDidUpdate(prevProps: Props): void {
+    if (
+      this.props.resetTrigger !== prevProps.resetTrigger &amp;&amp;
+      this.state.hasError
+    ) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >      this.setState({ hasError: false, errorMessage: '' });</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
   }
 &nbsp;
-  resetError(): void {
-    this.setState({ hasError: false, errorMessage: '' });
-  }
+<span class="fstat-no" title="function not covered" >  resetError(): void {</span>
+<span class="cstat-no" title="statement not covered" >    this.setState({ hasError: false, errorMessage: '' });</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
   render(): ReactNode {
     if (this.state.errorMessage) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
@@ -217,7 +247,7 @@ export class ErrorBoundary extends React.Component&lt;Props, State&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-22T06:57:41.171Z
+                at 2025-07-27T19:46:59.537Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

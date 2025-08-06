@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/components/results/test.constants.tsx</title>
+    <title>Code coverage report for src/components/results/render-animals-card.utils.tsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/results</a> test.constants.tsx</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/results</a> render-animals-card.utils.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>20/20</span>
+                <span class='fraction'>23/23</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>4/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>20/20</span>
+                <span class='fraction'>23/23</span>
             </div>
         
             
@@ -85,50 +85,62 @@
 <a name='L20'></a><a href='#L20'>20</a>
 <a name='L21'></a><a href='#L21'>21</a>
 <a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { Animals } from '../search/search.interfaces';
+import type { JSX } from 'react';
 &nbsp;
-export const MockAnimals: Animals[] = [
-  {
-    uid: 'ANMA0000032315',
-    name: "'Owon",
-    earthAnimal: true,
-    earthInsect: false,
-    avian: false,
-    canine: false,
-    feline: false,
-  },
-  {
-    uid: 'ANMA0000264633',
-    name: 'Abalone',
-    earthAnimal: true,
-    earthInsect: false,
-    avian: true,
-    canine: false,
-    feline: false,
-  },
-];
+export function renderAnimalsCards(result: Animals[]): JSX.Element[] {
+  return result.map((animal) =&gt; (
+    &lt;ul key={animal.uid} className="card"&gt;
+      &lt;li className="card-item animal-name"&gt;{animal.name}&lt;/li&gt;
+      &lt;li className="card-item"&gt;
+        Avian:{' '}
+        &lt;span className="animal-propertyes"&gt;{animal.avian ? 'yes' : 'no'}&lt;/span&gt;
+      &lt;/li&gt;
+      &lt;li className="card-item"&gt;
+        Earth animal:{' '}
+        &lt;span className="animal-propertyes"&gt;
+          {animal.earthAnimal ? <span class="branch-0 cbranch-no" title="branch not covered" >'yes' : 'no'}</span>
+        &lt;/span&gt;
+      &lt;/li&gt;
+      &lt;li className="card-item"&gt;
+        Feline:{' '}
+        &lt;span className="animal-propertyes"&gt;
+          {animal.<span class="branch-0 cbranch-no" title="branch not covered" >feline ? 'yes' : '</span>no'}
+        &lt;/span&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  ));
+}
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->

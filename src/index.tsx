@@ -4,6 +4,7 @@ export { Result } from './components/results/result.component';
 export { NotFound } from './components/results/not-found.component';
 export { Card } from './components/results/card.component';
 export { ResultPage } from './components/results/result-page.component';
+export { CardDetails } from './components/results/card-details.component';
 export type { AppState } from './app/app.interfaces';
 export { ErrorBoundary } from './error-boundary/error-boundary';
 export type { Status, Animals } from './components/search/search.interfaces';

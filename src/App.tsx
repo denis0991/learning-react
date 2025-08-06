@@ -6,6 +6,7 @@ import {
   Header,
   NotFound,
   ResultPage,
+  CardDetails,
   type Status,
   type Animals,
 } from './index';
@@ -17,9 +18,8 @@ export function App(): ReactElement {
   const [searchError, setSearchError] = useState<boolean>(false);
   const [errorResetTrigger, setErrorResetTrigger] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams({ page: '1' });
   const currentPage = Number(searchParams.get('page')) || 1;
-
   const handleSetSearchState = useCallback(
     (result: Animals[], total: number) => {
       setResult(result);
@@ -54,7 +54,7 @@ export function App(): ReactElement {
       <main>
         <Routes>
           <Route
-            path="/search"
+            path={`/search`}
             element={
               <ResultPage
                 status={status}
@@ -69,9 +69,12 @@ export function App(): ReactElement {
                 currentPage={currentPage}
                 totalPages={totalPages}
                 onPageChange={handlePageChange}
+                searchParams={searchParams}
               />
             }
-          />
+          >
+            <Route path=":uid" element={<CardDetails result={result} />} />
+          </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

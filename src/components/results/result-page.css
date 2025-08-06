@@ -1,0 +1,40 @@
+.result-page {
+  display: flex;
+  gap: 24px;
+}
+
+.card-list {
+  flex: 1;
+}
+
+.card-details {
+  padding: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+.card-details__header {
+  color: rgb(255, 194, 119);
+}
+
+.card-details-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.details-list {
+  list-style-type: none;
+  text-align: left;
+}
+
+.details-list__item {
+  margin-top: 10px;
+}
+
+.item-span {
+  color: rgba(0, 0, 0, 0.322);
+}

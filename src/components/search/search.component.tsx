@@ -31,6 +31,9 @@ export function Search(props: Props): ReactElement {
             data.animals,
             Math.ceil(data.page.totalPages / 10)
           );
+          if (data.animals.length < 10) {
+            props.onPageChange(1);
+          }
         } else {
           props.setStatus('missing');
           props.setError(true);
@@ -73,6 +76,9 @@ export function Search(props: Props): ReactElement {
         onClick={() => {
           saveToLocalStorage('request', value);
           handleSearch(value, 1);
+          if (value === '') {
+            props.onPageChange(1);
+          }
         }}
       >
         Search

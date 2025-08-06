@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/components/results/result.types.tsx</title>
+    <title>Code coverage report for src/components/search/search.utils.tsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/results</a> result.types.tsx</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/search</a> search.utils.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">68.18% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>15/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>4/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">68.18% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>15/22</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -93,56 +93,56 @@
 <a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">24x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { Animals, Status } from '../search/search.interfaces';
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { Status } from './search.interfaces';
+import type { JSX } from 'react';
 &nbsp;
-export interface PropsType {
-  result: Animals[];
-  lackOfResult: boolean;
-  searchError: boolean;
+export function renderSpinner(status: Status): JSX.Element {
+  switch (status) {
+    case 'default':
+      return &lt;div className="default"&gt;&lt;/div&gt;;
+    case 'search':
+      return &lt;div className="loader"&gt;&lt;/div&gt;;
+<span class="branch-0 cbranch-no" title="branch not covered" >    case 'success':</span>
+<span class="cstat-no" title="statement not covered" >      return &lt;div className="success"&gt;&lt;/div&gt;;</span>
+<span class="branch-0 cbranch-no" title="branch not covered" >    case 'error':</span>
+<span class="branch-0 cbranch-no" title="branch not covered" >    case 'missing':</span>
+<span class="cstat-no" title="statement not covered" >      return (</span>
+<span class="cstat-no" title="statement not covered" >        &lt;div className="missing"&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;span className="line line-1"&gt;&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;span className="line line-2"&gt;&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/div&gt;</span>
+      );
+<span class="branch-0 cbranch-no" title="branch not covered" >    default:</span>
+<span class="cstat-no" title="statement not covered" >      return &lt;div className="default"&gt;&lt;/div&gt;;</span>
+  }
 }
 &nbsp;
-export interface PropsCard {
-  result: Animals[];
-  lackOfResult: boolean;
-}
-&nbsp;
-export interface ResultPageProps {
-  status: Status;
-  setStatus: (status: Status) =&gt; void;
-  setSearchState: (animals: Animals[], total: number) =&gt; void;
-  setError: (error: boolean) =&gt; void;
-  setSearchError: (error: boolean) =&gt; void;
-  result: Animals[];
-  lackOfResult: boolean;
-  searchError: boolean;
-  errorResetTrigger: number;
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) =&gt; void;
+export function saveToLocalStorage(key: string, value: string): void {
+  localStorage.setItem(key, JSON.stringify(value));
 }
 &nbsp;</pre></td></tr></table></pre>
 

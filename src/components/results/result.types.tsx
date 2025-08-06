@@ -4,11 +4,13 @@ export interface PropsType {
   result: Animals[];
   lackOfResult: boolean;
   searchError: boolean;
+  searchParams: URLSearchParams;
 }
 
 export interface PropsCard {
   result: Animals[];
   lackOfResult: boolean;
+  searchParams: URLSearchParams;
 }
 
 export interface ResultPageProps {
@@ -24,4 +26,5 @@ export interface ResultPageProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+  searchParams: URLSearchParams;
 }

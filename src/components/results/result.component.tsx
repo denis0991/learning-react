@@ -13,7 +13,11 @@ export function Result(props: PropsType): ReactElement {
       {props.searchError ? (
         <p>Search error</p>
       ) : (
-        <Card result={props.result} lackOfResult={props.lackOfResult} />
+        <Card
+          result={props.result}
+          lackOfResult={props.lackOfResult}
+          searchParams={props.searchParams}
+        />
       )}
       <button
         onClick={() => {
