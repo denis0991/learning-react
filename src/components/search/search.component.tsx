@@ -3,9 +3,10 @@ import type { Props, ApiResponse, Status } from './search.interfaces';
 import './index.css';
 
 export class Search extends React.Component<Props> {
+  private lastSearchValue: string = '';
+
   constructor(props: Props) {
     super(props);
-    this.state = { value: '' };
     this.handleSearch = this.handleSearch.bind(this);
     this.renderSpinner = this.renderSpinner.bind(this);
   }
@@ -40,9 +41,17 @@ export class Search extends React.Component<Props> {
 
   async handleSearch(): Promise<void> {
     try {
+      const searchValue = this.props.value.trim();
+      if (searchValue === this.lastSearchValue) {
+        return;
+      }
       this.props.setStatus('search');
+      this.lastSearchValue = searchValue;
+
+      this.props.setInputValue(searchValue);
+
       const response = await fetch(
-        'https://stapi.co/api/v1/rest/animal/search?pageNumber=0&pageSize=10',
+        'https://stapi.co/api/v1/rest/animal/search?pageNumber=0&pageSize=12',
         {
           method: 'POST',
           headers: {
@@ -69,7 +78,7 @@ export class Search extends React.Component<Props> {
   }
 
   saveToLocalStorage(key: string, value: string): void {
-    localStorage.setItem(key, JSON.stringify(value));
+    localStorage.setItem(key, JSON.stringify(value.trim()));
   }
 
   renderSpinner(status: Status): ReactNode {

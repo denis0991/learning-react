@@ -1,6 +1,7 @@
 import React, { type ReactNode } from 'react';
-import { Card } from './card.component';
+import { Cards } from './cards.component';
 import type { PropsType, ResultState } from './result.types';
+import './result.styles.css';
 
 export class Result extends React.Component<PropsType, ResultState> {
   constructor(props: PropsType) {
@@ -19,11 +20,11 @@ export class Result extends React.Component<PropsType, ResultState> {
     }
     return (
       <section className="result">
-        <h2>Results</h2>
-        <Card
+        <h2 className="result__title">Results</h2>
+        <Cards
           result={this.props.result}
           lackOfResult={this.props.lackOfResult}
-        ></Card>
+        ></Cards>
         <button onClick={this.testError}>Error test</button>
       </section>
     );

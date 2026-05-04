@@ -1,42 +1,32 @@
 import React, { type ReactNode } from 'react';
-import type { PropsCard } from './result.types';
-import type { Animals } from '../search/search.interfaces';
-import './card.styles.css';
-export class Card extends React.Component<PropsCard> {
-  render(): ReactNode {
-    if (!this.props.lackOfResult) {
-      return (
-        <div className="card-container">
-          {this.renderAnimalsCards(this.props.result)}
-        </div>
-      );
-    }
-    return <div>Nothing found</div>;
-  }
+import type { AnimalCardProps } from './result.types';
 
-  renderAnimalsCards(result: Animals[]): ReactNode {
-    return result.map((animal) => (
+export class Card extends React.Component<AnimalCardProps> {
+  render(): ReactNode {
+    const { animal } = this.props;
+
+    return (
       <ul key={animal.uid} className="card">
         <li className="card-item animal-name">{animal.name}</li>
         <li className="card-item">
           Avian:{' '}
-          <span className="animal-propertyes">
+          <span className="animal-properties">
             {animal.avian ? 'yes' : 'no'}
           </span>
         </li>
         <li className="card-item">
           Earth animal:{' '}
-          <span className="animal-propertyes">
+          <span className="animal-properties">
             {animal.earthAnimal ? 'yes' : 'no'}
           </span>
         </li>
         <li className="card-item">
           Feline:{' '}
-          <span className="animal-propertyes">
+          <span className="animal-properties">
             {animal.feline ? 'yes' : 'no'}
           </span>
         </li>
       </ul>
-    ));
+    );
   }
 }

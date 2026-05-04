@@ -13,3 +13,7 @@ export interface PropsCard {
   result: Animals[];
   lackOfResult: boolean;
 }
+
+export interface AnimalCardProps {
+  animal: Animals;
+}
