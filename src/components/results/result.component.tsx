@@ -24,6 +24,8 @@ export class Result extends React.Component<PropsType, ResultState> {
         <Cards
           result={this.props.result}
           lackOfResult={this.props.lackOfResult}
+          searchError={this.props.searchError}
+          errorMessage={this.props.errorMessage}
         ></Cards>
         <button onClick={this.testError}>Error test</button>
       </section>

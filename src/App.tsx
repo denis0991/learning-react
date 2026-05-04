@@ -27,6 +27,7 @@ export class App extends React.Component<Record<string, never>, AppState> {
       lackOfResult: false,
       searchError: false,
       errorResetTrigger: 0,
+      errorMessage: '',
     };
     this.setSearchState = this.setSearchState.bind(this);
     this.setStatus = this.setStatus.bind(this);
@@ -48,11 +49,15 @@ export class App extends React.Component<Record<string, never>, AppState> {
             value={this.state.inputValue}
             setError={this.setError}
             setSearchError={this.setSearchError}
+            setErrorMessage={this.setErrorMessage}
+            errorMessage={this.state.errorMessage}
           ></Search>
           <ErrorBoundary resetTrigger={this.state.errorResetTrigger}>
             <Result
               result={this.state.result}
               lackOfResult={this.state.lackOfResult}
+              searchError={this.state.searchError}
+              errorMessage={this.state.errorMessage}
             ></Result>
           </ErrorBoundary>
         </main>
@@ -86,4 +91,8 @@ export class App extends React.Component<Record<string, never>, AppState> {
       errorResetTrigger: prev.errorResetTrigger + 1,
     }));
   }
+
+  setErrorMessage = (message: string): void => {
+    this.setState({ errorMessage: message });
+  };
 }

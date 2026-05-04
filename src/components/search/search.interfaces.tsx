@@ -6,6 +6,8 @@ export interface Props {
   setInputValue: (value: string) => void;
   setError: (value: boolean) => void;
   setSearchError: (value: boolean) => void;
+  setErrorMessage: (message: string) => void;
+  errorMessage?: string;
 }
 export interface Page {
   pageNumber: number;

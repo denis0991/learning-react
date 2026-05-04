@@ -7,4 +7,5 @@ export interface AppState {
   lackOfResult: boolean;
   searchError: boolean;
   errorResetTrigger: number;
+  errorMessage?: string;
 }

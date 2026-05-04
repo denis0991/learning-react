@@ -14,18 +14,32 @@ export class Search extends React.Component<Props> {
   render(): ReactNode {
     return (
       <section className="search-component">
-        <input
-          id="search-input"
-          value={this.props.value}
-          placeholder="search.."
-          onChange={(e) => {
-            this.props.setInputValue(e.target.value);
-          }}
-        ></input>
+        <div className="search-input-wrapper">
+          <input
+            id="search-input"
+            value={this.props.value}
+            placeholder="search.."
+            onChange={(e) => {
+              this.props.setInputValue(e.target.value);
+            }}
+          ></input>
+          {this.props.value && (
+            <button
+              className="clear-button"
+              onClick={() => {
+                this.props.setInputValue('');
+                this.saveToLocalStorage('request', '');
+              }}
+              aria-label="Clear search"
+            >
+              ✕
+            </button>
+          )}
+        </div>
         {this.renderSpinner(this.props.status)}
         <button
           onClick={() => {
-            this.handleSearch();
+            this.handleSearch('search');
             this.saveToLocalStorage('request', this.props.value);
           }}
         >
@@ -36,19 +50,19 @@ export class Search extends React.Component<Props> {
   }
 
   componentDidMount(): void {
-    this.handleSearch();
+    this.handleSearch('default');
   }
 
-  async handleSearch(): Promise<void> {
+  async handleSearch(status: Status): Promise<void> {
     try {
       const searchValue = this.props.value.trim();
-      if (searchValue === this.lastSearchValue) {
+
+      if (searchValue === this.lastSearchValue && status === 'search') {
         return;
       }
+
       this.props.setStatus('search');
       this.lastSearchValue = searchValue;
-
-      this.props.setInputValue(searchValue);
 
       const response = await fetch(
         'https://stapi.co/api/v1/rest/animal/search?pageNumber=0&pageSize=12',
@@ -57,9 +71,16 @@ export class Search extends React.Component<Props> {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
-          body: `name=${encodeURIComponent(this.props.value)}`,
+          body: `name=${encodeURIComponent(searchValue)}`,
         }
       );
+
+      if (!response.ok) {
+        this.props.setStatus('error');
+        this.props.setSearchError(true);
+        return;
+      }
+
       const data: ApiResponse = await response.json();
       if (data.animals && data.animals.length > 0) {
         this.props.setStatus('success');
@@ -71,9 +92,23 @@ export class Search extends React.Component<Props> {
         this.props.setError(true);
       }
     } catch (error) {
-      console.error('Search error:', error);
       this.props.setStatus('error');
       this.props.setSearchError(true);
+      let errorMessage = 'Something went wrong. Please try again later.';
+
+      if (error instanceof Error) {
+        if (
+          error.message.includes('Failed to fetch') ||
+          error.message.includes('CORS')
+        ) {
+          errorMessage =
+            'Unable to connect to search service. Please check your network connection.';
+        } else if (error.message.includes('404')) {
+          errorMessage = 'Search service not found. Please try again later.';
+        }
+      }
+
+      this.props.setErrorMessage(errorMessage);
     }
   }
 

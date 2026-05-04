@@ -5,6 +5,18 @@ import { Card } from './card.component';
 
 export class Cards extends React.Component<PropsCard> {
   render(): ReactNode {
+    if (this.props.searchError) {
+      return (
+        <div className="error-message-container">
+          <div className="error-icon">⚠️</div>
+          <div className="error-text">
+            {this.props.errorMessage ||
+              'Something went wrong. Please try again later.'}
+          </div>
+        </div>
+      );
+    }
+
     if (!this.props.lackOfResult) {
       return (
         <div className="card-container">
@@ -12,7 +24,13 @@ export class Cards extends React.Component<PropsCard> {
         </div>
       );
     }
-    return <div>Nothing found</div>;
+
+    return (
+      <div className="empty-message-container">
+        <div className="empty-icon">🔍</div>
+        <div className="empty-text">Nothing found</div>
+      </div>
+    );
   }
 
   renderAnimalsCards(result: Animals[]): ReactNode {

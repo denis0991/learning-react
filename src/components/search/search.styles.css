@@ -93,3 +93,51 @@ button:focus-visible {
   left: 10%;
   transform: translateY(50%) rotate(-45deg);
 }
+
+.search-input-wrapper {
+  position: relative;
+  width: 60%;
+}
+
+#search-input {
+  border: 1px solid #d4c4a8;
+  height: 30px;
+  width: 100%;
+  border-radius: 5px;
+  padding: 8px 30px 8px 12px; /* ← добавить отступ справа для крестика */
+  font-size: 1em;
+  background-color: #fffaf0;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.clear-button {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #a8927a;
+  transition: all 0.2s ease;
+  border-radius: 50%;
+}
+
+.clear-button:hover {
+  background-color: #e8dcc8;
+  color: #6b4c3b;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.clear-button:focus {
+  outline: none;
+}
