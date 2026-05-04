@@ -1,0 +1,19 @@
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+  margin: 20px 0 20px;
+  color: #6b4c3b;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+h2 {
+  margin: 0;
+  color: #8b6b4d;
+}
+
+header h2 {
+  color: #a88462;
+  font-weight: 400;
+  margin-top: -10px;
+}
