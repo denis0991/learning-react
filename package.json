@@ -8,6 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "test": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest --watch",
     "preview": "vite preview",
     "lint-fix": "npx eslint . --ext .ts,.tsx --fix",
     "format:fix": "prettier --write .",

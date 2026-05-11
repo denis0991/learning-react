@@ -2,25 +2,16 @@ import { describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Card } from '../card.component';
 import type { Animals } from '../../search/search.interfaces';
+import { mockAnimals } from '../../../test-utils/mocks';
 
 describe('Card component', () => {
-  const mockAnimal: Animals = {
-    uid: '1',
-    name: 'Lion',
-    avian: false,
-    earthAnimal: true,
-    feline: true,
-    earthInsect: false,
-    canine: false,
-  };
-
   test('renders animal name correctly', () => {
-    render(<Card animal={mockAnimal} />);
+    render(<Card animal={mockAnimals[0]} />);
     expect(screen.getByText('Lion')).toBeInTheDocument();
   });
 
   test('displays "yes" for true properties', () => {
-    render(<Card animal={mockAnimal} />);
+    render(<Card animal={mockAnimals[0]} />);
     const yesElements = screen.getAllByText('yes');
     expect(yesElements).toHaveLength(2);
     expect(yesElements[0]).toBeInTheDocument();
@@ -43,10 +34,12 @@ describe('Card component', () => {
   });
 
   test('has correct CSS classes', () => {
-    render(<Card animal={mockAnimal} />);
+    render(<Card animal={mockAnimals[2]} />);
     const card = document.querySelector('.card');
     expect(card).toBeInTheDocument();
-    expect(document.querySelector('.animal-name')).toHaveTextContent('Lion');
+    expect(document.querySelector('.animal-name')).toHaveTextContent(
+      mockAnimals[2].name
+    );
     const properties = document.querySelectorAll('.animal-properties');
     expect(properties).toHaveLength(3);
   });

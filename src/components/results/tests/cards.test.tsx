@@ -2,6 +2,7 @@ import { describe, expect, test, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Cards } from '../cards.component';
 import type { Animals } from '../../search/search.interfaces';
+import { mockAnimals } from '../../../test-utils/mocks';
 
 vi.mock('../card.component', () => ({
   Card: ({ animal }: { animal: Animals }) => (
@@ -10,27 +11,6 @@ vi.mock('../card.component', () => ({
 }));
 
 describe('Cards component', () => {
-  const mockResults: Animals[] = [
-    {
-      uid: '1',
-      name: 'Lion',
-      avian: false,
-      earthAnimal: true,
-      feline: true,
-      earthInsect: false,
-      canine: false,
-    },
-    {
-      uid: '2',
-      name: 'Eagle',
-      avian: true,
-      earthAnimal: false,
-      feline: false,
-      earthInsect: false,
-      canine: false,
-    },
-  ];
-
   describe('when searchError is true', () => {
     test('displays error message', () => {
       render(
@@ -64,7 +44,7 @@ describe('Cards component', () => {
     test('renders cards container', () => {
       render(
         <Cards
-          result={mockResults}
+          result={mockAnimals}
           lackOfResult={false}
           searchError={false}
           errorMessage=""
@@ -76,14 +56,14 @@ describe('Cards component', () => {
     test('renders correct number of cards', () => {
       render(
         <Cards
-          result={mockResults}
+          result={mockAnimals}
           lackOfResult={false}
           searchError={false}
           errorMessage=""
         />
       );
       const cards = screen.getAllByTestId('mock-card');
-      expect(cards).toHaveLength(2);
+      expect(cards).toHaveLength(3);
       expect(screen.getByText('Lion')).toBeInTheDocument();
       expect(screen.getByText('Eagle')).toBeInTheDocument();
     });
