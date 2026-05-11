@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -104,20 +104,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">21x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">20x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -137,21 +137,21 @@ import type { PropsType, ResultState } from './result.types';
 import './result.styles.css';
 &nbsp;
 export class Result extends React.Component&lt;PropsType, ResultState&gt; {
-<span class="fstat-no" title="function not covered" >  constructor(p</span>rops: PropsType) {
-<span class="cstat-no" title="statement not covered" >    super(props);</span>
-<span class="cstat-no" title="statement not covered" >    this.state = { hasError: false };</span>
-<span class="cstat-no" title="statement not covered" >    this.testError = this.testError.bind(this);</span>
+  constructor(props: PropsType) {
+    super(props);
+    this.state = { hasError: false };
+    this.testError = this.testError.bind(this);
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  testError(): void {</span>
-<span class="cstat-no" title="statement not covered" >    return this.setState({ hasError: true });</span>
+  testError(): void {
+    return this.setState({ hasError: true });
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  render(): ReactNode {</span>
-<span class="cstat-no" title="statement not covered" >    if (this.state.hasError) {</span>
-<span class="cstat-no" title="statement not covered" >      throw new Error('Congratulations! You have caused an error!');</span>
+  render(): ReactNode {
+    if (this.state.hasError) {
+      throw new Error('Congratulations! You have caused an error!');
     }
-<span class="cstat-no" title="statement not covered" >    return (</span>
+    return (
       &lt;section className="result"&gt;
         &lt;h2 className="result__title"&gt;Results&lt;/h2&gt;
         &lt;Cards
@@ -172,7 +172,7 @@ export class Result extends React.Component&lt;PropsType, ResultState&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-05-11T11:06:14.677Z
+                at 2026-05-11T12:13:27.645Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
