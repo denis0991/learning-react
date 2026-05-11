@@ -21,6 +21,7 @@ export default defineConfig({
         'src/**/types.ts',
         'src/**/*.interfaces.ts',
         'src/**/*.types.ts',
+        'src/test-utils/**',
       ],
       thresholds: {
         global: {

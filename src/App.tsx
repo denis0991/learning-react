@@ -13,17 +13,18 @@ import {
 export class App extends React.Component<Record<string, never>, AppState> {
   constructor(props: Record<string, never>) {
     super(props);
-    let initialValue = '';
+    let inputValue = '';
+
     try {
       const savedValue = localStorage.getItem('request');
-      initialValue = savedValue ? JSON.parse(savedValue) : '';
+      inputValue = savedValue ? JSON.parse(savedValue) : '';
     } catch (e) {
       console.error('Error accessing localStorage:', e);
     }
     this.state = {
       result: [],
       status: 'default',
-      inputValue: initialValue,
+      inputValue,
       lackOfResult: false,
       searchError: false,
       errorResetTrigger: 0,

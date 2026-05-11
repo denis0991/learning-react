@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Card } from '../card.component';
 import type { Animals } from '../../search/search.interfaces';
-import { mockAnimals } from '../../../test-utils/mocks';
+import { mockAnimals } from '../../../test-utils/search-mocks';
 
 describe('Card component', () => {
   test('renders animal name correctly', () => {

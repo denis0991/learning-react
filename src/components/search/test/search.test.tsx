@@ -9,7 +9,7 @@ import {
   getDefaultSearchProps,
   mockApiResponses,
   mockAnimalsData,
-} from '../../../test-utils/mocks';
+} from '../../../test-utils/search-mocks';
 
 describe('Search component', () => {
   let user: ReturnType<typeof userEvent.setup>;

@@ -2,7 +2,7 @@ import { describe, expect, test, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Cards } from '../cards.component';
 import type { Animals } from '../../search/search.interfaces';
-import { mockAnimals } from '../../../test-utils/mocks';
+import { mockAnimals } from '../../../test-utils/search-mocks';
 
 vi.mock('../card.component', () => ({
   Card: ({ animal }: { animal: Animals }) => (

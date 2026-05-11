@@ -2,7 +2,7 @@ import { describe, expect, test, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Result } from '../result.component';
-import { mockAnimals } from '../../../test-utils/mocks';
+import { mockAnimals } from '../../../test-utils/search-mocks';
 import type { Animals } from '../../search/search.interfaces';
 
 vi.mock('../cards.component', () => ({
