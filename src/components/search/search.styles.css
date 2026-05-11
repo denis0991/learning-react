@@ -1,0 +1,143 @@
+.search-component {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+#search-input {
+  border: 1px solid #d4c4a8;
+  height: 30px;
+  width: 60%;
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-size: 1em;
+  background-color: #fffaf0;
+  transition: all 0.3s ease;
+}
+
+#search-input:focus {
+  outline: none;
+  border-color: #c2a575;
+  box-shadow: 0 0 0 3px rgba(194, 165, 117, 0.1);
+  background-color: #ffffff;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid #d4c4a8;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #e8dcc8;
+  color: #6b4c3b;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+button:hover {
+  border-color: #c2a575;
+  background-color: #dfd0b7;
+  transform: translateY(-1px);
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto rgba(194, 165, 117, 0.3);
+}
+
+.success {
+  width: 50px;
+  height: 50px;
+  position: relative;
+}
+
+.success::after {
+  content: '';
+  position: absolute;
+  left: 10%;
+  top: 50%;
+  width: 30px;
+  height: 30px;
+  border: 2px solid #8faa6e;
+  border-top: none;
+  border-right: none;
+  transform: translateY(-80%) rotate(-45deg) rotateY(-55deg);
+}
+
+.missing {
+  width: 50px;
+  height: 50px;
+  position: relative;
+}
+
+.line {
+  position: absolute;
+  width: 80%;
+  height: 2px;
+  background-color: #b87a6a;
+  transition: all 0.3s ease;
+}
+
+.line-1 {
+  top: 50%;
+  left: 10%;
+  transform: translateY(50%) rotate(45deg);
+}
+
+.line-2 {
+  top: 50%;
+  left: 10%;
+  transform: translateY(50%) rotate(-45deg);
+}
+
+.search-input-wrapper {
+  position: relative;
+  width: 60%;
+}
+
+#search-input {
+  border: 1px solid #d4c4a8;
+  height: 30px;
+  width: 100%;
+  border-radius: 5px;
+  padding: 8px 30px 8px 12px; /* ← добавить отступ справа для крестика */
+  font-size: 1em;
+  background-color: #fffaf0;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.clear-button {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #a8927a;
+  transition: all 0.2s ease;
+  border-radius: 50%;
+}
+
+.clear-button:hover {
+  background-color: #e8dcc8;
+  color: #6b4c3b;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.clear-button:focus {
+  outline: none;
+}
