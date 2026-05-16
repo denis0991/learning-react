@@ -7,10 +7,6 @@ export interface PropsType {
   errorMessage?: string;
 }
 
-export interface ResultState {
-  hasError: boolean;
-}
-
 export interface PropsCard {
   result: Animals[];
   lackOfResult: boolean;
