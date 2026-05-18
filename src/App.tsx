@@ -19,6 +19,7 @@ import {
 import type { LayoutProps } from './types/app.interfaces';
 import { Details } from './components/results/details.component';
 import { About } from './components/about/about.component';
+import { NotFound } from './components/not-found/not-found.component';
 
 function Layout({
   result,
@@ -77,7 +78,11 @@ export function App(): JSX.Element {
   const [currentPage, setCurrentPage] = useState(1);
   const [isPaginating, setIsPaginating] = useState(false);
   const location = useLocation();
-  const isAboutPage = location.pathname === '/about';
+
+  const validPaths = ['/', '/about'];
+  const isValidPath =
+    validPaths.includes(location.pathname) ||
+    location.pathname.startsWith('/details/');
 
   useEffect(() => {
     localStorage.setItem('request', JSON.stringify(inputValue));
@@ -173,9 +178,9 @@ export function App(): JSX.Element {
 
   return (
     <>
-      <Header />
+      {isValidPath && <Header />}
       <main>
-        {!isAboutPage && (
+        {location.pathname === '/' && (
           <Search
             setSearchState={setSearchState}
             setStatus={setStatus}
@@ -210,6 +215,7 @@ export function App(): JSX.Element {
               <Route path="details/:uid" element={<Details />} />
             </Route>
             <Route path="/about" element={<About />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </ErrorBoundary>
       </main>
