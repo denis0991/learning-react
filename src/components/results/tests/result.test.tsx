@@ -39,19 +39,49 @@ describe('Result Component', () => {
 
   describe('Rendering', () => {
     test('renders Results title', () => {
-      render(<Result {...defaultProps} />);
+      render(
+        <Result
+          currentPage={0}
+          totalPages={0}
+          status={'error'}
+          onPageChange={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+          {...defaultProps}
+        />
+      );
       expect(screen.getByText('Results')).toBeInTheDocument();
     });
 
     test('renders h2 heading with correct text', () => {
-      render(<Result {...defaultProps} />);
+      render(
+        <Result
+          currentPage={0}
+          totalPages={0}
+          status={'error'}
+          onPageChange={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+          {...defaultProps}
+        />
+      );
       const heading = screen.getByRole('heading', { level: 2 });
       expect(heading).toHaveTextContent('Results');
       expect(heading).toHaveClass('result__title');
     });
 
     test('renders section with correct class', () => {
-      render(<Result {...defaultProps} />);
+      render(
+        <Result
+          currentPage={0}
+          totalPages={0}
+          status={'error'}
+          onPageChange={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+          {...defaultProps}
+        />
+      );
       const section = document.querySelector('.result');
       expect(section).toBeInTheDocument();
     });
@@ -59,19 +89,52 @@ describe('Result Component', () => {
 
   describe('Props passing to Cards', () => {
     test('passes result prop to Cards', () => {
-      render(<Result {...defaultProps} result={mockAnimals} />);
+      render(
+        <Result
+          currentPage={0}
+          totalPages={0}
+          status={'error'}
+          onPageChange={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+          {...defaultProps}
+          result={mockAnimals}
+        />
+      );
       expect(screen.getByTestId('cards-result-length')).toHaveTextContent('3');
     });
 
     test('passes lackOfResult prop to Cards', () => {
-      render(<Result {...defaultProps} lackOfResult={true} />);
+      render(
+        <Result
+          currentPage={0}
+          totalPages={0}
+          status={'error'}
+          onPageChange={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+          {...defaultProps}
+          lackOfResult={true}
+        />
+      );
       expect(screen.getByTestId('cards-lack-of-result')).toHaveTextContent(
         'true'
       );
     });
 
     test('passes searchError prop to Cards', () => {
-      render(<Result {...defaultProps} searchError={true} />);
+      render(
+        <Result
+          currentPage={0}
+          totalPages={0}
+          status={'error'}
+          onPageChange={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+          {...defaultProps}
+          searchError={true}
+        />
+      );
       expect(screen.getByTestId('cards-search-error')).toHaveTextContent(
         'true'
       );
@@ -80,6 +143,12 @@ describe('Result Component', () => {
     test('passes errorMessage prop to Cards', () => {
       render(
         <Result
+          currentPage={0}
+          totalPages={0}
+          status={'search'}
+          onPageChange={function (): void {
+            throw new Error('Function not implemented.');
+          }}
           {...defaultProps}
           searchError={true}
           errorMessage="Custom API error"
@@ -97,6 +166,12 @@ describe('Result Component', () => {
           lackOfResult={false}
           searchError={true}
           errorMessage="Network failed"
+          currentPage={0}
+          totalPages={0}
+          status={'search'}
+          onPageChange={function (): void {
+            throw new Error('Function not implemented.');
+          }}
         />
       );
 
@@ -121,6 +196,12 @@ describe('Result Component', () => {
           lackOfResult={true}
           searchError={false}
           errorMessage=""
+          currentPage={0}
+          totalPages={0}
+          status={'search'}
+          onPageChange={function (): void {
+            throw new Error('Function not implemented.');
+          }}
         />
       );
 
@@ -134,6 +215,12 @@ describe('Result Component', () => {
       const longMessage = 'A'.repeat(1000);
       render(
         <Result
+          currentPage={0}
+          totalPages={0}
+          status={'search'}
+          onPageChange={function (): void {
+            throw new Error('Function not implemented.');
+          }}
           {...defaultProps}
           searchError={true}
           errorMessage={longMessage}
@@ -149,6 +236,12 @@ describe('Result Component', () => {
       const specialChars = 'Error! @#$%^&*()_+{}[]|\\:;"\'<>,.?/~`';
       render(
         <Result
+          currentPage={0}
+          totalPages={0}
+          status={'search'}
+          onPageChange={function (): void {
+            throw new Error('Function not implemented.');
+          }}
           {...defaultProps}
           searchError={true}
           errorMessage={specialChars}
@@ -161,7 +254,19 @@ describe('Result Component', () => {
     });
 
     test('handles empty string error message', () => {
-      render(<Result {...defaultProps} searchError={true} errorMessage="" />);
+      render(
+        <Result
+          currentPage={0}
+          totalPages={0}
+          status={'search'}
+          onPageChange={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+          {...defaultProps}
+          searchError={true}
+          errorMessage=""
+        />
+      );
 
       expect(screen.getByTestId('cards-error-message')).toHaveTextContent('');
     });
@@ -175,6 +280,12 @@ describe('Result Component', () => {
           lackOfResult={false}
           searchError={false}
           errorMessage=""
+          currentPage={0}
+          totalPages={0}
+          status={'search'}
+          onPageChange={function (): void {
+            throw new Error('Function not implemented.');
+          }}
         />
       );
 
@@ -191,6 +302,12 @@ describe('Result Component', () => {
           lackOfResult={false}
           searchError={false}
           errorMessage=""
+          currentPage={0}
+          totalPages={0}
+          status={'search'}
+          onPageChange={function (): void {
+            throw new Error('Function not implemented.');
+          }}
         />
       );
 
@@ -207,6 +324,12 @@ describe('Result Component', () => {
           lackOfResult={false}
           searchError={true}
           errorMessage="API is down"
+          currentPage={0}
+          totalPages={0}
+          status={'search'}
+          onPageChange={function (): void {
+            throw new Error('Function not implemented.');
+          }}
         />
       );
 
@@ -225,6 +348,12 @@ describe('Result Component', () => {
           lackOfResult={true}
           searchError={false}
           errorMessage=""
+          currentPage={0}
+          totalPages={0}
+          status={'search'}
+          onPageChange={function (): void {
+            throw new Error('Function not implemented.');
+          }}
         />
       );
 
@@ -241,6 +370,12 @@ describe('Result Component', () => {
           lackOfResult={true}
           searchError={true}
           errorMessage="Error first"
+          currentPage={0}
+          totalPages={0}
+          status={'search'}
+          onPageChange={function (): void {
+            throw new Error('Function not implemented.');
+          }}
         />
       );
 
