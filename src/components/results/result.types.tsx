@@ -3,6 +3,9 @@ import type { Animals } from '../search/search.interfaces';
 export interface PropsType {
   result: Animals[];
   lackOfResult: boolean;
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
   searchError?: boolean;
   errorMessage?: string;
 }
@@ -16,4 +19,10 @@ export interface PropsCard {
 
 export interface AnimalCardProps {
   animal: Animals;
+}
+
+export interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
 }

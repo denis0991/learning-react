@@ -31,7 +31,7 @@ export function Search(props: Props): JSX.Element {
   }, []);
 
   const handleSearch = useCallback(
-    async (status: Status): Promise<void> => {
+    async (status: Status, page: number = 0): Promise<void> => {
       try {
         const searchValue = props.value.trim();
 
@@ -43,7 +43,7 @@ export function Search(props: Props): JSX.Element {
         setLastSearchValue(searchValue);
 
         const response = await fetch(
-          'https://stapi.co/api/v1/rest/animal/search?pageNumber=0&pageSize=12',
+          `https://stapi.co/api/v1/rest/animal/search?pageNumber=${page}&pageSize=12`,
           {
             method: 'POST',
             headers: {
@@ -65,10 +65,12 @@ export function Search(props: Props): JSX.Element {
           props.setStatus('success');
           props.setError(false);
           props.setSearchError(false);
-          props.setSearchState(data.animals);
+          const totalPages = data.page?.totalPages || 0;
+          props.setSearchState(data.animals, totalPages);
         } else {
           props.setStatus('missing');
           props.setError(true);
+          props.setSearchState([], 0);
         }
       } catch (error) {
         props.setStatus('error');
@@ -103,7 +105,7 @@ export function Search(props: Props): JSX.Element {
   );
 
   useEffect(() => {
-    handleSearch('default');
+    handleSearch('default', 0);
   }, []);
 
   return (
@@ -133,7 +135,7 @@ export function Search(props: Props): JSX.Element {
       {renderSpinner(props.status)}
       <button
         onClick={() => {
-          handleSearch('search');
+          handleSearch('search', 0);
           saveToLocalStorage('request', props.value);
         }}
       >

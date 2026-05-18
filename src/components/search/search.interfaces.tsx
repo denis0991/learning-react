@@ -1,6 +1,6 @@
 export interface Props {
   value: string;
-  setSearchState: (result: Animals[]) => void;
+  setSearchState: (animals: Animals[], totalPages?: number) => void;
   status: Status;
   setStatus: (value: Status) => void;
   setInputValue: (value: string) => void;

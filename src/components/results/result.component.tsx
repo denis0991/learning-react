@@ -1,6 +1,7 @@
 import { useState, type JSX } from 'react';
 import { Cards } from './cards.component';
 import type { PropsType } from './result.types';
+import { Pagination } from './pagination.component';
 import './result.styles.css';
 
 export function Result(props: PropsType): JSX.Element {
@@ -18,6 +19,11 @@ export function Result(props: PropsType): JSX.Element {
         searchError={props.searchError}
         errorMessage={props.errorMessage}
       ></Cards>
+      <Pagination
+        currentPage={props.currentPage}
+        totalPages={props.totalPages}
+        onPageChange={props.onPageChange}
+      />
       <button
         onClick={() => {
           setHasError(true);
