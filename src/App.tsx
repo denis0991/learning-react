@@ -1,5 +1,11 @@
 import { useCallback, useEffect, useState, type JSX } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import {
+  Outlet,
+  Route,
+  Routes,
+  useMatch,
+  useSearchParams,
+} from 'react-router-dom';
 import './App.css';
 import {
   Header,
@@ -9,6 +15,43 @@ import {
   type Status,
   type Animals,
 } from './index';
+import type { LayoutProps } from './types/app.interfaces';
+import { Details } from './components/results/details.component';
+
+function Layout({
+  result,
+  status,
+  lackOfResult,
+  searchError,
+  errorMessage,
+  currentPage,
+  totalPages,
+  onPageChange,
+}: LayoutProps) {
+  const isDetailsRoute = useMatch('/details/:uid');
+
+  return (
+    <div className={`split-view${isDetailsRoute ? ' has-details' : ''}`}>
+      <div className="left-panel">
+        <Result
+          result={result}
+          status={status}
+          lackOfResult={lackOfResult}
+          searchError={searchError}
+          errorMessage={errorMessage}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={onPageChange}
+        />
+      </div>
+      {isDetailsRoute && (
+        <div className="right-panel">
+          <Outlet />
+        </div>
+      )}
+    </div>
+  );
+}
 
 export function App(): JSX.Element {
   const [inputValue, setInputValue] = useState<string>(() => {
@@ -59,7 +102,11 @@ export function App(): JSX.Element {
 
   const updatePageInUrl = useCallback(
     (page: number) => {
-      setSearchParams({ page: page.toString() });
+      setSearchParams((prev) => {
+        const params = new URLSearchParams(prev);
+        params.set('page', page.toString());
+        return params;
+      });
     },
     [setSearchParams]
   );
@@ -137,16 +184,26 @@ export function App(): JSX.Element {
           resetPage={resetPage}
         />
         <ErrorBoundary resetTrigger={errorResetTrigger}>
-          <Result
-            result={result}
-            status={status}
-            lackOfResult={lackOfResult}
-            searchError={searchError}
-            errorMessage={errorMessage}
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setPage}
-          />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Layout
+                  result={result}
+                  status={status}
+                  lackOfResult={lackOfResult}
+                  searchError={searchError}
+                  errorMessage={errorMessage}
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={setPage}
+                />
+              }
+            >
+              <Route index element={null} />
+              <Route path="details/:uid" element={<Details />} />
+            </Route>
+          </Routes>
         </ErrorBoundary>
       </main>
     </>

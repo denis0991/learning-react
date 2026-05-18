@@ -9,3 +9,14 @@ export interface AppState {
   errorResetTrigger: number;
   errorMessage?: string;
 }
+
+export interface LayoutProps {
+  result: Animals[];
+  status: Status;
+  lackOfResult: boolean;
+  searchError: boolean;
+  errorMessage: string;
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}

@@ -60,7 +60,7 @@ export function Search(props: Props): JSX.Element {
         }
 
         const data: ApiResponse = await response.json();
-
+        console.log('API Response:', data);
         if (data.animals && data.animals.length > 0) {
           props.setStatus('success');
           props.setError(false);

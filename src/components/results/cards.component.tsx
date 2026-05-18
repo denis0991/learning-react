@@ -1,6 +1,7 @@
 import { type JSX } from 'react';
 import type { PropsCard } from './result.types';
 import type { Animals } from '../search/search.interfaces';
+
 import { Card } from './card.component';
 
 export function Cards({
