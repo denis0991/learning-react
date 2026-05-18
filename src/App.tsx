@@ -78,6 +78,7 @@ export function App(): JSX.Element {
   const [currentPage, setCurrentPage] = useState(1);
   const [isPaginating, setIsPaginating] = useState(false);
   const location = useLocation();
+  const isAboutPage = location.pathname === '/about';
 
   const validPaths = ['/', '/about'];
   const isValidPath =
@@ -180,7 +181,7 @@ export function App(): JSX.Element {
     <>
       {isValidPath && <Header />}
       <main>
-        {location.pathname === '/' && (
+        {!isAboutPage && isValidPath && (
           <Search
             setSearchState={setSearchState}
             setStatus={setStatus}
