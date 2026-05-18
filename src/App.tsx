@@ -3,6 +3,7 @@ import {
   Outlet,
   Route,
   Routes,
+  useLocation,
   useMatch,
   useSearchParams,
 } from 'react-router-dom';
@@ -17,6 +18,7 @@ import {
 } from './index';
 import type { LayoutProps } from './types/app.interfaces';
 import { Details } from './components/results/details.component';
+import { About } from './components/about/about.component';
 
 function Layout({
   result,
@@ -74,6 +76,8 @@ export function App(): JSX.Element {
   const [errorResetTrigger, setErrorResetTrigger] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [isPaginating, setIsPaginating] = useState(false);
+  const location = useLocation();
+  const isAboutPage = location.pathname === '/about';
 
   useEffect(() => {
     localStorage.setItem('request', JSON.stringify(inputValue));
@@ -171,18 +175,20 @@ export function App(): JSX.Element {
     <>
       <Header />
       <main>
-        <Search
-          setSearchState={setSearchState}
-          setStatus={setStatus}
-          setInputValue={setInputValueHandler}
-          status={status}
-          value={inputValue}
-          setError={setError}
-          setSearchError={setSearchErrorHandler}
-          setErrorMessage={setErrorMessageHandler}
-          errorMessage={errorMessage}
-          resetPage={resetPage}
-        />
+        {!isAboutPage && (
+          <Search
+            setSearchState={setSearchState}
+            setStatus={setStatus}
+            setInputValue={setInputValueHandler}
+            status={status}
+            value={inputValue}
+            setError={setError}
+            setSearchError={setSearchErrorHandler}
+            setErrorMessage={setErrorMessageHandler}
+            errorMessage={errorMessage}
+            resetPage={resetPage}
+          />
+        )}
         <ErrorBoundary resetTrigger={errorResetTrigger}>
           <Routes>
             <Route
@@ -203,6 +209,7 @@ export function App(): JSX.Element {
               <Route index element={null} />
               <Route path="details/:uid" element={<Details />} />
             </Route>
+            <Route path="/about" element={<About />} />
           </Routes>
         </ErrorBoundary>
       </main>

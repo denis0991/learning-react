@@ -39,7 +39,6 @@ export function Details() {
     <>
       <h2 className="details-title">Animal Details</h2>
       <div className="details-panel">
-        <button onClick={handleClose}>✕ Close</button>
         {loading && <div className="loader"></div>}
         {item && (
           <div>
@@ -76,6 +75,7 @@ export function Details() {
             </p>
           </div>
         )}
+        <button onClick={handleClose}>✕ Close</button>
       </div>
     </>
   );
