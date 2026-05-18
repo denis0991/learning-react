@@ -1,10 +1,12 @@
 import type { Animals } from '../search/search.interfaces';
+import type { Status } from '../search/search.interfaces';
 
 export interface PropsType {
   result: Animals[];
   lackOfResult: boolean;
   currentPage: number;
   totalPages: number;
+  status: Status;
   onPageChange: (page: number) => void;
   searchError?: boolean;
   errorMessage?: string;

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState, type JSX } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import './App.css';
 import {
   Header,
@@ -8,7 +9,6 @@ import {
   type Status,
   type Animals,
 } from './index';
-import type { ApiResponse } from './components/search/search.interfaces';
 
 export function App(): JSX.Element {
   const [inputValue, setInputValue] = useState<string>(() => {
@@ -26,23 +26,15 @@ export function App(): JSX.Element {
   const [lackOfResult, setLackOfResult] = useState(false);
   const [searchError, setSearchError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [, setSearchParams] = useSearchParams();
   const [errorResetTrigger, setErrorResetTrigger] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isPaginating, setIsPaginating] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('request', JSON.stringify(inputValue));
   }, [inputValue]);
-
-  const setSearchState = useCallback(
-    (newResult: Animals[], totalPages?: number) => {
-      setResult(newResult);
-      if (totalPages !== undefined) {
-        setTotalPages(totalPages);
-      }
-    },
-    []
-  );
 
   const setStatus = useCallback((newStatus: Status) => {
     setStatusState(newStatus);
@@ -65,12 +57,41 @@ export function App(): JSX.Element {
     setErrorMessage(message);
   }, []);
 
-  const setPage = useCallback((page: number) => {
-    setCurrentPage(page);
-  }, []);
+  const updatePageInUrl = useCallback(
+    (page: number) => {
+      setSearchParams({ page: page.toString() });
+    },
+    [setSearchParams]
+  );
+
+  const setPage = useCallback(
+    (page: number) => {
+      setCurrentPage(page);
+      updatePageInUrl(page);
+      setIsPaginating(true);
+    },
+    [updatePageInUrl]
+  );
+
+  const setSearchState = useCallback(
+    (newResult: Animals[], totalPages?: number) => {
+      setResult(newResult);
+      if (totalPages !== undefined) {
+        setTotalPages(totalPages);
+      }
+      setCurrentPage(1);
+      updatePageInUrl(1);
+    },
+    [updatePageInUrl]
+  );
+
+  const resetPage = useCallback(() => {
+    setCurrentPage(1);
+    updatePageInUrl(1);
+  }, [updatePageInUrl]);
 
   useEffect(() => {
-    if (status === 'success') {
+    if (status === 'success' && currentPage > 0 && isPaginating) {
       const handlePageChange = async () => {
         try {
           const response = await fetch(
@@ -80,20 +101,24 @@ export function App(): JSX.Element {
               headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
               },
-              body: `name=${encodeURIComponent(inputValue)}`,
+              body: `name=${encodeURIComponent(inputValue.trim())}`,
             }
           );
-          const data: ApiResponse = await response.json();
+          const data = await response.json();
           if (data.animals) {
-            setSearchState(data.animals, data.page?.totalPages);
+            setResult(data.animals);
+            if (data.page?.totalPages) {
+              setTotalPages(data.page.totalPages);
+            }
           }
         } catch (error) {
           console.error('Page change error:', error);
         }
       };
       handlePageChange();
+      setIsPaginating(false);
     }
-  }, [currentPage]);
+  }, [currentPage, status, isPaginating]);
 
   return (
     <>
@@ -109,10 +134,12 @@ export function App(): JSX.Element {
           setSearchError={setSearchErrorHandler}
           setErrorMessage={setErrorMessageHandler}
           errorMessage={errorMessage}
+          resetPage={resetPage}
         />
         <ErrorBoundary resetTrigger={errorResetTrigger}>
           <Result
             result={result}
+            status={status}
             lackOfResult={lackOfResult}
             searchError={searchError}
             errorMessage={errorMessage}

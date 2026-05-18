@@ -19,11 +19,13 @@ export function Result(props: PropsType): JSX.Element {
         searchError={props.searchError}
         errorMessage={props.errorMessage}
       ></Cards>
-      <Pagination
-        currentPage={props.currentPage}
-        totalPages={props.totalPages}
-        onPageChange={props.onPageChange}
-      />
+      {props.status !== 'search' && props.result.length > 0 && (
+        <Pagination
+          currentPage={props.currentPage}
+          totalPages={props.totalPages}
+          onPageChange={props.onPageChange}
+        />
+      )}
       <button
         onClick={() => {
           setHasError(true);

@@ -87,6 +87,7 @@ export function Search(props: Props): JSX.Element {
               'Unable to connect to search service. Please check your network connection.';
           } else if (error.message.includes('404')) {
             errorMessage = 'Search service not found. Please try again later.';
+            props.resetPage();
           }
         }
 
@@ -117,6 +118,7 @@ export function Search(props: Props): JSX.Element {
           placeholder="search.."
           onChange={(e) => {
             props.setInputValue(e.target.value);
+            props.resetPage();
           }}
         />
         {props.value && (

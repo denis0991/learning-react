@@ -1,4 +1,5 @@
 export interface Props {
+  resetPage(): unknown;
   value: string;
   setSearchState: (animals: Animals[], totalPages?: number) => void;
   status: Status;
