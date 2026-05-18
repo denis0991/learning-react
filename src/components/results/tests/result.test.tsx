@@ -1,6 +1,5 @@
 import { describe, expect, test, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { Result } from '../result.component';
 import { mockAnimals } from '../../../test-utils/search-mocks';
 import type { Animals } from '../../search/search.interfaces';
@@ -55,13 +54,6 @@ describe('Result Component', () => {
       render(<Result {...defaultProps} />);
       const section = document.querySelector('.result');
       expect(section).toBeInTheDocument();
-    });
-
-    test('renders Error test button', () => {
-      render(<Result {...defaultProps} />);
-      const button = screen.getByText('Error test');
-      expect(button).toBeInTheDocument();
-      expect(button.tagName).toBe('BUTTON');
     });
   });
 
@@ -118,29 +110,6 @@ describe('Result Component', () => {
       expect(screen.getByTestId('cards-error-message')).toHaveTextContent(
         'Network failed'
       );
-    });
-  });
-
-  describe('Error test button behavior', () => {
-    test('button click triggers state change', async () => {
-      const user = userEvent.setup();
-      render(<Result {...defaultProps} />);
-
-      const button = screen.getByText('Error test');
-
-      await expect(async () => {
-        await user.click(button);
-      }).rejects.toThrow('Congratulations! You have caused an error!');
-    });
-
-    test('button is clickable multiple times', async () => {
-      const user = userEvent.setup();
-      render(<Result {...defaultProps} />);
-      const button = screen.getByText('Error test');
-
-      await expect(async () => {
-        await user.click(button);
-      }).rejects.toThrow('Congratulations! You have caused an error!');
     });
   });
 

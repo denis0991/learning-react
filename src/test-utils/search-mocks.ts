@@ -42,6 +42,7 @@ export const createSearchMocks = () => ({
   setSearchError: vi.fn(),
   setError: vi.fn(),
   setErrorMessage: vi.fn(),
+  resetPage: vi.fn(),
 });
 
 export const getDefaultSearchProps = (

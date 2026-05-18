@@ -122,7 +122,7 @@ describe('Search component', () => {
       renderSearch();
       await waitFor(() => {
         expect(defaultProps.setStatus).toHaveBeenCalledWith('success');
-        expect(defaultProps.setSearchState).toHaveBeenCalledWith(animals);
+        expect(defaultProps.setSearchState).toHaveBeenCalledWith(animals, 0);
         expect(defaultProps.setError).toHaveBeenCalledWith(false);
         expect(defaultProps.setSearchError).toHaveBeenCalledWith(false);
       });

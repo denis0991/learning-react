@@ -5,11 +5,8 @@ import type { Animals } from '../../search/search.interfaces';
 import { mockAnimals } from '../../../test-utils/search-mocks';
 
 vi.mock('../card.component', () => ({
-  Card: ({ animal }: { animal: Animals }) => (
-    <div data-testid="mock-card">{animal.name}</div>
-  ),
+  Card: (props: Animals) => <div data-testid="mock-card">{props.name}</div>,
 }));
-
 describe('Cards component', () => {
   describe('when searchError is true', () => {
     test('displays error message', () => {
