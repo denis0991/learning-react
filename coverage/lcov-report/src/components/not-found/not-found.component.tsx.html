@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/components/results/result.component.tsx</title>
+    <title>Code coverage report for src/components/not-found/not-found.component.tsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/results</a> result.component.tsx</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/not-found</a> not-found.component.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -88,21 +88,15 @@
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L26'></a><a href='#L26'>26</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -115,29 +109,32 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { type JSX } from 'react';
-import { Cards } from './cards.component';
-import type { PropsType } from './result.types';
-import { Pagination } from './pagination.component';
-import './result.styles.css';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Link, useSearchParams } from 'react-router-dom';
+import type { JSX } from 'react';
+import './not-found.styles.css';
 &nbsp;
-export function Result(props: PropsType): JSX.Element {
-  return (
-    &lt;section className="result"&gt;
-      &lt;h2 className="result__title"&gt;Results&lt;/h2&gt;
-      &lt;Cards
-        result={props.result}
-        lackOfResult={props.lackOfResult}
-        searchError={props.searchError}
-        errorMessage={props.errorMessage}
-      &gt;&lt;/Cards&gt;
-      {props.status !== 'search' &amp;&amp; props.result.length &gt; 0 &amp;&amp; (
-        &lt;Pagination
-          currentPage={props.currentPage}
-          totalPages={props.totalPages}
-          onPageChange={props.onPageChange}
-        /&gt;
-      )}
+export function <span class="fstat-no" title="function not covered" >NotFound(): JSX.Element {</span>
+  const [searchParams<span class="cstat-no" title="statement not covered" >] = useSearchParams();</span>
+  const page = <span class="cstat-no" title="statement not covered" >searchParams.get('page') || '1';</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return (</span>
+    &lt;section className="not-found"&gt;
+      &lt;div className="not-found__container"&gt;
+        &lt;div className="not-found__code"&gt;404&lt;/div&gt;
+        &lt;h1 className="not-found__title"&gt;Page Not Found&lt;/h1&gt;
+        &lt;p className="not-found__message"&gt;
+          The page you are looking for does not exist or has been moved to
+          another sector of the galaxy. Please check your coordinates and try
+          again.
+        &lt;/p&gt;
+        &lt;Link to={`/?page=${page}`} className="not-found__button"&gt;
+          Return to Main Page
+        &lt;/Link&gt;
+      &lt;/div&gt;
     &lt;/section&gt;
   );
 }
