@@ -36,6 +36,9 @@ describe('Card component', () => {
       feline: false,
       earthInsect: false,
       canine: false,
+      json: function () {
+        throw new Error('Function not implemented.');
+      },
     };
     render(
       <MemoryRouter>

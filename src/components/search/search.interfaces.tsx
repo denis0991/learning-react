@@ -21,6 +21,7 @@ export interface Page {
 }
 
 export interface Animals {
+  json(): unknown;
   uid: string;
   name: string;
   earthAnimal: boolean;
