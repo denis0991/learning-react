@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, type JSX } from 'react';
+import { useCallback, useEffect, type JSX } from 'react';
 import {
   Outlet,
   Route,
@@ -73,12 +73,16 @@ export function App(): JSX.Element {
     setSearchError,
     errorMessage,
     setErrorMessage,
+    totalPages,
+    setTotalPages,
+    currentPage,
+    setCurrentPage,
+    isPaginating,
+    setIsPaginating,
+    resetPage,
   } = useAnimalStore();
 
-  const [totalPages, setTotalPages] = useState(0);
   const [, setSearchParams] = useSearchParams();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [isPaginating, setIsPaginating] = useState(false);
   const location = useLocation();
   const isAboutPage = location.pathname === '/about';
 
@@ -127,7 +131,7 @@ export function App(): JSX.Element {
       updatePageInUrl(page);
       setIsPaginating(true);
     },
-    [updatePageInUrl]
+    [setCurrentPage, setIsPaginating, updatePageInUrl]
   );
 
   const setSearchState = useCallback(
@@ -139,13 +143,13 @@ export function App(): JSX.Element {
       setCurrentPage(1);
       updatePageInUrl(1);
     },
-    [setResult, updatePageInUrl]
+    [setCurrentPage, setResult, setTotalPages, updatePageInUrl]
   );
 
-  const resetPage = useCallback(() => {
-    setCurrentPage(1);
+  const handleResetPage = useCallback(() => {
+    resetPage();
     updatePageInUrl(1);
-  }, [updatePageInUrl]);
+  }, [resetPage, updatePageInUrl]);
 
   useEffect(() => {
     if (status === 'success' && currentPage > 0 && isPaginating) {
@@ -175,7 +179,15 @@ export function App(): JSX.Element {
       handlePageChange();
       setIsPaginating(false);
     }
-  }, [currentPage, status, isPaginating, inputValue, setResult, setTotalPages]);
+  }, [
+    currentPage,
+    status,
+    isPaginating,
+    inputValue,
+    setResult,
+    setTotalPages,
+    setIsPaginating,
+  ]);
 
   return (
     <>
@@ -192,7 +204,7 @@ export function App(): JSX.Element {
             setSearchError={setSearchError}
             setErrorMessage={setErrorMessage}
             errorMessage={errorMessage}
-            resetPage={resetPage}
+            resetPage={handleResetPage}
           />
         )}
         <ErrorBoundary resetTrigger={errorResetTrigger}>

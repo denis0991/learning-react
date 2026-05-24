@@ -9,6 +9,9 @@ interface AnimalState {
   lackOfResult: boolean;
   searchError: boolean;
   errorMessage: string;
+  totalPages: number;
+  currentPage: number;
+  isPaginating: boolean;
 
   setInputValue: (value: string) => void;
   setResult: (result: Animals[]) => void;
@@ -17,6 +20,10 @@ interface AnimalState {
   setLackOfResult: (lack: boolean) => void;
   setSearchError: (error: boolean) => void;
   setErrorMessage: (message: string) => void;
+  setTotalPages: (pages: number) => void;
+  setCurrentPage: (page: number) => void;
+  setIsPaginating: (isPaginating: boolean) => void;
+  resetPage: () => void;
 }
 
 export const useAnimalStore = create<AnimalState>((set) => ({
@@ -27,6 +34,9 @@ export const useAnimalStore = create<AnimalState>((set) => ({
   lackOfResult: false,
   searchError: false,
   errorMessage: '',
+  totalPages: 0,
+  currentPage: 1,
+  isPaginating: false,
 
   setInputValue: (value) => set({ inputValue: value }),
   setResult: (result) => set({ result }),
@@ -41,4 +51,8 @@ export const useAnimalStore = create<AnimalState>((set) => ({
   setLackOfResult: (lack) => set({ lackOfResult: lack }),
   setSearchError: (error) => set({ searchError: error }),
   setErrorMessage: (message) => set({ errorMessage: message }),
+  setTotalPages: (pages) => set({ totalPages: pages }),
+  setCurrentPage: (page) => set({ currentPage: page }),
+  setIsPaginating: (isPaginating) => set({ isPaginating }),
+  resetPage: () => set({ currentPage: 1 }),
 }));

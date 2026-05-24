@@ -6,7 +6,7 @@ const renderSpinner = (status: Status): JSX.Element => {
   switch (status) {
     case 'default':
       return <div className="default"></div>;
-    case 'search':
+    case 'searching':
       return <div className="loader"></div>;
     case 'success':
       return <div className="success"></div>;
@@ -35,11 +35,11 @@ export function Search(props: Props): JSX.Element {
       try {
         const searchValue = props.value.trim();
 
-        if (searchValue === lastSearchValue && status === 'search') {
+        if (searchValue === lastSearchValue && status === 'searching') {
           return;
         }
 
-        props.setStatus('search');
+        props.setStatus('searching');
         setLastSearchValue(searchValue);
 
         const response = await fetch(
@@ -60,7 +60,6 @@ export function Search(props: Props): JSX.Element {
         }
 
         const data: ApiResponse = await response.json();
-        console.log('API Response:', data);
         if (data.animals && data.animals.length > 0) {
           props.setStatus('success');
           props.setError(false);
@@ -137,7 +136,7 @@ export function Search(props: Props): JSX.Element {
       {renderSpinner(props.status)}
       <button
         onClick={() => {
-          handleSearch('search', 0);
+          handleSearch('searching', 0);
           saveToLocalStorage('request', props.value);
         }}
       >

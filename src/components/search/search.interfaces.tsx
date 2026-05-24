@@ -39,6 +39,7 @@ export interface ApiResponse {
 
 export type Status =
   | 'default'
+  | 'searching'
   | 'loading'
   | 'success'
   | 'error'
