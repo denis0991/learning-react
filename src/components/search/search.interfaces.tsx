@@ -8,6 +8,7 @@ export interface Props {
   setError: (value: boolean) => void;
   setSearchError: (value: boolean) => void;
   setErrorMessage: (message: string) => void;
+  onSearch?: (value: string) => void;
   errorMessage?: string;
 }
 export interface Page {

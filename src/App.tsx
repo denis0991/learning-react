@@ -1,4 +1,4 @@
-import { useCallback, useEffect, type JSX } from 'react';
+import { useCallback, type JSX } from 'react';
 import {
   Outlet,
   Route,
@@ -8,19 +8,14 @@ import {
   useSearchParams,
 } from 'react-router-dom';
 import './App.css';
-import {
-  Header,
-  Search,
-  Result,
-  ErrorBoundary,
-  type Status,
-  type Animals,
-} from './index';
+import { Header, Search, Result, ErrorBoundary, type Status } from './index';
 import type { LayoutProps } from './types/app.interfaces';
 import { Details } from './components/results/details.component';
 import { About } from './components/about/about.component';
 import { NotFound } from './components/not-found/not-found.component';
 import { useAnimalStore } from './stores/animal.store';
+import { useAnimalSearch } from './hooks/useAnimalSearch';
+import { useLocalStorage } from './hooks/useLocalStorage';
 
 function Layout({
   result,
@@ -62,7 +57,6 @@ export function App(): JSX.Element {
     inputValue,
     setInputValue,
     result,
-    setResult,
     status,
     setStatus,
     errorResetTrigger,
@@ -74,13 +68,13 @@ export function App(): JSX.Element {
     errorMessage,
     setErrorMessage,
     totalPages,
-    setTotalPages,
     currentPage,
-    setCurrentPage,
-    isPaginating,
-    setIsPaginating,
     resetPage,
+    setSearchState,
   } = useAnimalStore();
+
+  useLocalStorage();
+  const { searchAnimals } = useAnimalSearch();
 
   const [, setSearchParams] = useSearchParams();
   const location = useLocation();
@@ -90,21 +84,6 @@ export function App(): JSX.Element {
   const isValidPath =
     validPaths.includes(location.pathname) ||
     location.pathname.startsWith('/details/');
-
-  useEffect(() => {
-    try {
-      const savedValue = localStorage.getItem('request');
-      if (savedValue) {
-        setInputValue(JSON.parse(savedValue));
-      }
-    } catch (e) {
-      console.error('Error accessing localStorage:', e);
-    }
-  }, [setInputValue]);
-
-  useEffect(() => {
-    localStorage.setItem('request', JSON.stringify(inputValue));
-  }, [inputValue]);
 
   const handleSetStatus = useCallback(
     (newStatus: Status) => {
@@ -125,69 +104,26 @@ export function App(): JSX.Element {
     [setSearchParams]
   );
 
-  const setPage = useCallback(
-    (page: number) => {
-      setCurrentPage(page);
+  const handlePageChange = useCallback(
+    async (page: number) => {
+      await searchAnimals(inputValue, page);
       updatePageInUrl(page);
-      setIsPaginating(true);
     },
-    [setCurrentPage, setIsPaginating, updatePageInUrl]
+    [inputValue, searchAnimals, updatePageInUrl]
   );
 
-  const setSearchState = useCallback(
-    (newResult: Animals[], totalPages?: number) => {
-      setResult(newResult);
-      if (totalPages !== undefined) {
-        setTotalPages(totalPages);
-      }
-      setCurrentPage(1);
+  const handleSearch = useCallback(
+    async (value: string) => {
+      await searchAnimals(value, 1);
       updatePageInUrl(1);
     },
-    [setCurrentPage, setResult, setTotalPages, updatePageInUrl]
+    [searchAnimals, updatePageInUrl]
   );
 
   const handleResetPage = useCallback(() => {
     resetPage();
     updatePageInUrl(1);
   }, [resetPage, updatePageInUrl]);
-
-  useEffect(() => {
-    if (status === 'success' && currentPage > 0 && isPaginating) {
-      const handlePageChange = async () => {
-        try {
-          const response = await fetch(
-            `https://stapi.co/api/v1/rest/animal/search?pageNumber=${currentPage - 1}&pageSize=12`,
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-              },
-              body: `name=${encodeURIComponent(inputValue.trim())}`,
-            }
-          );
-          const data = await response.json();
-          if (data.animals) {
-            setResult(data.animals);
-            if (data.page?.totalPages) {
-              setTotalPages(data.page.totalPages);
-            }
-          }
-        } catch (error) {
-          console.error('Page change error:', error);
-        }
-      };
-      handlePageChange();
-      setIsPaginating(false);
-    }
-  }, [
-    currentPage,
-    status,
-    isPaginating,
-    inputValue,
-    setResult,
-    setTotalPages,
-    setIsPaginating,
-  ]);
 
   return (
     <>
@@ -205,6 +141,7 @@ export function App(): JSX.Element {
             setErrorMessage={setErrorMessage}
             errorMessage={errorMessage}
             resetPage={handleResetPage}
+            onSearch={handleSearch}
           />
         )}
         <ErrorBoundary resetTrigger={errorResetTrigger}>
@@ -220,7 +157,7 @@ export function App(): JSX.Element {
                   errorMessage={errorMessage}
                   currentPage={currentPage}
                   totalPages={totalPages}
-                  onPageChange={setPage}
+                  onPageChange={handlePageChange}
                 />
               }
             >

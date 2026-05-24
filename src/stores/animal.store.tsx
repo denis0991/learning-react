@@ -24,9 +24,10 @@ interface AnimalState {
   setCurrentPage: (page: number) => void;
   setIsPaginating: (isPaginating: boolean) => void;
   resetPage: () => void;
+  setSearchState: (newResult: Animals[], totalPages?: number) => void;
 }
 
-export const useAnimalStore = create<AnimalState>((set) => ({
+export const useAnimalStore = create<AnimalState>((set, get) => ({
   inputValue: '',
   result: [],
   status: 'default',
@@ -55,4 +56,11 @@ export const useAnimalStore = create<AnimalState>((set) => ({
   setCurrentPage: (page) => set({ currentPage: page }),
   setIsPaginating: (isPaginating) => set({ isPaginating }),
   resetPage: () => set({ currentPage: 1 }),
+  setSearchState: (newResult, totalPages) => {
+    set({
+      result: newResult,
+      totalPages: totalPages ?? get().totalPages,
+      currentPage: 1,
+    });
+  },
 }));
