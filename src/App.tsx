@@ -58,15 +58,22 @@ function Layout({
 }
 
 export function App(): JSX.Element {
-  const { inputValue, setInputValue, result, setResult } = useAnimalStore();
+  const {
+    inputValue,
+    setInputValue,
+    result,
+    setResult,
+    status,
+    setStatus,
+    errorResetTrigger,
+    setErrorResetTrigger,
+  } = useAnimalStore();
 
-  const [status, setStatusState] = useState<Status>('default');
   const [lackOfResult, setLackOfResult] = useState(false);
   const [searchError, setSearchError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [totalPages, setTotalPages] = useState(0);
   const [, setSearchParams] = useSearchParams();
-  const [errorResetTrigger, setErrorResetTrigger] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [isPaginating, setIsPaginating] = useState(false);
   const location = useLocation();
@@ -92,10 +99,13 @@ export function App(): JSX.Element {
     localStorage.setItem('request', JSON.stringify(inputValue));
   }, [inputValue]);
 
-  const setStatus = useCallback((newStatus: Status) => {
-    setStatusState(newStatus);
-    setErrorResetTrigger((prev) => prev + 1);
-  }, []);
+  const handleSetStatus = useCallback(
+    (newStatus: Status) => {
+      setStatus(newStatus);
+      setErrorResetTrigger((prev) => prev + 1);
+    },
+    [setStatus, setErrorResetTrigger]
+  );
 
   const setError = useCallback((status: boolean) => {
     setLackOfResult(status);
@@ -183,7 +193,7 @@ export function App(): JSX.Element {
         {!isAboutPage && isValidPath && (
           <Search
             setSearchState={setSearchState}
-            setStatus={setStatus}
+            setStatus={handleSetStatus}
             setInputValue={setInputValue}
             status={status}
             value={inputValue}
