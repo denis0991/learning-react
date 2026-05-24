@@ -67,11 +67,14 @@ export function App(): JSX.Element {
     setStatus,
     errorResetTrigger,
     setErrorResetTrigger,
+    lackOfResult,
+    setLackOfResult,
+    searchError,
+    setSearchError,
+    errorMessage,
+    setErrorMessage,
   } = useAnimalStore();
 
-  const [lackOfResult, setLackOfResult] = useState(false);
-  const [searchError, setSearchError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
   const [totalPages, setTotalPages] = useState(0);
   const [, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(1);
@@ -106,18 +109,6 @@ export function App(): JSX.Element {
     },
     [setStatus, setErrorResetTrigger]
   );
-
-  const setError = useCallback((status: boolean) => {
-    setLackOfResult(status);
-  }, []);
-
-  const setSearchErrorHandler = useCallback((status: boolean) => {
-    setSearchError(status);
-  }, []);
-
-  const setErrorMessageHandler = useCallback((message: string) => {
-    setErrorMessage(message);
-  }, []);
 
   const updatePageInUrl = useCallback(
     (page: number) => {
@@ -197,9 +188,9 @@ export function App(): JSX.Element {
             setInputValue={setInputValue}
             status={status}
             value={inputValue}
-            setError={setError}
-            setSearchError={setSearchErrorHandler}
-            setErrorMessage={setErrorMessageHandler}
+            setError={setLackOfResult}
+            setSearchError={setSearchError}
+            setErrorMessage={setErrorMessage}
             errorMessage={errorMessage}
             resetPage={resetPage}
           />
