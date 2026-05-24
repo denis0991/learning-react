@@ -1,6 +1,7 @@
-import { type JSX } from 'react';
+import { useCallback, type JSX } from 'react';
 import type { Animals } from '../search/search.interfaces';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useSelectionStore } from '../../stores/selectionStore';
 
 export function Card({
   uid,
@@ -11,15 +12,43 @@ export function Card({
 }: Animals): JSX.Element {
   const navigate = useNavigate();
   const location = useLocation();
+  const { toggleSelection, isSelected } = useSelectionStore();
+  const selected = isSelected(uid);
 
-  const handleClick = () => {
-    const searchParams = new URLSearchParams(location.search);
-    const page = searchParams.get('page') || '1';
-    navigate(`/details/${uid}?page=${page}`);
-  };
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLUListElement>) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest('.checkbox-wrapper')) {
+        const searchParams = new URLSearchParams(location.search);
+        const page = searchParams.get('page') || '1';
+        navigate(`/details/${uid}?page=${page}`);
+      }
+    },
+    [uid, location.search, navigate]
+  );
+
+  const handleCheckboxChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.stopPropagation();
+      toggleSelection(uid);
+    },
+    [toggleSelection, uid]
+  );
 
   return (
     <ul className="card" onClick={handleClick}>
+      <li className="card-item checkbox-wrapper">
+        <label className="checkbox-label">
+          <input
+            type="checkbox"
+            checked={selected}
+            onChange={handleCheckboxChange}
+            onClick={(e) => e.stopPropagation()}
+            className="card-checkbox"
+          />
+          <span className="checkbox-custom"></span>
+        </label>
+      </li>
       <li className="card-item animal-name">{name}</li>
       <li className="card-item">
         Avian: <span className="animal-properties">{avian ? 'yes' : 'no'}</span>
