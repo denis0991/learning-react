@@ -58,9 +58,8 @@ function Layout({
 }
 
 export function App(): JSX.Element {
-  const { inputValue, setInputValue } = useAnimalStore();
+  const { inputValue, setInputValue, result, setResult } = useAnimalStore();
 
-  const [result, setResult] = useState<Animals[]>([]);
   const [status, setStatusState] = useState<Status>('default');
   const [lackOfResult, setLackOfResult] = useState(false);
   const [searchError, setSearchError] = useState(false);
@@ -139,7 +138,7 @@ export function App(): JSX.Element {
       setCurrentPage(1);
       updatePageInUrl(1);
     },
-    [updatePageInUrl]
+    [setResult, updatePageInUrl]
   );
 
   const resetPage = useCallback(() => {
@@ -175,7 +174,7 @@ export function App(): JSX.Element {
       handlePageChange();
       setIsPaginating(false);
     }
-  }, [currentPage, status, isPaginating]);
+  }, [currentPage, status, isPaginating, inputValue, setResult, setTotalPages]);
 
   return (
     <>
