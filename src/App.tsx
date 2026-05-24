@@ -20,6 +20,7 @@ import type { LayoutProps } from './types/app.interfaces';
 import { Details } from './components/results/details.component';
 import { About } from './components/about/about.component';
 import { NotFound } from './components/not-found/not-found.component';
+import { useAnimalStore } from './stores/animal.store';
 
 function Layout({
   result,
@@ -57,15 +58,7 @@ function Layout({
 }
 
 export function App(): JSX.Element {
-  const [inputValue, setInputValue] = useState<string>(() => {
-    try {
-      const savedValue = localStorage.getItem('request');
-      return savedValue ? JSON.parse(savedValue) : '';
-    } catch (e) {
-      console.error('Error accessing localStorage:', e);
-      return '';
-    }
-  });
+  const { inputValue, setInputValue } = useAnimalStore();
 
   const [result, setResult] = useState<Animals[]>([]);
   const [status, setStatusState] = useState<Status>('default');
@@ -86,16 +79,23 @@ export function App(): JSX.Element {
     location.pathname.startsWith('/details/');
 
   useEffect(() => {
+    try {
+      const savedValue = localStorage.getItem('request');
+      if (savedValue) {
+        setInputValue(JSON.parse(savedValue));
+      }
+    } catch (e) {
+      console.error('Error accessing localStorage:', e);
+    }
+  }, [setInputValue]);
+
+  useEffect(() => {
     localStorage.setItem('request', JSON.stringify(inputValue));
   }, [inputValue]);
 
   const setStatus = useCallback((newStatus: Status) => {
     setStatusState(newStatus);
     setErrorResetTrigger((prev) => prev + 1);
-  }, []);
-
-  const setInputValueHandler = useCallback((value: string) => {
-    setInputValue(value);
   }, []);
 
   const setError = useCallback((status: boolean) => {
@@ -185,7 +185,7 @@ export function App(): JSX.Element {
           <Search
             setSearchState={setSearchState}
             setStatus={setStatus}
-            setInputValue={setInputValueHandler}
+            setInputValue={setInputValue}
             status={status}
             value={inputValue}
             setError={setError}

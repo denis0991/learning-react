@@ -37,4 +37,10 @@ export interface ApiResponse {
   animals: Animals[];
 }
 
-export type Status = 'default' | 'search' | 'success' | 'error' | 'missing';
+export type Status =
+  | 'default'
+  | 'loading'
+  | 'success'
+  | 'error'
+  | 'noResults'
+  | 'missing';
