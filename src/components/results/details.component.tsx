@@ -41,34 +41,34 @@ export function Details() {
       <div className="details-panel">
         {loading && <div className="loader"></div>}
         {item && (
-          <div>
+          <div className="details-content">
             <h3>{item.name}</h3>
-            <p>
-              Earth animal:{' '}
+            <p className="details-property">
+              <span className="property-label">Earth animal:</span>
               <span className="animal-properties">
                 {formatValue(item.earthAnimal)}
               </span>
             </p>
-            <p>
-              Earth insect:{' '}
+            <p className="details-property">
+              <span className="property-label">Earth insect:</span>
               <span className="animal-properties">
                 {formatValue(item.earthInsect)}
               </span>
             </p>
-            <p>
-              Avian:{' '}
+            <p className="details-property">
+              <span className="property-label">Avian:</span>
               <span className="animal-properties">
                 {formatValue(item.avian)}
               </span>
             </p>
-            <p>
-              Canine:{' '}
+            <p className="details-property">
+              <span className="property-label">Canine:</span>
               <span className="animal-properties">
                 {formatValue(item.canine)}
               </span>
             </p>
-            <p>
-              Feline:{' '}
+            <p className="details-property">
+              <span className="property-label">Feline:</span>
               <span className="animal-properties">
                 {formatValue(item.feline)}
               </span>

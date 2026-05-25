@@ -1,9 +1,26 @@
-import { describe, expect, test } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, expect, test, vi } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { Card } from '../card.component';
 import type { Animals } from '../../search/search.interfaces';
 import { mockAnimals } from '../../../test-utils/search-mocks';
 import { MemoryRouter } from 'react-router-dom';
+
+const mockNavigate = vi.fn();
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom');
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate,
+    useLocation: () => ({ search: '' }),
+  };
+});
+
+vi.mock('../../../stores/selectionStore', () => ({
+  useSelectionStore: () => ({
+    toggleSelection: vi.fn(),
+    isSelected: vi.fn().mockReturnValue(false),
+  }),
+}));
 
 describe('Card component', () => {
   test('renders animal name correctly', () => {
@@ -39,6 +56,7 @@ describe('Card component', () => {
       json: function () {
         throw new Error('Function not implemented.');
       },
+      selectedAt: undefined,
     };
     render(
       <MemoryRouter>
@@ -62,5 +80,27 @@ describe('Card component', () => {
     );
     const properties = document.querySelectorAll('.animal-properties');
     expect(properties).toHaveLength(3);
+  });
+  test('renders checkbox', () => {
+    render(
+      <MemoryRouter>
+        <Card {...mockAnimals[0]} />
+      </MemoryRouter>
+    );
+    const checkbox = document.querySelector('.card-checkbox');
+    expect(checkbox).toBeInTheDocument();
+  });
+  test('navigates to details on card click', () => {
+    render(
+      <MemoryRouter>
+        <Card {...mockAnimals[0]} />
+      </MemoryRouter>
+    );
+    const card = document.querySelector('.card');
+    if (!card) {
+      throw new Error('Card element not found');
+    }
+    fireEvent.click(card);
+    expect(mockNavigate).toHaveBeenCalled();
   });
 });

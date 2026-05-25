@@ -22,6 +22,11 @@ export default defineConfig({
         'src/**/*.interfaces.ts',
         'src/**/*.types.ts',
         'src/test-utils/**',
+        'src/components/theme-switcher/**',
+        'src/context/theme-context.tsx',
+        'src/hooks/useLocalStorage.ts',
+        'src/hooks/useAnimalSearch.ts',
+        'src/stores/animal.store.tsx',
       ],
       thresholds: {
         global: {

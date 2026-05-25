@@ -3,14 +3,19 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { Header } from './header.component';
 import { MemoryRouter } from 'react-router-dom';
+import { ThemeProvider } from '../../context/theme-context';
+
+const renderWithTheme = (component: React.ReactElement) => {
+  return render(
+    <MemoryRouter>
+      <ThemeProvider>{component}</ThemeProvider>
+    </MemoryRouter>
+  );
+};
 
 describe('Header component', () => {
   test('should display a header with h1 heading', () => {
-    render(
-      <MemoryRouter>
-        <Header />
-      </MemoryRouter>
-    );
+    renderWithTheme(<Header />);
     const h1 = screen.getByRole('heading', {
       level: 1,
       name: /Star Trek/i,
@@ -19,11 +24,7 @@ describe('Header component', () => {
   });
 
   test('should display a header with h2 heading', () => {
-    render(
-      <MemoryRouter>
-        <Header />
-      </MemoryRouter>
-    );
+    renderWithTheme(<Header />);
     const h2 = screen.getByRole('heading', {
       level: 2,
       name: /Animals/i,

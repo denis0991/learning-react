@@ -268,34 +268,34 @@ export function Details() {
       &lt;div className="details-panel"&gt;
         {loading &amp;&amp; &lt;div className="loader"&gt;&lt;/div&gt;}
         {item &amp;&amp; (
-          &lt;div&gt;
+          &lt;div className="details-content"&gt;
             &lt;h3&gt;{item.name}&lt;/h3&gt;
-            &lt;p&gt;
-              Earth animal:{' '}
+            &lt;p className="details-property"&gt;
+              &lt;span className="property-label"&gt;Earth animal:&lt;/span&gt;
               &lt;span className="animal-properties"&gt;
                 {formatValue(item.earthAnimal)}
               &lt;/span&gt;
             &lt;/p&gt;
-            &lt;p&gt;
-              Earth insect:{' '}
+            &lt;p className="details-property"&gt;
+              &lt;span className="property-label"&gt;Earth insect:&lt;/span&gt;
               &lt;span className="animal-properties"&gt;
                 {formatValue(item.earthInsect)}
               &lt;/span&gt;
             &lt;/p&gt;
-            &lt;p&gt;
-              Avian:{' '}
+            &lt;p className="details-property"&gt;
+              &lt;span className="property-label"&gt;Avian:&lt;/span&gt;
               &lt;span className="animal-properties"&gt;
                 {formatValue(item.avian)}
               &lt;/span&gt;
             &lt;/p&gt;
-            &lt;p&gt;
-              Canine:{' '}
+            &lt;p className="details-property"&gt;
+              &lt;span className="property-label"&gt;Canine:&lt;/span&gt;
               &lt;span className="animal-properties"&gt;
                 {formatValue(item.canine)}
               &lt;/span&gt;
             &lt;/p&gt;
-            &lt;p&gt;
-              Feline:{' '}
+            &lt;p className="details-property"&gt;
+              &lt;span className="property-label"&gt;Feline:&lt;/span&gt;
               &lt;span className="animal-properties"&gt;
                 {formatValue(item.feline)}
               &lt;/span&gt;
@@ -321,7 +321,7 @@ export function Details() {
         rel="noopener noreferrer"
         >istanbul</a
       >
-      at 2026-05-22T20:39:15.364Z
+      at 2026-05-25T21:03:58.016Z
     </div>
     <script src="../../../prettify.js"></script>
     <script>

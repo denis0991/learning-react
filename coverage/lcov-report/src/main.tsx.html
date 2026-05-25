@@ -71,7 +71,13 @@
 <a name='L10'></a><a href='#L10'>10</a>
 <a name='L11'></a><a href='#L11'>11</a>
 <a name='L12'></a><a href='#L12'>12</a>
-<a name='L13'></a><a href='#L13'>13</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -83,16 +89,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
+import './themes/theme.css';
 import { App } from './App';
+import { ThemeProvider } from './context/theme-context';
 &nbsp;
 const root: HTMLElement | null = document.getElementById('root');
 if (root)
   createRoot(root).render(
     &lt;BrowserRouter&gt;
-      &lt;App /&gt;
+      &lt;ThemeProvider&gt;
+        &lt;App /&gt;
+      &lt;/ThemeProvider&gt;
     &lt;/BrowserRouter&gt;
   );
 &nbsp;</pre></td></tr></table></pre>
@@ -109,7 +121,7 @@ if (root)
         rel="noopener noreferrer"
         >istanbul</a
       >
-      at 2026-05-22T20:39:15.364Z
+      at 2026-05-25T21:03:58.016Z
     </div>
     <script src="../prettify.js"></script>
     <script>

@@ -27,7 +27,7 @@
           <div class="fl pad1y space-right2">
             <span class="strong">100% </span>
             <span class="quiet">Statements</span>
-            <span class="fraction">3/3</span>
+            <span class="fraction">4/4</span>
           </div>
 
           <div class="fl pad1y space-right2">
@@ -45,7 +45,7 @@
           <div class="fl pad1y space-right2">
             <span class="strong">100% </span>
             <span class="quiet">Lines</span>
-            <span class="fraction">3/3</span>
+            <span class="fraction">4/4</span>
           </div>
         </div>
         <p class="quiet">
@@ -84,15 +84,23 @@
 <a name='L21'></a><a href='#L21'>21</a>
 <a name='L22'></a><a href='#L22'>22</a>
 <a name='L23'></a><a href='#L23'>23</a>
-<a name='L24'></a><a href='#L24'>24</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -110,13 +118,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { type ReactElement } from 'react';
 import './header.styles.css';
 import { Link, useSearchParams } from 'react-router-dom';
+import { ThemeSwitcher } from '../theme-switcher/theme-switcher.component';
+import { useTheme } from '../../context/theme-context';
 &nbsp;
 export function Header(): ReactElement {
   const [searchParams] = useSearchParams();
   const page = searchParams.get('page') || '1';
+  const { theme } = useTheme();
 &nbsp;
   return (
-    &lt;header&gt;
+    &lt;header className={`app-header ${theme}`}&gt;
       &lt;h1&gt;Star Trek&lt;/h1&gt;
       &lt;h2&gt;Animals&lt;/h2&gt;
       &lt;nav className="header__nav-menu"&gt;
@@ -127,6 +138,7 @@ export function Header(): ReactElement {
           About
         &lt;/Link&gt;
       &lt;/nav&gt;
+      &lt;ThemeSwitcher /&gt;
     &lt;/header&gt;
   );
 }
@@ -144,7 +156,7 @@ export function Header(): ReactElement {
         rel="noopener noreferrer"
         >istanbul</a
       >
-      at 2026-05-22T20:39:15.347Z
+      at 2026-05-25T21:03:57.998Z
     </div>
     <script src="../../../prettify.js"></script>
     <script>

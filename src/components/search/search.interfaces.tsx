@@ -8,6 +8,7 @@ export interface Props {
   setError: (value: boolean) => void;
   setSearchError: (value: boolean) => void;
   setErrorMessage: (message: string) => void;
+  onSearch?: (value: string) => void;
   errorMessage?: string;
 }
 export interface Page {
@@ -21,6 +22,7 @@ export interface Page {
 }
 
 export interface Animals {
+  selectedAt: unknown;
   json(): unknown;
   uid: string;
   name: string;
@@ -37,4 +39,12 @@ export interface ApiResponse {
   animals: Animals[];
 }
 
-export type Status = 'default' | 'search' | 'success' | 'error' | 'missing';
+export type Status =
+  | 'default'
+  | 'search'
+  | 'searching'
+  | 'loading'
+  | 'success'
+  | 'error'
+  | 'noResults'
+  | 'missing';
