@@ -95,45 +95,15 @@ describe('Details Component', () => {
       expect(screen.getByText('Tiger')).toBeInTheDocument();
     });
 
-    expect(
-      screen.getByText((_content, element) => {
-        return (
-          element?.tagName === 'P' &&
-          element?.textContent === 'Earth animal: yes'
-        );
-      })
-    ).toBeInTheDocument();
+    const yesElements = screen.getAllByText('yes');
+    expect(yesElements[0]).toHaveTextContent('yes'); // Earth animal
+    expect(yesElements[1]).toHaveTextContent('yes'); // Feline
 
-    expect(
-      screen.getByText((_content, element) => {
-        return (
-          element?.tagName === 'P' &&
-          element?.textContent === 'Earth insect: no'
-        );
-      })
-    ).toBeInTheDocument();
-
-    expect(
-      screen.getByText((_content, element) => {
-        return element?.tagName === 'P' && element?.textContent === 'Avian: no';
-      })
-    ).toBeInTheDocument();
-
-    expect(
-      screen.getByText((_content, element) => {
-        return (
-          element?.tagName === 'P' && element?.textContent === 'Canine: no'
-        );
-      })
-    ).toBeInTheDocument();
-
-    expect(
-      screen.getByText((_content, element) => {
-        return (
-          element?.tagName === 'P' && element?.textContent === 'Feline: yes'
-        );
-      })
-    ).toBeInTheDocument();
+    // Находим все элементы с текстом 'no'
+    const noElements = screen.getAllByText('no');
+    expect(noElements[0]).toHaveTextContent('no'); // Earth insect
+    expect(noElements[1]).toHaveTextContent('no'); // Avian
+    expect(noElements[2]).toHaveTextContent('no'); // Canine
   });
 
   it('handles error during loading', async () => {
@@ -183,47 +153,13 @@ describe('Details Component', () => {
       expect(screen.getByText('Unknown')).toBeInTheDocument();
     });
 
-    expect(
-      screen.getByText((_content, element) => {
-        return (
-          element?.tagName === 'P' &&
-          element?.textContent === 'Earth animal: unknown'
-        );
-      })
-    ).toBeInTheDocument();
+    const values = document.querySelectorAll('.animal-properties');
 
-    expect(
-      screen.getByText((_content, element) => {
-        return (
-          element?.tagName === 'P' &&
-          element?.textContent === 'Earth insect: unknown'
-        );
-      })
-    ).toBeInTheDocument();
-
-    expect(
-      screen.getByText((_content, element) => {
-        return (
-          element?.tagName === 'P' && element?.textContent === 'Avian: yes'
-        );
-      })
-    ).toBeInTheDocument();
-
-    expect(
-      screen.getByText((_content, element) => {
-        return (
-          element?.tagName === 'P' && element?.textContent === 'Canine: no'
-        );
-      })
-    ).toBeInTheDocument();
-
-    expect(
-      screen.getByText((_content, element) => {
-        return (
-          element?.tagName === 'P' && element?.textContent === 'Feline: unknown'
-        );
-      })
-    ).toBeInTheDocument();
+    expect(values[0]).toHaveTextContent('unknown');
+    expect(values[1]).toHaveTextContent('unknown');
+    expect(values[2]).toHaveTextContent('yes');
+    expect(values[3]).toHaveTextContent('no');
+    expect(values[4]).toHaveTextContent('unknown');
   });
 
   it('navigates to the main page with the page parameter when Close is clicked', async () => {
@@ -286,45 +222,14 @@ describe('Details Component', () => {
       expect(screen.getByText('Wolf')).toBeInTheDocument();
     });
 
-    expect(
-      screen.getByText((_content, element) => {
-        return (
-          element?.tagName === 'P' &&
-          element?.textContent === 'Earth animal: yes'
-        );
-      })
-    ).toBeInTheDocument();
+    const yesElements = screen.getAllByText('yes');
+    expect(yesElements[0]).toHaveTextContent('yes'); // Earth animal
+    expect(yesElements[1]).toHaveTextContent('yes'); // Canine
 
-    expect(
-      screen.getByText((_content, element) => {
-        return (
-          element?.tagName === 'P' &&
-          element?.textContent === 'Earth insect: no'
-        );
-      })
-    ).toBeInTheDocument();
-
-    expect(
-      screen.getByText((_content, element) => {
-        return element?.tagName === 'P' && element?.textContent === 'Avian: no';
-      })
-    ).toBeInTheDocument();
-
-    expect(
-      screen.getByText((_content, element) => {
-        return (
-          element?.tagName === 'P' && element?.textContent === 'Canine: yes'
-        );
-      })
-    ).toBeInTheDocument();
-
-    expect(
-      screen.getByText((_content, element) => {
-        return (
-          element?.tagName === 'P' && element?.textContent === 'Feline: no'
-        );
-      })
-    ).toBeInTheDocument();
+    const noElements = screen.getAllByText('no');
+    expect(noElements[0]).toHaveTextContent('no'); // Earth insect
+    expect(noElements[1]).toHaveTextContent('no'); // Avian
+    expect(noElements[2]).toHaveTextContent('no'); // Feline
   });
 
   it('finds values through span class', async () => {
