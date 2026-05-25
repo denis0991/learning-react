@@ -92,6 +92,10 @@ describe('App Component', () => {
         avian: false,
         canine: false,
         feline: false,
+        selectedAt: undefined,
+        json: function (): unknown {
+          throw new Error('Function not implemented.');
+        },
       },
     ];
 

@@ -30,13 +30,25 @@ export function Card({
   const handleCheckboxChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       e.stopPropagation();
-      toggleSelection(uid);
+      toggleSelection({
+        uid,
+        name,
+        avian,
+        earthAnimal,
+        feline,
+        json: function (): unknown {
+          throw new Error('Function not implemented.');
+        },
+        earthInsect: false,
+        canine: false,
+        selectedAt: undefined,
+      });
     },
     [toggleSelection, uid]
   );
 
   return (
-    <ul className="card" onClick={handleClick}>
+    <ul className={`card ${selected ? 'selected' : ''}`} onClick={handleClick}>
       <li className="card-item checkbox-wrapper">
         <label className="checkbox-label">
           <input

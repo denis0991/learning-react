@@ -22,6 +22,7 @@ export interface Page {
 }
 
 export interface Animals {
+  selectedAt: unknown;
   json(): unknown;
   uid: string;
   name: string;
@@ -40,6 +41,7 @@ export interface ApiResponse {
 
 export type Status =
   | 'default'
+  | 'search'
   | 'searching'
   | 'loading'
   | 'success'

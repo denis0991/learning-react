@@ -1,51 +1,78 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import type { Animals } from '../components/search/search.interfaces';
 
 interface SelectionState {
-  selectedItems: Set<string>;
-  toggleSelection: (uid: string) => void;
-  selectItem: (uid: string) => void;
+  selectedItems: Map<string, SelectedItem>;
+  toggleSelection: (animal: Animals) => void;
+  selectItem: (animal: Animals) => void;
   unselectItem: (uid: string) => void;
   clearSelection: () => void;
   isSelected: (uid: string) => boolean;
+  getSelectedCount: () => number;
+  getSelectedItems: () => SelectedItem[];
+  getSelectedUids: () => string[];
+}
+
+interface SelectedItem extends Animals {
+  selectedAt: number;
 }
 
 export const useSelectionStore = create<SelectionState>()(
   persist(
     (set, get) => ({
-      selectedItems: new Set<string>(),
+      selectedItems: new Map<string, SelectedItem>(),
 
-      toggleSelection: (uid: string) => {
+      toggleSelection: (animal: Animals) => {
         const { selectedItems } = get();
-        const newSelection = new Set(selectedItems);
-        if (newSelection.has(uid)) {
-          newSelection.delete(uid);
+        const newSelection = new Map(selectedItems);
+
+        if (newSelection.has(animal.uid)) {
+          newSelection.delete(animal.uid);
         } else {
-          newSelection.add(uid);
+          newSelection.set(animal.uid, {
+            ...animal,
+            selectedAt: Date.now(),
+          });
         }
         set({ selectedItems: newSelection });
       },
 
-      selectItem: (uid: string) => {
+      selectItem: (animal: Animals) => {
         const { selectedItems } = get();
-        const newSelection = new Set(selectedItems);
-        newSelection.add(uid);
+        const newSelection = new Map(selectedItems);
+        newSelection.set(animal.uid, {
+          ...animal,
+          selectedAt: Date.now(),
+        });
         set({ selectedItems: newSelection });
       },
 
       unselectItem: (uid: string) => {
         const { selectedItems } = get();
-        const newSelection = new Set(selectedItems);
+        const newSelection = new Map(selectedItems);
         newSelection.delete(uid);
         set({ selectedItems: newSelection });
       },
 
       clearSelection: () => {
-        set({ selectedItems: new Set() });
+        set({ selectedItems: new Map() });
       },
 
       isSelected: (uid: string) => {
         return get().selectedItems.has(uid);
+      },
+
+      getSelectedCount: () => {
+        return get().selectedItems.size;
+      },
+
+      getSelectedItems: () => {
+        return Array.from(get().selectedItems.values());
+      },
+
+      getSelectedUids: () => {
+        return Array.from(get().selectedItems.keys());
       },
     }),
     {
@@ -55,18 +82,33 @@ export const useSelectionStore = create<SelectionState>()(
           const value = localStorage.getItem(name);
           if (value) {
             const parsed = JSON.parse(value);
+            const selectedItemsMap = new Map();
+            if (parsed.state.selectedItems) {
+              Object.entries(parsed.state.selectedItems).forEach(
+                ([key, value]) => {
+                  selectedItemsMap.set(key, value);
+                }
+              );
+            }
             return {
               state: {
-                selectedItems: new Set(parsed.state.selectedItems),
+                selectedItems: selectedItemsMap,
               },
             };
           }
           return null;
         },
         setItem: (name, value) => {
+          const selectedItemsObj: Record<string, SelectedItem> = {};
+          value.state.selectedItems.forEach(
+            (item: SelectedItem, key: string) => {
+              selectedItemsObj[key] = item;
+            }
+          );
+
           const toSave = {
             state: {
-              selectedItems: Array.from(value.state.selectedItems),
+              selectedItems: selectedItemsObj,
             },
           };
           localStorage.setItem(name, JSON.stringify(toSave));

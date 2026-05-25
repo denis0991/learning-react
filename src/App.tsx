@@ -16,6 +16,8 @@ import { NotFound } from './components/not-found/not-found.component';
 import { useAnimalStore } from './stores/animal.store';
 import { useAnimalSearch } from './hooks/useAnimalSearch';
 import { useLocalStorage } from './hooks/useLocalStorage';
+import { SelectionPanel } from './components/selection-components/selection-panel.component';
+import { SelectionActions } from './components/selection-components/selection-actions.component';
 
 function Layout({
   result,
@@ -149,16 +151,20 @@ export function App(): JSX.Element {
             <Route
               path="/"
               element={
-                <Layout
-                  result={result}
-                  status={status}
-                  lackOfResult={lackOfResult}
-                  searchError={searchError}
-                  errorMessage={errorMessage}
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={handlePageChange}
-                />
+                <>
+                  <Layout
+                    result={result}
+                    status={status}
+                    lackOfResult={lackOfResult}
+                    searchError={searchError}
+                    errorMessage={errorMessage}
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                  />
+                  <SelectionPanel />
+                  <SelectionActions />
+                </>
               }
             >
               <Route index element={null} />
