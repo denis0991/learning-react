@@ -8,6 +8,7 @@ export const useAnimalSearch = () => {
     setLackOfResult,
     setSearchError,
     setErrorMessage,
+    setCurrentPage,
   } = useAnimalStore();
 
   const searchAnimals = useCallback(
@@ -37,6 +38,7 @@ export const useAnimalSearch = () => {
           setSearchState(data.animals, data.page?.totalPages);
           setStatus(data.animals.length === 0 ? 'missing' : 'success');
           setLackOfResult(data.animals.length === 0);
+          setCurrentPage(page);
         } else if (data.error) {
           setStatus('error');
           setSearchError(true);
