@@ -11,6 +11,10 @@ export const mockAnimals: Animals[] = [
     feline: true,
     earthInsect: false,
     canine: false,
+    selectedAt: undefined,
+    json: function (): unknown {
+      throw new Error('Function not implemented.');
+    },
   },
   {
     uid: '2',
@@ -20,6 +24,10 @@ export const mockAnimals: Animals[] = [
     feline: false,
     earthInsect: false,
     canine: false,
+    selectedAt: undefined,
+    json: function (): unknown {
+      throw new Error('Function not implemented.');
+    },
   },
   {
     uid: '3',
@@ -29,11 +37,15 @@ export const mockAnimals: Animals[] = [
     feline: true,
     earthInsect: false,
     canine: false,
+    selectedAt: undefined,
+    json: function (): unknown {
+      throw new Error('Function not implemented.');
+    },
   },
 ];
 
 export const mockFetch = vi.fn();
-global.fetch = mockFetch;
+globalThis.fetch = mockFetch;
 
 export const createSearchMocks = () => ({
   setInputValue: vi.fn(),

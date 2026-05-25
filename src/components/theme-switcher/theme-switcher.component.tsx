@@ -1,5 +1,5 @@
 import { type JSX } from 'react';
-import { useTheme } from '../../context/theme-context';
+import { useTheme } from '../../hooks/useTheme';
 import './switcher.css';
 import { getIconByTheme } from '../../utils/icons-switcher.utils';
 

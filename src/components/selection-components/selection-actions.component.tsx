@@ -83,7 +83,7 @@ export function SelectionActions({
     return '\uFEFF' + csvContent;
   };
 
-  const downloadCSV = (items: Animals[]) => {
+  const downloadCSV = useCallback((items: Animals[]) => {
     if (items.length === 0) return;
 
     const csv = convertToCSV(items);
@@ -101,7 +101,7 @@ export function SelectionActions({
     document.body.removeChild(link);
 
     URL.revokeObjectURL(url);
-  };
+  }, []);
 
   const handleExport = useCallback(() => {
     if (onExport) {
@@ -109,7 +109,7 @@ export function SelectionActions({
     } else {
       downloadCSV(selectedItems);
     }
-  }, [selectedItems, onExport]);
+  }, [onExport, selectedItems, downloadCSV]);
 
   const handleDeselectAll = useCallback(() => {
     clearSelection();

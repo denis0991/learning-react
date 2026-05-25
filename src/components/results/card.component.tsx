@@ -44,7 +44,7 @@ export function Card({
         selectedAt: undefined,
       });
     },
-    [toggleSelection, uid]
+    [avian, earthAnimal, feline, name, toggleSelection, uid]
   );
 
   return (

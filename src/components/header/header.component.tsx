@@ -2,7 +2,7 @@ import { type ReactElement } from 'react';
 import './header.styles.css';
 import { Link, useSearchParams } from 'react-router-dom';
 import { ThemeSwitcher } from '../theme-switcher/theme-switcher.component';
-import { useTheme } from '../../context/theme-context';
+import { useTheme } from '../../hooks/useTheme';
 
 export function Header(): ReactElement {
   const [searchParams] = useSearchParams();

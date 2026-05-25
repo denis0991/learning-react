@@ -28,7 +28,7 @@ export function Search(props: Props): JSX.Element {
     if (props.onSearch) {
       props.onSearch(props.value);
     }
-  }, [props.onSearch, props.value]);
+  }, [props]);
 
   const handleKeyPress = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -48,12 +48,7 @@ export function Search(props: Props): JSX.Element {
         props.setStatus('default');
       }
     },
-    [
-      props.setInputValue,
-      props.resetPage,
-      props.setSearchState,
-      props.setStatus,
-    ]
+    [props]
   );
 
   const handleClear = useCallback(() => {
@@ -61,12 +56,7 @@ export function Search(props: Props): JSX.Element {
     props.setSearchState([], 0);
     props.setStatus('default');
     props.resetPage();
-  }, [
-    props.setInputValue,
-    props.setSearchState,
-    props.setStatus,
-    props.resetPage,
-  ]);
+  }, [props]);
 
   return (
     <section className="search-component">
