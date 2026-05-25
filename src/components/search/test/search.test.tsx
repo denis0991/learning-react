@@ -1,20 +1,18 @@
 import { beforeEach, describe, expect, test, vi } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { Search } from '../search.component';
 import type { Status } from '../search.interfaces';
-import {
-  mockFetch,
-  getDefaultSearchProps,
-  mockApiResponses,
-  mockAnimalsData,
-} from '../../../test-utils/search-mocks';
+import { getDefaultSearchProps } from '../../../test-utils/search-mocks';
 
 describe('Search component', () => {
   let user: ReturnType<typeof userEvent.setup>;
 
-  const defaultProps = getDefaultSearchProps();
+  const defaultProps = {
+    ...getDefaultSearchProps(),
+    onSearch: vi.fn(),
+  };
 
   const renderSearch = (props: Partial<typeof defaultProps> = {}) =>
     render(<Search {...defaultProps} {...props} />);
@@ -22,7 +20,6 @@ describe('Search component', () => {
   beforeEach(() => {
     user = userEvent.setup();
     vi.clearAllMocks();
-    mockFetch.mockReset();
     localStorage.clear();
     vi.spyOn(Storage.prototype, 'setItem');
     vi.spyOn(console, 'error').mockImplementation(() => {});
@@ -56,7 +53,7 @@ describe('Search component', () => {
   describe('Status rendering', () => {
     const statusCases: Array<[Status, string]> = [
       ['default', '.default'],
-      ['search', '.loader'],
+      ['searching', '.loader'],
       ['success', '.success'],
       ['missing', '.missing'],
       ['error', '.missing'],
@@ -84,92 +81,21 @@ describe('Search component', () => {
       renderSearch({ value: 'lion' });
       await user.click(screen.getByLabelText('Clear search'));
       expect(defaultProps.setInputValue).toHaveBeenCalledWith('');
-      expect(localStorage.setItem).toHaveBeenCalledWith(
-        'request',
-        JSON.stringify('')
-      );
     });
 
-    test('starts search', async () => {
-      renderSearch({ value: 'cat' });
-      await user.click(screen.getByRole('button', { name: 'Search' }));
-      expect(defaultProps.setStatus).toHaveBeenCalledWith('search');
-      expect(localStorage.setItem).toHaveBeenCalledWith(
-        'request',
-        JSON.stringify('cat')
-      );
-    });
-  });
-
-  describe('API calls', () => {
-    test('fetches animals on mount', async () => {
-      mockFetch.mockResolvedValueOnce(mockApiResponses.success());
-      renderSearch();
-      await waitFor(() => {
-        expect(mockFetch).toHaveBeenCalledWith(
-          'https://stapi.co/api/v1/rest/animal/search?pageNumber=0&pageSize=12',
-          expect.objectContaining({
-            method: 'POST',
-            body: 'name=',
-          })
-        );
-      });
+    test('starts search when Enter key is pressed', async () => {
+      renderSearch({ value: 'dog' });
+      const input = screen.getByPlaceholderText('search..');
+      await user.type(input, '{Enter}');
+      expect(defaultProps.onSearch).toHaveBeenCalledWith('dog');
     });
 
-    test('handles successful response', async () => {
-      const animals = mockAnimalsData.single;
-      mockFetch.mockResolvedValueOnce(mockApiResponses.success(animals));
-      renderSearch();
-      await waitFor(() => {
-        expect(defaultProps.setStatus).toHaveBeenCalledWith('success');
-        expect(defaultProps.setSearchState).toHaveBeenCalledWith(animals, 0);
-        expect(defaultProps.setError).toHaveBeenCalledWith(false);
-        expect(defaultProps.setSearchError).toHaveBeenCalledWith(false);
-      });
-    });
-
-    test('handles empty response', async () => {
-      mockFetch.mockResolvedValueOnce(mockApiResponses.empty());
-      renderSearch();
-      await waitFor(() => {
-        expect(defaultProps.setStatus).toHaveBeenCalledWith('missing');
-        expect(defaultProps.setError).toHaveBeenCalledWith(true);
-      });
-    });
-
-    test('handles http error', async () => {
-      mockFetch.mockResolvedValueOnce(mockApiResponses.httpError(500));
-      renderSearch();
-      await waitFor(() => {
-        expect(defaultProps.setStatus).toHaveBeenCalledWith('error');
-        expect(defaultProps.setSearchError).toHaveBeenCalledWith(true);
-      });
-    });
-  });
-
-  describe('Error handling', () => {
-    const errorCases: Array<[string, string]> = [
-      [
-        'Failed to fetch',
-        'Unable to connect to search service. Please check your network connection.',
-      ],
-      [
-        'CORS error',
-        'Unable to connect to search service. Please check your network connection.',
-      ],
-      ['Unknown error', 'Something went wrong. Please try again later.'],
-    ];
-
-    test.each(errorCases)('handles "%s"', async (error, expectedMessage) => {
-      mockFetch.mockRejectedValueOnce(mockApiResponses.networkError(error));
-      renderSearch();
-      await waitFor(() => {
-        expect(defaultProps.setStatus).toHaveBeenCalledWith('error');
-        expect(defaultProps.setSearchError).toHaveBeenCalledWith(true);
-        expect(defaultProps.setErrorMessage).toHaveBeenCalledWith(
-          expectedMessage
-        );
-      });
+    test('clears results when input becomes empty', async () => {
+      renderSearch({ value: 'test' });
+      const clearButton = screen.getByLabelText('Clear search');
+      await user.click(clearButton);
+      expect(defaultProps.setSearchState).toHaveBeenCalledWith([], 0);
+      expect(defaultProps.setStatus).toHaveBeenCalledWith('default');
     });
   });
 
@@ -177,21 +103,7 @@ describe('Search component', () => {
     test('handles empty trimmed value', async () => {
       renderSearch({ value: '   ' });
       await user.click(screen.getByRole('button', { name: 'Search' }));
-      expect(defaultProps.setStatus).toHaveBeenCalled();
-    });
-
-    test('prevents duplicate search requests', async () => {
-      mockFetch.mockResolvedValueOnce(mockApiResponses.success());
-      const { rerender } = renderSearch({ value: 'lion' });
-      const button = screen.getByRole('button', { name: 'Search' });
-
-      await user.click(button);
-      expect(mockFetch).toHaveBeenCalledTimes(1);
-
-      rerender(<Search {...getDefaultSearchProps({ value: 'lion' })} />);
-      await user.click(button);
-
-      expect(mockFetch).toHaveBeenCalledTimes(1);
+      expect(defaultProps.onSearch).toHaveBeenCalledWith('   ');
     });
   });
 });
