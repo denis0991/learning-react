@@ -1,32 +1,37 @@
-import React, { type ReactNode } from 'react';
-import type { AnimalCardProps } from './result.types';
+import { type JSX } from 'react';
+import type { Animals } from '../search/search.interfaces';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-export class Card extends React.Component<AnimalCardProps> {
-  render(): ReactNode {
-    const { animal } = this.props;
+export function Card({
+  uid,
+  name,
+  avian,
+  earthAnimal,
+  feline,
+}: Animals): JSX.Element {
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    return (
-      <ul key={animal.uid} className="card">
-        <li className="card-item animal-name">{animal.name}</li>
-        <li className="card-item">
-          Avian:{' '}
-          <span className="animal-properties">
-            {animal.avian ? 'yes' : 'no'}
-          </span>
-        </li>
-        <li className="card-item">
-          Earth animal:{' '}
-          <span className="animal-properties">
-            {animal.earthAnimal ? 'yes' : 'no'}
-          </span>
-        </li>
-        <li className="card-item">
-          Feline:{' '}
-          <span className="animal-properties">
-            {animal.feline ? 'yes' : 'no'}
-          </span>
-        </li>
-      </ul>
-    );
-  }
+  const handleClick = () => {
+    const searchParams = new URLSearchParams(location.search);
+    const page = searchParams.get('page') || '1';
+    navigate(`/details/${uid}?page=${page}`);
+  };
+
+  return (
+    <ul className="card" onClick={handleClick}>
+      <li className="card-item animal-name">{name}</li>
+      <li className="card-item">
+        Avian: <span className="animal-properties">{avian ? 'yes' : 'no'}</span>
+      </li>
+      <li className="card-item">
+        Earth animal:{' '}
+        <span className="animal-properties">{earthAnimal ? 'yes' : 'no'}</span>
+      </li>
+      <li className="card-item">
+        Feline:{' '}
+        <span className="animal-properties">{feline ? 'yes' : 'no'}</span>
+      </li>
+    </ul>
+  );
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { vi } from 'vitest';
 import type { Props, State } from '../error-boundary/error.types';
 import React, { type JSX, type ReactNode } from 'react';

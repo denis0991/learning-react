@@ -8,6 +8,7 @@ import {
   mockErrorBoundary,
   mocks,
 } from './test-utils/app-mocks';
+import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('./index', async () => {
   const actual = await vi.importActual<typeof import('./index')>('./index');
@@ -27,7 +28,11 @@ describe('App Component', () => {
   test('renders all main components', async () => {
     const { App } = await import('./App');
 
-    render(<App />);
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
 
     expect(screen.getByText('Header component')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('search..')).toBeInTheDocument();
@@ -39,7 +44,11 @@ describe('App Component', () => {
 
     localStorage.setItem('request', JSON.stringify('lion'));
 
-    render(<App />);
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
 
     expect(localStorage.getItem).toHaveBeenCalledWith('request');
   });
@@ -47,7 +56,11 @@ describe('App Component', () => {
   test('updates input value state', async () => {
     const { App } = await import('./App');
 
-    render(<App />);
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
 
     const searchProps = mockSearch.mock.calls[0][0];
 
@@ -64,7 +77,11 @@ describe('App Component', () => {
   test('updates result state', async () => {
     const { App } = await import('./App');
 
-    render(<App />);
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
 
     const animals: Animals[] = [
       {
@@ -93,7 +110,11 @@ describe('App Component', () => {
   test('updates status and resets error boundary', async () => {
     const { App } = await import('./App');
 
-    render(<App />);
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
 
     const initialProps = mockErrorBoundary.mock.calls[0][0];
 
@@ -114,7 +135,11 @@ describe('App Component', () => {
   test('sets error message', async () => {
     const { App } = await import('./App');
 
-    render(<App />);
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
 
     const searchProps = mockSearch.mock.calls[0][0];
 

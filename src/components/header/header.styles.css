@@ -17,3 +17,22 @@ header h2 {
   font-weight: 400;
   margin-top: -10px;
 }
+
+.header__nav-menu {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.nav-menu__link {
+  color: #c2894f;
+  text-decoration: none;
+  font-size: 1.1em;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.nav-menu__link:hover {
+  border-bottom-color: #c2894f;
+}

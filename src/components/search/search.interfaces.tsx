@@ -1,6 +1,7 @@
 export interface Props {
+  resetPage(): unknown;
   value: string;
-  setSearchState: (result: Animals[]) => void;
+  setSearchState: (animals: Animals[], totalPages?: number) => void;
   status: Status;
   setStatus: (value: Status) => void;
   setInputValue: (value: string) => void;
@@ -20,6 +21,7 @@ export interface Page {
 }
 
 export interface Animals {
+  json(): unknown;
   uid: string;
   name: string;
   earthAnimal: boolean;

@@ -1,13 +1,23 @@
-import React, { type ReactNode } from 'react';
+import { type ReactElement } from 'react';
 import './header.styles.css';
+import { Link, useSearchParams } from 'react-router-dom';
 
-export class Header extends React.Component {
-  render(): ReactNode {
-    return (
-      <header>
-        <h1>Star Trek</h1>
-        <h2>Animals</h2>
-      </header>
-    );
-  }
+export function Header(): ReactElement {
+  const [searchParams] = useSearchParams();
+  const page = searchParams.get('page') || '1';
+
+  return (
+    <header>
+      <h1>Star Trek</h1>
+      <h2>Animals</h2>
+      <nav className="header__nav-menu">
+        <Link className="nav-menu__link" to={`/?page=${page}`}>
+          Home
+        </Link>
+        <Link className="nav-menu__link" to="/about">
+          About
+        </Link>
+      </nav>
+    </header>
+  );
 }

@@ -3,15 +3,24 @@ import { render, screen } from '@testing-library/react';
 import { Card } from '../card.component';
 import type { Animals } from '../../search/search.interfaces';
 import { mockAnimals } from '../../../test-utils/search-mocks';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('Card component', () => {
   test('renders animal name correctly', () => {
-    render(<Card animal={mockAnimals[0]} />);
+    render(
+      <MemoryRouter>
+        <Card {...mockAnimals[0]} />
+      </MemoryRouter>
+    );
     expect(screen.getByText('Lion')).toBeInTheDocument();
   });
 
   test('displays "yes" for true properties', () => {
-    render(<Card animal={mockAnimals[0]} />);
+    render(
+      <MemoryRouter>
+        <Card {...mockAnimals[0]} />
+      </MemoryRouter>
+    );
     const yesElements = screen.getAllByText('yes');
     expect(yesElements).toHaveLength(2);
     expect(yesElements[0]).toBeInTheDocument();
@@ -27,14 +36,25 @@ describe('Card component', () => {
       feline: false,
       earthInsect: false,
       canine: false,
+      json: function () {
+        throw new Error('Function not implemented.');
+      },
     };
-    render(<Card animal={bird} />);
+    render(
+      <MemoryRouter>
+        <Card {...bird} />
+      </MemoryRouter>
+    );
     const noElements = screen.getAllByText('no');
     expect(noElements).toHaveLength(2);
   });
 
   test('has correct CSS classes', () => {
-    render(<Card animal={mockAnimals[2]} />);
+    render(
+      <MemoryRouter>
+        <Card {...mockAnimals[2]} />
+      </MemoryRouter>
+    );
     const card = document.querySelector('.card');
     expect(card).toBeInTheDocument();
     expect(document.querySelector('.animal-name')).toHaveTextContent(
