@@ -1,4 +1,4 @@
-import { useCallback, type JSX } from 'react';
+import { useCallback, useEffect, useState, type JSX } from 'react';
 import {
   Outlet,
   Route,
@@ -14,10 +14,10 @@ import { Details } from './components/results/details.component';
 import { About } from './components/about/about.component';
 import { NotFound } from './components/notFound/notFound.component';
 import { useAnimalStore } from './stores/useAnimalStore';
-import { useAnimalSearch } from './hooks/useAnimalSearch';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { SelectionPanel } from './components/selectionComponents/selection-panel.component';
 import { SelectionActions } from './components/selectionComponents/selectionActions.component';
+import { useSearchAnimals } from './hooks/useAnimalQueries';
 
 function Layout({
   result,
@@ -58,25 +58,47 @@ export function App(): JSX.Element {
   const {
     inputValue,
     setInputValue,
-    result,
     status,
     setStatus,
     errorResetTrigger,
     setErrorResetTrigger,
-    lackOfResult,
     setLackOfResult,
-    searchError,
     setSearchError,
     errorMessage,
     setErrorMessage,
-    totalPages,
     currentPage,
     resetPage,
     setSearchState,
   } = useAnimalStore();
 
+  const [page, setPage] = useState(currentPage);
+
+  const { data, isLoading, isError, error, refetch } = useSearchAnimals(
+    inputValue,
+    page
+  );
+
+  useEffect(() => {
+    if (data) {
+      setSearchState(data.animals, data.page?.totalPages);
+      setStatus(data.animals.length === 0 ? 'missing' : 'success');
+      setLackOfResult(data.animals.length === 0);
+    }
+  }, [data, setSearchState, setStatus, setLackOfResult]);
+  useEffect(() => {
+    if (isLoading) {
+      setStatus('searching');
+    }
+  }, [isLoading, setStatus]);
+
+  useEffect(() => {
+    if (isError) {
+      setStatus('error');
+      setSearchError(true);
+      setErrorMessage(error?.message || 'Something went wrong');
+    }
+  }, [isError, error, setStatus, setSearchError, setErrorMessage]);
   useLocalStorage();
-  const { searchAnimals } = useAnimalSearch();
 
   const [, setSearchParams] = useSearchParams();
   const location = useLocation();
@@ -107,19 +129,20 @@ export function App(): JSX.Element {
   );
 
   const handlePageChange = useCallback(
-    async (page: number) => {
-      await searchAnimals(inputValue, page);
+    (page: number) => {
+      setPage(page);
       updatePageInUrl(page);
     },
-    [inputValue, searchAnimals, updatePageInUrl]
+    [updatePageInUrl]
   );
 
   const handleSearch = useCallback(
-    async (value: string) => {
-      await searchAnimals(value, 1);
-      updatePageInUrl(1);
+    (value: string) => {
+      setInputValue(value);
+      setPage(1);
+      refetch();
     },
-    [searchAnimals, updatePageInUrl]
+    [setInputValue, refetch]
   );
 
   const handleResetPage = useCallback(() => {
@@ -136,7 +159,7 @@ export function App(): JSX.Element {
             setSearchState={setSearchState}
             setStatus={handleSetStatus}
             setInputValue={setInputValue}
-            status={status}
+            status={isLoading ? 'searching' : status}
             value={inputValue}
             setError={setLackOfResult}
             setSearchError={setSearchError}
@@ -153,13 +176,15 @@ export function App(): JSX.Element {
               element={
                 <>
                   <Layout
-                    result={result}
-                    status={status}
-                    lackOfResult={lackOfResult}
-                    searchError={searchError}
-                    errorMessage={errorMessage}
-                    currentPage={currentPage}
-                    totalPages={totalPages}
+                    result={data?.animals || []}
+                    status={
+                      isLoading ? 'searching' : isError ? 'error' : status
+                    }
+                    lackOfResult={data?.animals?.length === 0}
+                    searchError={isError}
+                    errorMessage={error?.message || errorMessage}
+                    currentPage={page}
+                    totalPages={data?.page?.totalPages || 0}
                     onPageChange={handlePageChange}
                   />
                   <SelectionPanel />

@@ -1,26 +1,12 @@
-import { useEffect, useState } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
-import type { Animals } from '../search/search.interfaces';
+import { useAnimalDetails } from '../../hooks/useAnimalQueries';
 
 export function Details() {
   const { uid } = useParams<{ uid: string }>();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [item, setItem] = useState<Animals | null>(null);
-  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (!uid) return;
-
-    setLoading(true);
-    fetch(`https://stapi.co/api/v1/rest/animal?uid=${uid}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setItem(data.animal);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, [uid]);
+  const { data, isLoading, error } = useAnimalDetails(uid);
 
   const handleClose = () => {
     const page = searchParams.get('page') || '1';
@@ -28,6 +14,10 @@ export function Details() {
   };
 
   if (!uid) return null;
+  if (isLoading) return <div className="loader"></div>;
+  if (error) return <div className="error">Error loading details</div>;
+
+  const item = data?.animal;
 
   const formatValue = (value: boolean | undefined | null): string => {
     if (value === true) return 'yes';
@@ -39,7 +29,6 @@ export function Details() {
     <>
       <h2 className="details-title">Animal Details</h2>
       <div className="details-panel">
-        {loading && <div className="loader"></div>}
         {item && (
           <div className="details-content">
             <h3>{item.name}</h3>
