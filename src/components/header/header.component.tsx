@@ -1,7 +1,7 @@
 import { type ReactElement } from 'react';
 import './header.styles.css';
 import { Link, useSearchParams } from 'react-router-dom';
-import { ThemeSwitcher } from '../theme-switcher/theme-switcher.component';
+import { ThemeSwitcher } from '../themeSwitcher/themeSwitcher.component';
 import { useTheme } from '../../hooks/useTheme';
 
 export function Header(): ReactElement {

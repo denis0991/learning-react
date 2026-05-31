@@ -1,5 +1,5 @@
 import { type JSX, useCallback } from 'react';
-import { useSelectionStore } from '../../stores/selectionStore';
+import { useSelectionStore } from '../../stores/useSelectionStore';
 import './selection.css';
 
 export function SelectionPanel(): JSX.Element | null {

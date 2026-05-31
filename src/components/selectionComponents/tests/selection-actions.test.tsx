@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { SelectionActions } from '../selection-actions.component';
-import { useSelectionStore } from '../../../stores/selectionStore';
+import { SelectionActions } from '../selectionActions.component';
+import { useSelectionStore } from '../../../stores/useSelectionStore';
 
 vi.mock('../../../stores/selectionStore', () => ({
   useSelectionStore: vi.fn(),

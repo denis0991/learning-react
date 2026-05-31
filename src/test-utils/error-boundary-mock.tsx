@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { vi } from 'vitest';
-import type { Props, State } from '../error-boundary/error.types';
+import type { Props, State } from '../errorBoundary/error.types';
 import React, { type JSX, type ReactNode } from 'react';
 
 export const getDefaultErrorBoundaryProps = (

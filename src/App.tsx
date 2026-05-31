@@ -12,12 +12,12 @@ import { Header, Search, Result, ErrorBoundary, type Status } from './index';
 import type { LayoutProps } from './types/app.interfaces';
 import { Details } from './components/results/details.component';
 import { About } from './components/about/about.component';
-import { NotFound } from './components/not-found/not-found.component';
-import { useAnimalStore } from './stores/animal.store';
+import { NotFound } from './components/notFound/notFound.component';
+import { useAnimalStore } from './stores/useAnimalStore';
 import { useAnimalSearch } from './hooks/useAnimalSearch';
 import { useLocalStorage } from './hooks/useLocalStorage';
-import { SelectionPanel } from './components/selection-components/selection-panel.component';
-import { SelectionActions } from './components/selection-components/selection-actions.component';
+import { SelectionPanel } from './components/selectionComponents/selection-panel.component';
+import { SelectionActions } from './components/selectionComponents/selectionActions.component';
 
 function Layout({
   result,

@@ -1,6 +1,6 @@
 import { Link, useSearchParams } from 'react-router-dom';
 import type { JSX } from 'react';
-import './not-found.styles.css';
+import './notFound.styles.css';
 
 export function NotFound(): JSX.Element {
   const [searchParams] = useSearchParams();

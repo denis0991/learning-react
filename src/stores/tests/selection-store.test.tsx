@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { useSelectionStore } from '../selectionStore';
+import { useSelectionStore } from '../useSelectionStore';
 import type { Animals } from '../../components/search/search.interfaces';
 
 const createTestAnimal = (uid: string, name: string): Animals => ({

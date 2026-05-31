@@ -1,5 +1,5 @@
 import { type JSX, useCallback } from 'react';
-import { useSelectionStore } from '../../stores/selectionStore';
+import { useSelectionStore } from '../../stores/useSelectionStore';
 import type { Animals } from '../search/search.interfaces';
 import './selection.css';
 

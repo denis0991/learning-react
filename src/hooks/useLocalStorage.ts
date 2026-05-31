@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useAnimalStore } from '../stores/animal.store';
+import { useAnimalStore } from '../stores/useAnimalStore';
 import { useAnimalSearch } from './useAnimalSearch';
 
 export const useLocalStorage = () => {

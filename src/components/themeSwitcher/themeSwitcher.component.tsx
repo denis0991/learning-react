@@ -1,7 +1,7 @@
 import { type JSX } from 'react';
 import { useTheme } from '../../hooks/useTheme';
 import './switcher.css';
-import { getIconByTheme } from '../../utils/icons-switcher.utils';
+import { getIconByTheme } from '../../utils/getIconByTheme';
 
 export function ThemeSwitcher(): JSX.Element {
   const { theme, toggleTheme } = useTheme();

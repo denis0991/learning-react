@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { NotFound } from './not-found.component';
+import { NotFound } from './notFound.component';
 import { MemoryRouter } from 'react-router-dom';
 
 it('should render the title and content', () => {

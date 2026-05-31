@@ -146,17 +146,7 @@
 <a name='L83'></a><a href='#L83'>83</a>
 <a name='L84'></a><a href='#L84'>84</a>
 <a name='L85'></a><a href='#L85'>85</a>
-<a name='L86'></a><a href='#L86'>86</a>
-<a name='L87'></a><a href='#L87'>87</a>
-<a name='L88'></a><a href='#L88'>88</a>
-<a name='L89'></a><a href='#L89'>89</a>
-<a name='L90'></a><a href='#L90'>90</a>
-<a name='L91'></a><a href='#L91'>91</a>
-<a name='L92'></a><a href='#L92'>92</a>
-<a name='L93'></a><a href='#L93'>93</a>
-<a name='L94'></a><a href='#L94'>94</a>
-<a name='L95'></a><a href='#L95'>95</a>
-<a name='L96'></a><a href='#L96'>96</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L86'></a><a href='#L86'>86</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -209,21 +199,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">14x</span>
@@ -281,7 +261,7 @@ export function Search(props: Props): JSX.Element {
     <span class="missing-if-branch" title="else path not taken" >E</span>if (props.onSearch) {
       props.onSearch(props.value);
     }
-  }, [props.onSearch, props.value]);
+  }, [props]);
 &nbsp;
   const handleKeyPress = useCallback(
     (e: React.KeyboardEvent&lt;HTMLInputElement&gt;) =&gt; {
@@ -301,12 +281,7 @@ export function Search(props: Props): JSX.Element {
 <span class="cstat-no" title="statement not covered" >        props.setStatus('default');</span>
       }
     },
-    [
-      props.setInputValue,
-      props.resetPage,
-      props.setSearchState,
-      props.setStatus,
-    ]
+    [props]
   );
 &nbsp;
   const handleClear = useCallback(() =&gt; {
@@ -314,12 +289,7 @@ export function Search(props: Props): JSX.Element {
     props.setSearchState([], 0);
     props.setStatus('default');
     props.resetPage();
-  }, [
-    props.setInputValue,
-    props.setSearchState,
-    props.setStatus,
-    props.resetPage,
-  ]);
+  }, [props]);
 &nbsp;
   return (
     &lt;section className="search-component"&gt;
@@ -360,7 +330,7 @@ export function Search(props: Props): JSX.Element {
         rel="noopener noreferrer"
         >istanbul</a
       >
-      at 2026-05-25T21:03:58.016Z
+      at 2026-05-25T21:31:57.936Z
     </div>
     <script src="../../../prettify.js"></script>
     <script>

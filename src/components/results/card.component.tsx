@@ -1,7 +1,7 @@
 import { useCallback, type JSX } from 'react';
 import type { Animals } from '../search/search.interfaces';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSelectionStore } from '../../stores/selectionStore';
+import { useSelectionStore } from '../../stores/useSelectionStore';
 
 export function Card({
   uid,
