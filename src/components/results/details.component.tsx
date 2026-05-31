@@ -6,7 +6,7 @@ export function Details() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const { data, isLoading, error } = useAnimalDetails(uid);
+  const { data, isLoading, isFetching, error } = useAnimalDetails(uid);
 
   const handleClose = () => {
     const page = searchParams.get('page') || '1';
@@ -14,10 +14,33 @@ export function Details() {
   };
 
   if (!uid) return null;
-  if (isLoading) return <div className="loader"></div>;
-  if (error) return <div className="error">Error loading details</div>;
+
+  if (isLoading || isFetching) {
+    return (
+      <div className="details-panel">
+        <div className="content-loader">
+          <div className="loader"></div>
+          <div className="content-loader-text">Loading animal details...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error)
+    return (
+      <div className="details-panel">
+        <div className="error-container">
+          <div className="error-icon">⚠️</div>
+          <div className="error-text">
+            Error loading details. Please try again.
+          </div>
+          <button onClick={handleClose}>Close</button>
+        </div>
+      </div>
+    );
 
   const item = data?.animal;
+  if (!item) return null;
 
   const formatValue = (value: boolean | undefined | null): string => {
     if (value === true) return 'yes';

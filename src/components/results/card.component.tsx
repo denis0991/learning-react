@@ -2,6 +2,7 @@ import { useCallback, type JSX } from 'react';
 import type { Animals } from '../search/search.interfaces';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelectionStore } from '../../stores/useSelectionStore';
+import { usePrefetchAnimalDetails } from '../../hooks/useAnimalQueries';
 
 export function Card({
   uid,
@@ -14,6 +15,11 @@ export function Card({
   const location = useLocation();
   const { toggleSelection, isSelected } = useSelectionStore();
   const selected = isSelected(uid);
+  const prefetchDetails = usePrefetchAnimalDetails();
+
+  const handleMouseEnter = () => {
+    prefetchDetails(uid);
+  };
 
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLUListElement>) => {
@@ -56,6 +62,7 @@ export function Card({
             checked={selected}
             onChange={handleCheckboxChange}
             onClick={(e) => e.stopPropagation()}
+            onMouseEnter={handleMouseEnter}
             className="card-checkbox"
           />
           <span className="checkbox-custom"></span>

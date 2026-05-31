@@ -51,3 +51,17 @@ export function useInvalidateAnimalCache() {
 
   return { invalidateSearch, invalidateDetails };
 }
+
+export function usePrefetchAnimalDetails() {
+  const queryClient = useQueryClient();
+
+  const prefetchDetails = (uid: string) => {
+    queryClient.prefetchQuery({
+      queryKey: animalKeys.details(uid),
+      queryFn: () => animalApi.getAnimalDetails(uid),
+      staleTime: Number(import.meta.env.VITE_CACHE_TTL) || 300000,
+    });
+  };
+
+  return prefetchDetails;
+}

@@ -72,11 +72,19 @@ export function App(): JSX.Element {
   } = useAnimalStore();
 
   const [page, setPage] = useState(currentPage);
-
   const { data, isLoading, isError, error, refetch } = useSearchAnimals(
     inputValue,
     page
   );
+  const [isSearching, setIsSearching] = useState(false);
+
+  useEffect(() => {
+    if (isLoading) {
+      setIsSearching(true);
+    } else {
+      setIsSearching(false);
+    }
+  }, [isLoading]);
 
   useEffect(() => {
     if (data) {
@@ -177,9 +185,7 @@ export function App(): JSX.Element {
                 <>
                   <Layout
                     result={data?.animals || []}
-                    status={
-                      isLoading ? 'searching' : isError ? 'error' : status
-                    }
+                    status={isSearching ? 'searching' : status}
                     lackOfResult={data?.animals?.length === 0}
                     searchError={isError}
                     errorMessage={error?.message || errorMessage}

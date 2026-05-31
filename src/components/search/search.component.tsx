@@ -7,7 +7,7 @@ const renderSpinner = (status: Status): JSX.Element => {
     case 'default':
       return <div className="default"></div>;
     case 'searching':
-      return <div className="loader"></div>;
+      return <div className="searching-loader"></div>;
     case 'success':
       return <div className="success"></div>;
     case 'error':
