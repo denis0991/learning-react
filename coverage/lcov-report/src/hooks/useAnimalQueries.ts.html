@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52.17% </span>
+                <span class="strong">69.56% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/23</span>
+                <span class='fraction'>16/23</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">61.53% </span>
+                <span class="strong">69.23% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>8/13</span>
+                <span class='fraction'>9/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52.17% </span>
+                <span class="strong">69.56% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/23</span>
+                <span class='fraction'>16/23</span>
             </div>
         
             
@@ -165,29 +165,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -195,7 +195,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { animalApi } from '../services/animalApi';
@@ -231,10 +231,10 @@ export function useAnimalDetails(uid: string | undefined) {
   });
 }
 &nbsp;
-export function <span class="fstat-no" title="function not covered" >useInvalidateAnimalCache() {</span>
-  const <span class="cstat-no" title="statement not covered" >queryClient = useQueryClient();</span>
+export function useInvalidateAnimalCache() {
+  const queryClient = useQueryClient();
 &nbsp;
-  const invalidateSearch = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(n</span>ame?: string, page?: number) =&gt; {</span>
+  const invalidateSearch = <span class="fstat-no" title="function not covered" >(n</span>ame?: string, page?: number) =&gt; {
 <span class="cstat-no" title="statement not covered" >    if (name &amp;&amp; page) {</span>
 <span class="cstat-no" title="statement not covered" >      queryClient.invalidateQueries({</span>
         queryKey: animalKeys.search(name, page),
@@ -244,11 +244,11 @@ export function <span class="fstat-no" title="function not covered" >useInvalida
     }
   };
 &nbsp;
-  const invalidateDetails = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(u</span>id: string) =&gt; {</span>
+  const invalidateDetails = <span class="fstat-no" title="function not covered" >(u</span>id: string) =&gt; {
 <span class="cstat-no" title="statement not covered" >    queryClient.invalidateQueries({ queryKey: animalKeys.details(uid) });</span>
   };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return { invalidateSearch, invalidateDetails };</span>
+  return { invalidateSearch, invalidateDetails };
 }
 &nbsp;
 export function usePrefetchAnimalDetails() {
@@ -271,7 +271,7 @@ export function usePrefetchAnimalDetails() {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-06-01T20:53:37.987Z
+                at 2026-06-01T21:05:56.450Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

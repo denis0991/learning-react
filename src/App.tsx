@@ -15,7 +15,7 @@ import { About } from './components/about/about.component';
 import { NotFound } from './components/notFound/notFound.component';
 import { useAnimalStore } from './stores/useAnimalStore';
 import { useLocalStorage } from './hooks/useLocalStorage';
-import { SelectionPanel } from './components/selectionComponents/selection-panel.component';
+import { SelectionPanel } from './components/selectionComponents/selectionPanel.component';
 import { SelectionActions } from './components/selectionComponents/selectionActions.component';
 import { animalKeys, useSearchAnimals } from './hooks/useAnimalQueries';
 import { queryClient } from './tanstack/queryClient';

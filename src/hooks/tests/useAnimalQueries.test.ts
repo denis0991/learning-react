@@ -6,6 +6,8 @@ import {
   useSearchAnimals,
   useAnimalDetails,
   animalKeys,
+  usePrefetchAnimalDetails,
+  useInvalidateAnimalCache,
 } from '../useAnimalQueries';
 import { animalApi } from '../../services/animalApi';
 
@@ -141,5 +143,24 @@ describe('useAnimalQueries', () => {
     it('should generate correct all key', () => {
       expect(animalKeys.all).toEqual(['animals']);
     });
+  });
+});
+
+describe('usePrefetchAnimalDetails', () => {
+  it('should prefetch details', () => {
+    const { result } = renderHook(() => usePrefetchAnimalDetails(), {
+      wrapper: createWrapper(),
+    });
+    expect(result.current).toBeDefined();
+  });
+});
+
+describe('useInvalidateAnimalCache', () => {
+  it('should invalidate cache', () => {
+    const { result } = renderHook(() => useInvalidateAnimalCache(), {
+      wrapper: createWrapper(),
+    });
+    expect(result.current.invalidateSearch).toBeDefined();
+    expect(result.current.invalidateDetails).toBeDefined();
   });
 });
