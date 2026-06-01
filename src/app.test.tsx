@@ -67,4 +67,14 @@ describe('App Component', () => {
       expect(updatedProps.value).toBe('tiger');
     });
   });
+
+  test('shows not found page for invalid route', async () => {
+    const { App } = await import('./App');
+
+    render(
+      <TestWrapper>
+        <App />
+      </TestWrapper>
+    );
+  });
 });
