@@ -82,6 +82,7 @@ export function App(): JSX.Element {
   const hasInitialSearch = useRef(false);
   const [isSearchLoading, setIsSearchLoading] = useState(false);
   const lastSearchRef = useRef({ value: '', page: 1 });
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
     if (!hasInitialSearch.current && inputValue !== undefined) {
@@ -189,9 +190,33 @@ export function App(): JSX.Element {
     updatePageInUrl(1);
   }, [resetPage, updatePageInUrl]);
 
+  const refreshData = useCallback(async () => {
+    if (isRefreshing) return;
+
+    setIsRefreshing(true);
+    try {
+      await queryClient.invalidateQueries({ queryKey: animalKeys.all });
+
+      await queryClient.refetchQueries({ queryKey: animalKeys.all });
+
+      console.log('🔄 Refresh complete');
+    } catch (error) {
+      console.error('Refresh failed:', error);
+    } finally {
+      setIsRefreshing(false);
+    }
+
+    const currentUid = location.pathname.match(/\/details\/(.+)/)?.[1];
+    if (currentUid) {
+      queryClient.invalidateQueries({
+        queryKey: animalKeys.details(currentUid),
+      });
+    }
+  }, [queryClient, refetch, location.pathname, isRefreshing]);
+
   return (
     <>
-      {isValidPath && <Header />}
+      {isValidPath && <Header onRefresh={refreshData} />}
       <main>
         {!isAboutPage && isValidPath && (
           <Search
