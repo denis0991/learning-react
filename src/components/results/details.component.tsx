@@ -1,26 +1,13 @@
-import { useEffect, useState } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
-import type { Animals } from '../search/search.interfaces';
+import { useAnimalDetails } from '../../hooks/useAnimalQueries';
+import { ErrorDisplay } from '../common/errorDisplay';
 
 export function Details() {
   const { uid } = useParams<{ uid: string }>();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [item, setItem] = useState<Animals | null>(null);
-  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (!uid) return;
-
-    setLoading(true);
-    fetch(`https://stapi.co/api/v1/rest/animal?uid=${uid}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setItem(data.animal);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, [uid]);
+  const { data, isLoading, isFetching, error, refetch } = useAnimalDetails(uid);
 
   const handleClose = () => {
     const page = searchParams.get('page') || '1';
@@ -28,6 +15,40 @@ export function Details() {
   };
 
   if (!uid) return null;
+
+  if (isLoading || isFetching) {
+    return (
+      <div className="details-panel">
+        <div className="content-loader">
+          <div className="loader"></div>
+          <div className="content-loader-text">Loading animal details...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    let errorMessage = 'Error loading details. Please try again.';
+    if (
+      error.message?.includes('Network error') ||
+      error.message?.includes('Failed to fetch')
+    ) {
+      errorMessage =
+        'Unable to connect to the server. Please check your internet connection.';
+    } else if (error.message?.includes('404')) {
+      errorMessage = 'Animal not found.';
+    }
+    return (
+      <div className="details-panel">
+        <ErrorDisplay message={errorMessage} onRetry={refetch} />
+        <button onClick={handleClose} className="close-btn">
+          ✕ Close
+        </button>
+      </div>
+    );
+  }
+  const item = data?.animal;
+  if (!item) return null;
 
   const formatValue = (value: boolean | undefined | null): string => {
     if (value === true) return 'yes';
@@ -39,7 +60,6 @@ export function Details() {
     <>
       <h2 className="details-title">Animal Details</h2>
       <div className="details-panel">
-        {loading && <div className="loader"></div>}
         {item && (
           <div className="details-content">
             <h3>{item.name}</h3>

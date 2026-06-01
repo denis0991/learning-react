@@ -1,8 +1,9 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
-import { BrowserRouter } from 'react-router-dom';
 import { Details } from '../details.component';
+import { TestWrapper } from '../../../test-utils/test-wrapper';
+import { useAnimalDetails } from '../../../hooks/useAnimalQueries';
 
 const mockNavigate = vi.fn();
 const mockUseParams = vi.fn();
@@ -18,30 +19,9 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-const fetchMock = globalThis.fetch as Mock;
-fetchMock.mockImplementation(() => Promise.resolve({} as Response));
-
-interface MockAnimalData {
-  animal: {
-    name: string;
-    earthAnimal: boolean | null;
-    earthInsect: boolean | null;
-    avian: boolean | null;
-    canine: boolean | null;
-    feline: boolean | null;
-  };
-}
-
-const mockAnimalData: MockAnimalData = {
-  animal: {
-    name: 'Tiger',
-    earthAnimal: true,
-    earthInsect: false,
-    avian: false,
-    canine: false,
-    feline: true,
-  },
-};
+vi.mock('../../../hooks/useAnimalQueries', () => ({
+  useAnimalDetails: vi.fn(),
+}));
 
 describe('Details Component', () => {
   beforeEach(() => {
@@ -51,13 +31,30 @@ describe('Details Component', () => {
       new URLSearchParams('page=2'),
       vi.fn(),
     ]);
+    (useAnimalDetails as Mock).mockReturnValue({
+      data: {
+        animal: {
+          name: 'Lion',
+          uid: 'test-123',
+          avian: false,
+          earthAnimal: true,
+          feline: true,
+          earthInsect: false,
+          canine: false,
+        },
+      },
+      isLoading: false,
+      isFetching: false,
+      error: null,
+      refetch: vi.fn(),
+    });
   });
 
   const renderComponent = () => {
     return render(
-      <BrowserRouter>
+      <TestWrapper>
         <Details />
-      </BrowserRouter>
+      </TestWrapper>
     );
   };
 
@@ -78,21 +75,53 @@ describe('Details Component', () => {
 
   it('renderers the loader during loading', () => {
     mockUseParams.mockReturnValue({ uid: 'test-123' });
-    fetchMock.mockImplementation(() => new Promise(() => {}));
+    (useAnimalDetails as Mock).mockReturnValue({
+      data: null,
+      isLoading: true,
+      isFetching: false,
+      error: null,
+      refetch: vi.fn(),
+    });
 
     renderComponent();
-    expect(screen.getByText('Animal Details')).toBeInTheDocument();
+    expect(screen.getByText('Loading animal details...')).toBeInTheDocument();
+  });
+
+  it('renderers the error message on error', () => {
+    mockUseParams.mockReturnValue({ uid: 'test-123' });
+    (useAnimalDetails as Mock).mockReturnValue({
+      data: null,
+      isLoading: false,
+      isFetching: false,
+      error: new Error('Network error'),
+      refetch: vi.fn(),
+    });
+    renderComponent();
+    expect(screen.getByText(/Something went wrong/)).toBeInTheDocument();
   });
 
   it('displays animal data', async () => {
-    fetchMock.mockResolvedValue({
-      json: async () => mockAnimalData,
-    } as Response);
-
+    (useAnimalDetails as Mock).mockReturnValue({
+      data: {
+        animal: {
+          name: 'Lion',
+          uid: 'test-123',
+          avian: false,
+          earthAnimal: true,
+          feline: true,
+          earthInsect: false,
+          canine: false,
+        },
+      },
+      isLoading: false,
+      isFetching: false,
+      error: null,
+      refetch: vi.fn(),
+    });
     renderComponent();
 
     await waitFor(() => {
-      expect(screen.getByText('Tiger')).toBeInTheDocument();
+      expect(screen.getByText('Lion')).toBeInTheDocument();
     });
 
     const yesElements = screen.getAllByText('yes');
@@ -107,45 +136,52 @@ describe('Details Component', () => {
   });
 
   it('handles error during loading', async () => {
-    fetchMock.mockRejectedValue(new Error('Network error'));
+    (useAnimalDetails as Mock).mockReturnValue({
+      data: null,
+      isLoading: false,
+      isFetching: false,
+      error: new Error('Network error'),
+      refetch: vi.fn(),
+    });
 
     renderComponent();
 
     await waitFor(() => {
-      expect(screen.queryByText('Tiger')).not.toBeInTheDocument();
+      expect(screen.getByText(/Something went wrong/)).toBeInTheDocument();
     });
-  });
-
-  it('does not make a request if uid is missing', () => {
-    mockUseParams.mockReturnValue({ uid: undefined });
-
-    renderComponent();
-
-    expect(fetchMock).not.toHaveBeenCalled();
   });
 
   it('returns null if uid is missing', () => {
     mockUseParams.mockReturnValue({ uid: undefined });
+    (useAnimalDetails as Mock).mockReturnValue({
+      data: null,
+      isLoading: false,
+      isFetching: false,
+      error: null,
+      refetch: vi.fn(),
+    });
     const { container } = renderComponent();
 
     expect(container.querySelector('.details-title')).not.toBeInTheDocument();
   });
 
   it('formats boolean values correctly', async () => {
-    const nullData: MockAnimalData = {
-      animal: {
-        name: 'Unknown',
-        earthAnimal: null,
-        earthInsect: null,
-        avian: true,
-        canine: false,
-        feline: null,
+    (useAnimalDetails as Mock).mockReturnValue({
+      data: {
+        animal: {
+          name: 'Unknown',
+          earthAnimal: null,
+          earthInsect: null,
+          avian: true,
+          canine: false,
+          feline: null,
+        },
       },
-    };
-
-    fetchMock.mockResolvedValue({
-      json: async () => nullData,
-    } as Response);
+      isLoading: false,
+      isFetching: false,
+      error: null,
+      refetch: vi.fn(),
+    });
 
     renderComponent();
 
@@ -164,14 +200,11 @@ describe('Details Component', () => {
 
   it('navigates to the main page with the page parameter when Close is clicked', async () => {
     const user = userEvent.setup();
-    fetchMock.mockResolvedValue({
-      json: async () => mockAnimalData,
-    } as Response);
 
     renderComponent();
 
     await waitFor(() => {
-      expect(screen.getByText('Tiger')).toBeInTheDocument();
+      expect(screen.getByText('Lion')).toBeInTheDocument();
     });
 
     const closeButton = screen.getByText('✕ Close');
@@ -184,14 +217,10 @@ describe('Details Component', () => {
     mockUseSearchParams.mockReturnValue([new URLSearchParams(''), vi.fn()]);
 
     const user = userEvent.setup();
-    fetchMock.mockResolvedValue({
-      json: async () => mockAnimalData,
-    } as Response);
-
     renderComponent();
 
     await waitFor(() => {
-      expect(screen.getByText('Tiger')).toBeInTheDocument();
+      expect(screen.getByText('Lion')).toBeInTheDocument();
     });
 
     const closeButton = screen.getByText('✕ Close');
@@ -201,20 +230,22 @@ describe('Details Component', () => {
   });
 
   it('displays all animal properties correctly', async () => {
-    const fullAnimalData: MockAnimalData = {
-      animal: {
-        name: 'Wolf',
-        earthAnimal: true,
-        earthInsect: false,
-        avian: false,
-        canine: true,
-        feline: false,
+    (useAnimalDetails as Mock).mockReturnValue({
+      data: {
+        animal: {
+          name: 'Wolf',
+          earthAnimal: true,
+          earthInsect: false,
+          avian: false,
+          canine: true,
+          feline: false,
+        },
       },
-    };
-
-    fetchMock.mockResolvedValue({
-      json: async () => fullAnimalData,
-    } as Response);
+      isLoading: false,
+      isFetching: false,
+      error: null,
+      refetch: vi.fn(),
+    });
 
     renderComponent();
 
@@ -233,21 +264,22 @@ describe('Details Component', () => {
   });
 
   it('finds values through span class', async () => {
-    const fullAnimalData: MockAnimalData = {
-      animal: {
-        name: 'Wolf',
-        earthAnimal: true,
-        earthInsect: false,
-        avian: false,
-        canine: true,
-        feline: false,
+    (useAnimalDetails as Mock).mockReturnValue({
+      data: {
+        animal: {
+          name: 'Wolf',
+          earthAnimal: true,
+          earthInsect: false,
+          avian: false,
+          canine: true,
+          feline: false,
+        },
       },
-    };
-
-    fetchMock.mockResolvedValue({
-      json: async () => fullAnimalData,
-    } as Response);
-
+      isLoading: false,
+      isFetching: false,
+      error: null,
+      refetch: vi.fn(),
+    });
     renderComponent();
 
     await waitFor(() => {

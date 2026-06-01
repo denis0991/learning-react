@@ -10,6 +10,7 @@ export interface PropsType {
   onPageChange: (page: number) => void;
   searchError?: boolean;
   errorMessage?: string;
+  onRetry?: () => void;
 }
 
 export interface PropsCard {
@@ -17,6 +18,7 @@ export interface PropsCard {
   lackOfResult: boolean;
   searchError?: boolean;
   errorMessage?: string;
+  onRetry?: () => void;
 }
 
 export interface AnimalCardProps {

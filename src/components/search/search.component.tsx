@@ -7,7 +7,7 @@ const renderSpinner = (status: Status): JSX.Element => {
     case 'default':
       return <div className="default"></div>;
     case 'searching':
-      return <div className="loader"></div>;
+      return <div className="searching-loader"></div>;
     case 'success':
       return <div className="success"></div>;
     case 'error':
@@ -28,7 +28,7 @@ export function Search(props: Props): JSX.Element {
     if (props.onSearch) {
       props.onSearch(props.value);
     }
-  }, [props]);
+  }, [props.onSearch, props.value]);
 
   const handleKeyPress = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -48,7 +48,12 @@ export function Search(props: Props): JSX.Element {
         props.setStatus('default');
       }
     },
-    [props]
+    [
+      props.setInputValue,
+      props.resetPage,
+      props.setSearchState,
+      props.setStatus,
+    ]
   );
 
   const handleClear = useCallback(() => {

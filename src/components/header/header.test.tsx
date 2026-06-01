@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { Header } from './header.component';
-import { MemoryRouter } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from '../../context/theme-context';
 
 const renderWithTheme = (component: React.ReactElement) => {
@@ -30,5 +30,17 @@ describe('Header component', () => {
       name: /Animals/i,
     });
     expect(h2).toBeInTheDocument();
+  });
+  it('should render navigation links', () => {
+    render(
+      <BrowserRouter>
+        <ThemeProvider>
+          <Header />
+        </ThemeProvider>
+      </BrowserRouter>
+    );
+
+    expect(screen.getByText('Home')).toBeInTheDocument();
+    expect(screen.getByText('About')).toBeInTheDocument();
   });
 });

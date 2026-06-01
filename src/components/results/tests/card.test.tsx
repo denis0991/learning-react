@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { Card } from '../card.component';
 import type { Animals } from '../../search/search.interfaces';
 import { mockAnimals } from '../../../test-utils/search-mocks';
-import { MemoryRouter } from 'react-router-dom';
+import { TestWrapper } from '../../../test-utils/test-wrapper';
 
 const mockNavigate = vi.fn();
 vi.mock('react-router-dom', async () => {
@@ -25,18 +25,18 @@ vi.mock('../../../stores/selectionStore', () => ({
 describe('Card component', () => {
   test('renders animal name correctly', () => {
     render(
-      <MemoryRouter>
+      <TestWrapper>
         <Card {...mockAnimals[0]} />
-      </MemoryRouter>
+      </TestWrapper>
     );
     expect(screen.getByText('Lion')).toBeInTheDocument();
   });
 
   test('displays "yes" for true properties', () => {
     render(
-      <MemoryRouter>
+      <TestWrapper>
         <Card {...mockAnimals[0]} />
-      </MemoryRouter>
+      </TestWrapper>
     );
     const yesElements = screen.getAllByText('yes');
     expect(yesElements).toHaveLength(2);
@@ -56,12 +56,12 @@ describe('Card component', () => {
       json: function () {
         throw new Error('Function not implemented.');
       },
-      selectedAt: undefined,
+      selectedAt: Date.now(),
     };
     render(
-      <MemoryRouter>
+      <TestWrapper>
         <Card {...bird} />
-      </MemoryRouter>
+      </TestWrapper>
     );
     const noElements = screen.getAllByText('no');
     expect(noElements).toHaveLength(2);
@@ -69,9 +69,9 @@ describe('Card component', () => {
 
   test('has correct CSS classes', () => {
     render(
-      <MemoryRouter>
+      <TestWrapper>
         <Card {...mockAnimals[2]} />
-      </MemoryRouter>
+      </TestWrapper>
     );
     const card = document.querySelector('.card');
     expect(card).toBeInTheDocument();
@@ -83,18 +83,18 @@ describe('Card component', () => {
   });
   test('renders checkbox', () => {
     render(
-      <MemoryRouter>
+      <TestWrapper>
         <Card {...mockAnimals[0]} />
-      </MemoryRouter>
+      </TestWrapper>
     );
     const checkbox = document.querySelector('.card-checkbox');
     expect(checkbox).toBeInTheDocument();
   });
   test('navigates to details on card click', () => {
     render(
-      <MemoryRouter>
+      <TestWrapper>
         <Card {...mockAnimals[0]} />
-      </MemoryRouter>
+      </TestWrapper>
     );
     const card = document.querySelector('.card');
     if (!card) {

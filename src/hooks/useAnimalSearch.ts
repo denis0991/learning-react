@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useAnimalStore } from '../stores/animal.store';
+import { useAnimalStore } from '../stores/useAnimalStore';
 
 export const useAnimalSearch = () => {
   const {

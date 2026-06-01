@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Animals } from '../index';
 import { vi } from 'vitest';
+import { Link } from 'react-router-dom';
 
 export const mockSearch = vi.fn();
 export const mockResult = vi.fn();
@@ -8,6 +9,7 @@ export const mockErrorBoundary = vi.fn();
 
 export const mocks = {
   Search: (props: {
+    onSearch(value: string): void;
     value: string;
     setInputValue: (value: string) => void;
     setSearchState: (animals: Animals[]) => void;
@@ -19,11 +21,14 @@ export const mocks = {
     mockSearch(props);
 
     return (
-      <input
-        placeholder="search.."
-        value={props.value}
-        onChange={(e) => props.setInputValue(e.target.value)}
-      />
+      <div>
+        <input
+          placeholder="search.."
+          value={props.value}
+          onChange={(e) => props.setInputValue(e.target.value)}
+        />
+        <button onClick={() => props.onSearch?.(props.value)}>Search</button>
+      </div>
     );
   },
 
@@ -40,5 +45,15 @@ export const mocks = {
     return <div>{props.children}</div>;
   },
 
-  Header: () => <div>Header component</div>,
+  Header: () => (
+    <div>
+      Header component
+      <nav>
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+      </nav>
+    </div>
+  ),
+  About: () => <div>About component</div>,
+  NotFound: () => <div>Not Found</div>,
 };
