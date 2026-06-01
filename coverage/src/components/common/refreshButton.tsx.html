@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">91.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/12</span>
+                <span class='fraction'>11/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/15</span>
+                <span class='fraction'>12/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">36.36% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/11</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -123,26 +123,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -172,32 +172,32 @@ export function RefreshButton({
   const [internalIsRefreshing, setInternalIsRefreshing] = useState(false);
   const isRefreshing = externalIsRefreshing ?? internalIsRefreshing;
 &nbsp;
-  const handleRefresh = useCallback(<span class="fstat-no" title="function not covered" >async () =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    if (isRefreshing) <span class="cstat-no" title="statement not covered" >return;</span></span>
+  const handleRefresh = useCallback(async () =&gt; {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (isRefreshing) <span class="cstat-no" title="statement not covered" >return;</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (!externalIsRefreshing) {</span>
-<span class="cstat-no" title="statement not covered" >      setInternalIsRefreshing(true);</span>
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (!externalIsRefreshing) {
+      setInternalIsRefreshing(true);
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    try {</span>
-<span class="cstat-no" title="statement not covered" >      await onRefresh();</span>
+    try {
+      await onRefresh();
     } finally {
-<span class="cstat-no" title="statement not covered" >      if (!externalIsRefreshing) {</span>
-<span class="cstat-no" title="statement not covered" >        setInternalIsRefreshing(false);</span>
+      <span class="missing-if-branch" title="else path not taken" >E</span>if (!externalIsRefreshing) {
+        setInternalIsRefreshing(false);
       }
     }
   }, [onRefresh, isRefreshing, externalIsRefreshing]);
 &nbsp;
   return (
     &lt;button
-      className={`refresh-button refresh-button-${size} ${isRefreshing ? <span class="branch-0 cbranch-no" title="branch not covered" >'refreshing' : '</span>'}`}
+      className={`refresh-button refresh-button-${size} ${isRefreshing ? 'refreshing' : ''}`}
       onClick={handleRefresh}
       disabled={isRefreshing}
       aria-label="Refresh data"
       title="Refresh data"
     &gt;
-      &lt;span className={`refresh-icon ${isRefreshing ? <span class="branch-0 cbranch-no" title="branch not covered" >'spin' : '</span>'}`}&gt;⟳&lt;/span&gt;
-      {isRefreshing ? <span class="branch-0 cbranch-no" title="branch not covered" >'Refreshing...' : '</span>Refresh cache'}
+      &lt;span className={`refresh-icon ${isRefreshing ? 'spin' : ''}`}&gt;⟳&lt;/span&gt;
+      {isRefreshing ? 'Refreshing...' : 'Refresh cache'}
     &lt;/button&gt;
   );
 }
@@ -208,7 +208,7 @@ export function RefreshButton({
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-06-01T20:38:56.263Z
+                at 2026-06-01T20:53:37.962Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

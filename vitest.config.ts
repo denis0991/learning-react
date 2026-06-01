@@ -22,6 +22,7 @@ export default defineConfig({
         'src/**/*.interfaces.ts',
         'src/**/*.types.ts',
         'src/test-utils/**',
+        'src/components/common/globalLoader.tsx',
         'src/components/theme-switcher/**',
         'src/context/theme-context.tsx',
         'src/hooks/useLocalStorage.ts',
