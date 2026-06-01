@@ -13,6 +13,7 @@ export function Result(props: PropsType): JSX.Element {
         lackOfResult={props.lackOfResult}
         searchError={props.searchError}
         errorMessage={props.errorMessage}
+        onRetry={props.onRetry}
       ></Cards>
       {props.status !== 'search' && props.result.length > 0 && (
         <Pagination

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, type JSX } from 'react';
+import { useCallback, useEffect, useRef, useState, type JSX } from 'react';
 import {
   Outlet,
   Route,
@@ -17,7 +17,8 @@ import { useAnimalStore } from './stores/useAnimalStore';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { SelectionPanel } from './components/selectionComponents/selection-panel.component';
 import { SelectionActions } from './components/selectionComponents/selectionActions.component';
-import { useSearchAnimals } from './hooks/useAnimalQueries';
+import { animalKeys, useSearchAnimals } from './hooks/useAnimalQueries';
+import { queryClient } from './tanstack/queryClient';
 
 function Layout({
   result,
@@ -28,6 +29,7 @@ function Layout({
   currentPage,
   totalPages,
   onPageChange,
+  onRetry,
 }: LayoutProps) {
   const isDetailsRoute = useMatch('/details/:uid');
 
@@ -43,6 +45,7 @@ function Layout({
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={onPageChange}
+          onRetry={onRetry}
         />
       </div>
       {isDetailsRoute && (
@@ -72,19 +75,22 @@ export function App(): JSX.Element {
   } = useAnimalStore();
 
   const [page, setPage] = useState(currentPage);
-  const { data, isLoading, isError, error, refetch } = useSearchAnimals(
+  const { data, isFetching, isError, error, refetch } = useSearchAnimals(
     inputValue,
     page
   );
-  const [isSearching, setIsSearching] = useState(false);
+  const hasInitialSearch = useRef(false);
+  const [isSearchLoading, setIsSearchLoading] = useState(false);
+  const lastSearchRef = useRef({ value: '', page: 1 });
 
   useEffect(() => {
-    if (isLoading) {
-      setIsSearching(true);
-    } else {
-      setIsSearching(false);
+    if (!hasInitialSearch.current && inputValue !== undefined) {
+      hasInitialSearch.current = true;
+      setTimeout(() => {
+        refetch();
+      }, 0);
     }
-  }, [isLoading]);
+  }, [inputValue, refetch]);
 
   useEffect(() => {
     if (data) {
@@ -94,10 +100,10 @@ export function App(): JSX.Element {
     }
   }, [data, setSearchState, setStatus, setLackOfResult]);
   useEffect(() => {
-    if (isLoading) {
+    if (isFetching) {
       setStatus('searching');
     }
-  }, [isLoading, setStatus]);
+  }, [isFetching, setStatus]);
 
   useEffect(() => {
     if (isError) {
@@ -106,6 +112,12 @@ export function App(): JSX.Element {
       setErrorMessage(error?.message || 'Something went wrong');
     }
   }, [isError, error, setStatus, setSearchError, setErrorMessage]);
+  useEffect(() => {
+    if (hasInitialSearch.current) {
+      refetch();
+    }
+  }, [page, refetch]);
+
   useLocalStorage();
 
   const [, setSearchParams] = useSearchParams();
@@ -140,15 +152,34 @@ export function App(): JSX.Element {
     (page: number) => {
       setPage(page);
       updatePageInUrl(page);
+      refetch();
     },
-    [updatePageInUrl]
+    [updatePageInUrl, refetch]
   );
 
   const handleSearch = useCallback(
-    (value: string) => {
+    async (value: string) => {
+      if (
+        isSearchLoading ||
+        (lastSearchRef.current.value === value &&
+          lastSearchRef.current.page === 1)
+      ) {
+        return;
+      }
+
+      lastSearchRef.current = { value, page: 1 };
       setInputValue(value);
       setPage(1);
-      refetch();
+      setIsSearchLoading(true);
+
+      try {
+        queryClient.invalidateQueries({
+          queryKey: animalKeys.search(value, 1),
+        });
+        await refetch();
+      } finally {
+        setIsSearchLoading(false);
+      }
     },
     [setInputValue, refetch]
   );
@@ -167,7 +198,7 @@ export function App(): JSX.Element {
             setSearchState={setSearchState}
             setStatus={handleSetStatus}
             setInputValue={setInputValue}
-            status={isLoading ? 'searching' : status}
+            status={isSearchLoading || isFetching ? 'searching' : status}
             value={inputValue}
             setError={setLackOfResult}
             setSearchError={setSearchError}
@@ -185,13 +216,14 @@ export function App(): JSX.Element {
                 <>
                   <Layout
                     result={data?.animals || []}
-                    status={isSearching ? 'searching' : status}
+                    status={isFetching ? 'searching' : status}
                     lackOfResult={data?.animals?.length === 0}
                     searchError={isError}
                     errorMessage={error?.message || errorMessage}
                     currentPage={page}
                     totalPages={data?.page?.totalPages || 0}
                     onPageChange={handlePageChange}
+                    onRetry={refetch}
                   />
                   <SelectionPanel />
                   <SelectionActions />

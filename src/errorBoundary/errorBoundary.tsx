@@ -1,5 +1,6 @@
 import React, { type ErrorInfo, type ReactNode } from 'react';
 import type { Props, State } from './error.types';
+import { ErrorDisplay } from '../components/common/errorDisplay';
 
 export class ErrorBoundary extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -39,8 +40,10 @@ export class ErrorBoundary extends React.Component<Props, State> {
     if (this.state.errorMessage) {
       return (
         <>
-          <p>{this.state.errorMessage}</p>
-          <button onClick={this.resetError}>Reset error</button>
+          <ErrorDisplay
+            message={this.state.errorMessage}
+            onRetry={this.resetError}
+          />
         </>
       );
     }

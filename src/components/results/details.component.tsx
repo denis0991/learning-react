@@ -1,12 +1,13 @@
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { useAnimalDetails } from '../../hooks/useAnimalQueries';
+import { ErrorDisplay } from '../common/errorDisplay';
 
 export function Details() {
   const { uid } = useParams<{ uid: string }>();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const { data, isLoading, isFetching, error } = useAnimalDetails(uid);
+  const { data, isLoading, isFetching, error, refetch } = useAnimalDetails(uid);
 
   const handleClose = () => {
     const page = searchParams.get('page') || '1';
@@ -26,19 +27,26 @@ export function Details() {
     );
   }
 
-  if (error)
+  if (error) {
+    let errorMessage = 'Error loading details. Please try again.';
+    if (
+      error.message?.includes('Network error') ||
+      error.message?.includes('Failed to fetch')
+    ) {
+      errorMessage =
+        'Unable to connect to the server. Please check your internet connection.';
+    } else if (error.message?.includes('404')) {
+      errorMessage = 'Animal not found.';
+    }
     return (
       <div className="details-panel">
-        <div className="error-container">
-          <div className="error-icon">⚠️</div>
-          <div className="error-text">
-            Error loading details. Please try again.
-          </div>
-          <button onClick={handleClose}>Close</button>
-        </div>
+        <ErrorDisplay message={errorMessage} onRetry={refetch} />
+        <button onClick={handleClose} className="close-btn">
+          ✕ Close
+        </button>
       </div>
     );
-
+  }
   const item = data?.animal;
   if (!item) return null;
 

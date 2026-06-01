@@ -12,7 +12,7 @@ export function useSearchAnimals(name: string, page: number) {
   return useQuery({
     queryKey: animalKeys.search(name, page),
     queryFn: () => animalApi.searchAnimals(name, page),
-    enabled: true,
+    enabled: false,
     staleTime: Number(import.meta.env.VITE_CACHE_TTL) || 300000,
     placeholderData: (previousData) => previousData,
   });

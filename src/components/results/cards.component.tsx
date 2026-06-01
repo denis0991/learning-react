@@ -1,6 +1,7 @@
 import { type JSX } from 'react';
 import type { PropsCard } from './result.types';
 import type { Animals } from '../search/search.interfaces';
+import { ErrorDisplay } from '../common/errorDisplay';
 
 import { Card } from './card.component';
 
@@ -9,15 +10,16 @@ export function Cards({
   lackOfResult,
   searchError,
   errorMessage,
+  onRetry,
 }: PropsCard): JSX.Element {
   if (searchError) {
     return (
-      <div className="error-message-container">
-        <div className="error-icon">⚠️</div>
-        <div className="error-text">
-          {errorMessage || 'Something went wrong. Please try again later.'}
-        </div>
-      </div>
+      <ErrorDisplay
+        message={
+          errorMessage || 'Something went wrong. Please try again later.'
+        }
+        onRetry={onRetry}
+      />
     );
   }
 
