@@ -40,7 +40,7 @@ describe('ErrorBoundary Component', () => {
       );
 
       expect(
-        screen.queryByRole('button', { name: 'Reset error' })
+        screen.queryByRole('button', { name: 'Try Again' })
       ).not.toBeInTheDocument();
     });
   });
@@ -67,7 +67,7 @@ describe('ErrorBoundary Component', () => {
       );
 
       expect(
-        screen.getByRole('button', { name: 'Reset error' })
+        screen.getByRole('button', { name: 'Try Again' })
       ).toBeInTheDocument();
     });
   });
@@ -84,7 +84,7 @@ describe('ErrorBoundary Component', () => {
 
       expect(screen.getByText('Test error')).toBeInTheDocument();
 
-      await user.click(screen.getByRole('button', { name: 'Reset error' }));
+      await user.click(screen.getByRole('button', { name: 'Try Again' }));
 
       rerender(
         <ErrorBoundary key="normal" {...getDefaultErrorBoundaryProps()}>
@@ -169,7 +169,7 @@ describe('ErrorBoundary Component', () => {
 
       expect(screen.getByText('First error')).toBeInTheDocument();
 
-      await user.click(screen.getByRole('button', { name: 'Reset error' }));
+      await user.click(screen.getByRole('button', { name: 'Try Again' }));
 
       rerender(
         <ErrorBoundary key="reset" {...getDefaultErrorBoundaryProps()}>

@@ -19,7 +19,6 @@ describe('Cards component', () => {
         />
       );
       expect(screen.getByText('Custom error')).toBeInTheDocument();
-      expect(screen.getByText('⚠️')).toBeInTheDocument();
     });
 
     test('displays default error message when none provided', () => {

@@ -53,7 +53,7 @@ describe('Search component', () => {
   describe('Status rendering', () => {
     const statusCases: Array<[Status, string]> = [
       ['default', '.default'],
-      ['searching', '.loader'],
+      ['searching', '.searching-loader'],
       ['success', '.success'],
       ['missing', '.missing'],
       ['error', '.missing'],
