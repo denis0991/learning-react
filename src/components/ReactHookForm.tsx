@@ -76,6 +76,7 @@ const ReactHookForm = ({ onClose }: ReactHookFormProps) => {
     clearErrors,
     setValue,
     watch,
+    reset,
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
@@ -110,6 +111,9 @@ const ReactHookForm = ({ onClose }: ReactHookFormProps) => {
       password: data.password,
       country: data.country,
     });
+    reset();
+    setImagePreview('');
+    setImageBase64('');
     onClose();
   };
 

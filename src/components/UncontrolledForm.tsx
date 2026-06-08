@@ -74,6 +74,26 @@ const UncontrolledForm = ({ onClose }: UncontrolledFormProps) => {
   const [countrySuggestions, setCountrySuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
+  const resetForm = () => {
+    if (nameRef.current) nameRef.current.value = '';
+    if (ageRef.current) ageRef.current.value = '';
+    if (emailRef.current) emailRef.current.value = '';
+    if (genderRef.current) genderRef.current.value = '';
+    if (termsRef.current) termsRef.current.checked = false;
+    if (passwordRef.current) passwordRef.current.value = '';
+    if (confirmPasswordRef.current) confirmPasswordRef.current.value = '';
+    if (countryRef.current) countryRef.current.value = '';
+    if (imageRef.current) imageRef.current.value = '';
+
+    setImagePreview('');
+    setImageBase64('');
+    setSelectedCountry('');
+    setPasswordStrength('');
+    setErrors({});
+    setCountrySuggestions([]);
+    setShowSuggestions(false);
+  };
+
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -168,7 +188,7 @@ const UncontrolledForm = ({ onClose }: UncontrolledFormProps) => {
       password: passwordRef.current?.value || undefined,
       country: selectedCountry || undefined,
     });
-
+    resetForm();
     onClose();
   };
 
