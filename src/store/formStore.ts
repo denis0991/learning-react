@@ -1,8 +1,10 @@
 import { create } from 'zustand';
 import type { FormData } from '../types/form';
+import { countries } from '../constants/countries';
 
 interface FormStore {
   submissions: FormData[];
+  countries: string[];
   addSubmission: (
     data: Omit<FormData, 'id' | 'submittedAt' | 'isNewlySubmitted'>
   ) => void;
@@ -11,6 +13,7 @@ interface FormStore {
 
 export const useFormStore = create<FormStore>((set) => ({
   submissions: [],
+  countries: countries,
 
   addSubmission: (data) => {
     const newSubmission: FormData = {
