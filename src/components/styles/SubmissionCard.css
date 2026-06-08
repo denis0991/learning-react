@@ -1,0 +1,46 @@
+.submission-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.submission-card.new {
+  border: 2px solid #4caf50;
+  background: #f0fff0;
+  animation: highlight 0.5s ease;
+}
+
+@keyframes highlight {
+  0% {
+    transform: scale(0.98);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.timestamp {
+  font-size: 12px;
+  color: #666;
+}
+
+.card-body {
+  font-size: 14px;
+}
+
+.card-body > div {
+  margin: 5px 0;
+}
