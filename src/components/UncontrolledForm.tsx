@@ -15,7 +15,7 @@ const formSchema = z
       .string()
       .min(1, 'Name is required')
       .refine(
-        (val) => val[0] === val[0].toUpperCase(),
+        (val) => val && val.length > 0 && val[0] === val[0].toUpperCase(),
         'First letter must be uppercase'
       ),
     age: z
@@ -32,6 +32,10 @@ const formSchema = z
     password: z
       .string()
       .min(1, 'Password is required')
+      .refine(
+        (val) => val && val.length >= 8,
+        'Password must be at least 8 characters long'
+      )
       .refine((val) => /\d/.test(val), 'Must contain at least 1 number')
       .refine(
         (val) => /[A-Z]/.test(val),
