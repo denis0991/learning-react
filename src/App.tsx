@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import { Modal } from './components/Modal';
 import { useFormStore } from './store/formStore';
@@ -12,10 +12,6 @@ function App() {
     'uncontrolled'
   );
   const submissions = useFormStore((state) => state.submissions);
-
-  useEffect(() => {
-    console.log('App: submissions changed:', submissions);
-  }, [submissions]);
 
   const handleOpenModal = (type: 'uncontrolled' | 'react-hook-form') => {
     setFormType(type);

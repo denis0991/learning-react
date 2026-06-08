@@ -45,6 +45,8 @@
   color: #dc3545;
   font-size: 12px;
   margin-top: 4px;
+  min-height: 18px;
+  line-height: 18px;
 }
 
 .form-buttons {

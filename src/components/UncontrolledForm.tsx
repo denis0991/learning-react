@@ -2,11 +2,56 @@ import { useRef, useState } from 'react';
 import { useFormStore } from '../store/formStore';
 import PasswordStrength from './PasswordStrength';
 import { fileToBase64, validateImage } from '../utils/helpers';
+import { z } from 'zod';
 import './styles/FormStyles.css';
 
 interface UncontrolledFormProps {
   onClose: () => void;
 }
+
+const formSchema = z
+  .object({
+    name: z
+      .string()
+      .min(1, 'Name is required')
+      .refine(
+        (val) => val[0] === val[0].toUpperCase(),
+        'First letter must be uppercase'
+      ),
+    age: z
+      .number()
+      .min(1, 'Age is required')
+      .nonnegative('Age cannot be negative'),
+    email: z.string().min(1, 'Email is required').email('Invalid email format'),
+    gender: z.enum(['male', 'female', 'other'], {
+      message: 'Gender is required',
+    }),
+    termsAccepted: z
+      .boolean()
+      .refine((val) => val === true, 'You must accept Terms and Conditions'),
+    password: z
+      .string()
+      .min(1, 'Password is required')
+      .refine((val) => /\d/.test(val), 'Must contain at least 1 number')
+      .refine(
+        (val) => /[A-Z]/.test(val),
+        'Must contain at least 1 uppercase letter'
+      )
+      .refine(
+        (val) => /[a-z]/.test(val),
+        'Must contain at least 1 lowercase letter'
+      )
+      .refine(
+        (val) => /[!@#$%^&*(),.?":{}|<>]/.test(val),
+        'Must contain at least 1 special character'
+      ),
+    confirmPassword: z.string(),
+    country: z.string().min(1, 'Country is required'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
 
 const UncontrolledForm = ({ onClose }: UncontrolledFormProps) => {
   const addSubmission = useFormStore((state) => state.addSubmission);
@@ -79,71 +124,32 @@ const UncontrolledForm = ({ onClose }: UncontrolledFormProps) => {
   };
 
   const validate = () => {
-    const newErrors: Record<string, string> = {};
+    const formData = {
+      name: nameRef.current?.value || '',
+      age: parseInt(ageRef.current?.value || '0'),
+      email: emailRef.current?.value || '',
+      gender: genderRef.current?.value as 'male' | 'female' | 'other',
+      termsAccepted: termsRef.current?.checked || false,
+      password: passwordRef.current?.value || '',
+      confirmPassword: confirmPasswordRef.current?.value || '',
+      country: selectedCountry,
+    };
 
-    const name = nameRef.current?.value || '';
-    if (!name) newErrors.name = 'Name is required';
-    else if (name[0] !== name[0].toUpperCase())
-      newErrors.name = 'First letter must be uppercase';
+    const result = formSchema.safeParse(formData);
 
-    const age = parseInt(ageRef.current?.value || '');
-    if (isNaN(age)) newErrors.age = 'Age is required';
-    else if (age < 0) newErrors.age = 'Age cannot be negative';
-
-    const email = emailRef.current?.value || '';
-    if (!email) newErrors.email = 'Email is required';
-    else {
-      const atIndex = email.indexOf('@');
-      const dotIndex = email.lastIndexOf('.');
-      if (atIndex === -1 || atIndex === 0)
-        newErrors.email = 'Email must contain @';
-      else if (dotIndex === -1 || dotIndex < atIndex + 2)
-        newErrors.email = 'Invalid email format';
+    if (!result.success) {
+      const newErrors: Record<string, string> = {};
+      result.error.issues.forEach((err) => {
+        if (err.path[0]) {
+          newErrors[err.path[0] as string] = err.message;
+        }
+      });
+      setErrors(newErrors);
+      return false;
     }
 
-    if (!genderRef.current?.value) newErrors.gender = 'Gender is required';
-
-    if (!termsRef.current?.checked)
-      newErrors.terms = 'You must accept Terms and Conditions';
-
-    const password = passwordRef.current?.value || '';
-    const confirmPassword = confirmPasswordRef.current?.value || '';
-
-    if (!password) {
-      newErrors.password = 'Password is required';
-    } else {
-      const hasNumber = /\d/.test(password);
-      const hasUppercase = /[A-Z]/.test(password);
-      const hasLowercase = /[a-z]/.test(password);
-      const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-
-      if (!hasNumber)
-        newErrors.password = 'Password must contain at least 1 number';
-      else if (!hasUppercase)
-        newErrors.password =
-          'Password must contain at least 1 uppercase letter';
-      else if (!hasLowercase)
-        newErrors.password =
-          'Password must contain at least 1 lowercase letter';
-      else if (!hasSpecial)
-        newErrors.password =
-          'Password must contain at least 1 special character';
-    }
-
-    if (!confirmPassword) {
-      newErrors.confirmPassword = 'Please confirm your password';
-    } else if (password !== confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
-    }
-
-    if (!selectedCountry) {
-      newErrors.country = 'Country is required';
-    } else if (!countries.includes(selectedCountry)) {
-      newErrors.country = 'Country must exist in the list';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    setErrors({});
+    return true;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -289,7 +295,9 @@ const UncontrolledForm = ({ onClose }: UncontrolledFormProps) => {
           <input id="uncontrolled-terms" type="checkbox" ref={termsRef} />I
           accept the Terms and Conditions *
         </label>
-        {errors.terms && <span className="error">{errors.terms}</span>}
+        {errors.termsAccepted && (
+          <span className="error">{errors.termsAccepted}</span>
+        )}
       </div>
 
       <div className="form-buttons">

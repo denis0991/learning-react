@@ -23,8 +23,6 @@ export const useFormStore = create<FormStore>((set) => ({
       isNewlySubmitted: true,
     };
 
-    console.log('Adding submission:', newSubmission);
-
     set((state) => ({
       submissions: [newSubmission, ...state.submissions],
     }));
