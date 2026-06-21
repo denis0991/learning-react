@@ -41,6 +41,4 @@ export function Header({
     </header>
   );
 }
-// function onRefresh() {
-//   throw new Error('Function not implemented.');
-// }
+
