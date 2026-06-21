@@ -1,5 +1,8 @@
+'use client';
+
 import { useEffect, useRef } from 'react';
 import { useAnimalStore } from '../stores/useAnimalStore';
+
 
 export const useLocalStorage = () => {
   const { inputValue, setInputValue } = useAnimalStore();

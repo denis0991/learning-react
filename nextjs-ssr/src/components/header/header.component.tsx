@@ -3,7 +3,7 @@ import './header.styles.css';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { ThemeSwitcher } from '../themeSwitcher/themeSwitcher.component';
-import { useTheme } from '../../hooks/useTheme';
+import { useTheme } from '@/context/theme-context';
 import { queryClient } from '../../tanstack/queryClient';
 import { animalKeys } from '../../hooks/useAnimalQueries';
 import { RefreshButton } from '../common/refreshButton';

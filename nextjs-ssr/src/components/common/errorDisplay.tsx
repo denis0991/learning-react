@@ -1,5 +1,5 @@
 import { type JSX } from 'react';
-import './ErrorDisplay.css';
+import './errorDisplay.css';
 
 interface ErrorDisplayProps {
   message: string;

@@ -1,7 +1,7 @@
 import type { Animals } from '../components/search/search.interfaces';
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || 'https://stapi.co/api/v1/rest';
+  process.env.NEXT_PUBLIC_API_BASE_URL || 'https://stapi.co/api/v1/rest';
 
 export interface SearchResponse {
   animals: Animals[];

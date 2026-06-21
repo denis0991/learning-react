@@ -1,5 +1,5 @@
 import { type JSX, useCallback, useState } from 'react';
-import './RefreshButton.css';
+import './refreshButton.css';
 
 interface RefreshButtonProps {
   onRefresh: () => Promise<void>;
