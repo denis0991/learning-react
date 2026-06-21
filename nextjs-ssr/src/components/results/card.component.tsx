@@ -1,8 +1,8 @@
-import { useCallback, type JSX } from 'react';
-import type { Animals } from '../search/search.interfaces';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useSelectionStore } from '../../stores/useSelectionStore';
-import { usePrefetchAnimalDetails } from '../../hooks/useAnimalQueries';
+import { useCallback, type JSX } from "react";
+import type { Animals } from "../search/search.interfaces";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSelectionStore } from "../../stores/useSelectionStore";
+import { usePrefetchAnimalDetails } from "../../hooks/useAnimalQueries";
 
 export function Card({
   uid,
@@ -11,8 +11,9 @@ export function Card({
   earthAnimal,
   feline,
 }: Animals): JSX.Element {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const location = usePathname();
+  const searchParams = useSearchParams();
   const { toggleSelection, isSelected } = useSelectionStore();
   const selected = isSelected(uid);
   const prefetchDetails = usePrefetchAnimalDetails();
@@ -24,13 +25,12 @@ export function Card({
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLUListElement>) => {
       const target = e.target as HTMLElement;
-      if (!target.closest('.checkbox-wrapper')) {
-        const searchParams = new URLSearchParams(location.search);
-        const page = searchParams.get('page') || '1';
-        navigate(`/details/${uid}?page=${page}`);
+      if (!target.closest(".checkbox-wrapper")) {
+        const page = searchParams?.get("page") || "1";
+        router.push(`/details/${uid}?page=${page}`);
       }
     },
-    [uid, location.search, navigate]
+    [uid, router, searchParams],
   );
 
   const handleCheckboxChange = useCallback(
@@ -43,18 +43,18 @@ export function Card({
         earthAnimal,
         feline,
         json: function (): unknown {
-          throw new Error('Function not implemented.');
+          throw new Error("Function not implemented.");
         },
         earthInsect: false,
         canine: false,
         selectedAt: undefined,
       });
     },
-    [avian, earthAnimal, feline, name, toggleSelection, uid]
+    [avian, earthAnimal, feline, name, toggleSelection, uid],
   );
 
   return (
-    <ul className={`card ${selected ? 'selected' : ''}`} onClick={handleClick}>
+    <ul className={`card ${selected ? "selected" : ""}`} onClick={handleClick}>
       <li className="card-item checkbox-wrapper">
         <label className="checkbox-label">
           <input
@@ -70,15 +70,15 @@ export function Card({
       </li>
       <li className="card-item animal-name">{name}</li>
       <li className="card-item">
-        Avian: <span className="animal-properties">{avian ? 'yes' : 'no'}</span>
+        Avian: <span className="animal-properties">{avian ? "yes" : "no"}</span>
       </li>
       <li className="card-item">
-        Earth animal:{' '}
-        <span className="animal-properties">{earthAnimal ? 'yes' : 'no'}</span>
+        Earth animal:{" "}
+        <span className="animal-properties">{earthAnimal ? "yes" : "no"}</span>
       </li>
       <li className="card-item">
-        Feline:{' '}
-        <span className="animal-properties">{feline ? 'yes' : 'no'}</span>
+        Feline:{" "}
+        <span className="animal-properties">{feline ? "yes" : "no"}</span>
       </li>
     </ul>
   );

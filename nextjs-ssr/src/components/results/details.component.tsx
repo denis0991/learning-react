@@ -1,17 +1,17 @@
-import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
-import { useAnimalDetails } from '../../hooks/useAnimalQueries';
-import { ErrorDisplay } from '../common/errorDisplay';
+import { useParams, useSearchParams, useRouter } from "next/navigation";
+import { useAnimalDetails } from "../../hooks/useAnimalQueries";
+import { ErrorDisplay } from "../common/errorDisplay";
 
 export function Details() {
   const { uid } = useParams<{ uid: string }>();
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   const { data, isLoading, isFetching, error, refetch } = useAnimalDetails(uid);
 
   const handleClose = () => {
-    const page = searchParams.get('page') || '1';
-    navigate(`/?page=${page}`);
+    const page = searchParams.get("page") || "1";
+    router.push(`/?page=${page}`);
   };
 
   if (!uid) return null;
@@ -28,15 +28,15 @@ export function Details() {
   }
 
   if (error) {
-    let errorMessage = 'Error loading details. Please try again.';
+    let errorMessage = "Error loading details. Please try again.";
     if (
-      error.message?.includes('Network error') ||
-      error.message?.includes('Failed to fetch')
+      error.message?.includes("Network error") ||
+      error.message?.includes("Failed to fetch")
     ) {
       errorMessage =
-        'Unable to connect to the server. Please check your internet connection.';
-    } else if (error.message?.includes('404')) {
-      errorMessage = 'Animal not found.';
+        "Unable to connect to the server. Please check your internet connection.";
+    } else if (error.message?.includes("404")) {
+      errorMessage = "Animal not found.";
     }
     return (
       <div className="details-panel">
@@ -51,9 +51,9 @@ export function Details() {
   if (!item) return null;
 
   const formatValue = (value: boolean | undefined | null): string => {
-    if (value === true) return 'yes';
-    if (value === false) return 'no';
-    return 'unknown';
+    if (value === true) return "yes";
+    if (value === false) return "no";
+    return "unknown";
   };
 
   return (
