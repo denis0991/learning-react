@@ -21,14 +21,10 @@ export default async function RootLayout({
   const { locale } = await params;
   const messages = (await import(`../../messages/${locale}.json`)).default;
   return (
-    <html lang={locale}>
-      <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProvider>
             {children}
           </ThemeProvider>
         </NextIntlClientProvider>
-      </body>
-    </html>
   );
 }

@@ -1,26 +1,23 @@
 'use client';
 
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import type { JSX } from 'react';
 import './notFound.styles.css';
 
 export function NotFound(): JSX.Element {
-  const searchParams = useSearchParams();
-  const page = searchParams?.get('page') || '1';
+  const t = useTranslations('notFound');
 
   return (
     <section className="not-found">
       <div className="not-found__container">
         <div className="not-found__code">404</div>
-        <h1 className="not-found__title">Page Not Found</h1>
+        <h1 className="not-found__title">{t('title')}</h1>
         <p className="not-found__message">
-          The page you are looking for does not exist or has been moved to
-          another sector of the galaxy. Please check your coordinates and try
-          again.
+          {t('description')}
         </p>
-        <Link href={`/?page=${page}`} className="not-found__button">
-          Return to Main Page
+        <Link href="/" className="not-found__button">
+          {t('goHome')}
         </Link>
       </div>
     </section>

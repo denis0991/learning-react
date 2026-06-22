@@ -6,7 +6,9 @@ import { headers } from 'next/headers';
 export default async function NotFoundPage() {
   const headersList = await headers();
   const locale = headersList.get('x-next-intl-locale') ?? 'en';
-  const messages = (await import(`../../messages/${locale}.json`)).default;
+
+  const messages = (await import(`../messages/en.json`)).default;
+
 
   return (
         <NextIntlClientProvider locale={locale} messages={messages}>
