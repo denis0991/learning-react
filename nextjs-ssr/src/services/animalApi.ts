@@ -39,8 +39,9 @@ export const animalApi = {
   },
 
   getAnimalDetails: async (uid: string): Promise<AnimalDetailsResponse> => {
-    const response = await fetch(`${API_BASE_URL}/animal?uid=${uid}`);
-
+    const response = await fetch(`${API_BASE_URL}/animal?uid=${uid}`, {
+    });
+    
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

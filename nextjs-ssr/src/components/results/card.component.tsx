@@ -1,8 +1,10 @@
 import { useCallback, type JSX } from "react";
 import type { Animals } from "../search/search.interfaces";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useSelectionStore } from "../../stores/useSelectionStore";
 import { usePrefetchAnimalDetails } from "../../hooks/useAnimalQueries";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from '../../../i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 export function Card({
   uid,
@@ -12,7 +14,6 @@ export function Card({
   feline,
 }: Animals): JSX.Element {
   const router = useRouter();
-  const location = usePathname();
   const searchParams = useSearchParams();
   const { toggleSelection, isSelected } = useSelectionStore();
   const selected = isSelected(uid);
@@ -52,6 +53,9 @@ export function Card({
     },
     [avian, earthAnimal, feline, name, toggleSelection, uid],
   );
+ const tDetails = useTranslations('details');
+const tCommon = useTranslations('common');
+const boolVal = (v: boolean) => v ? tCommon('yes') : tCommon('no');
 
   return (
     <ul className={`card ${selected ? "selected" : ""}`} onClick={handleClick}>
@@ -70,15 +74,15 @@ export function Card({
       </li>
       <li className="card-item animal-name">{name}</li>
       <li className="card-item">
-        Avian: <span className="animal-properties">{avian ? "yes" : "no"}</span>
+        {tDetails('properties.avian')}:{" "} <span className="animal-properties">{boolVal(avian)}</span>
       </li>
       <li className="card-item">
-        Earth animal:{" "}
-        <span className="animal-properties">{earthAnimal ? "yes" : "no"}</span>
+        {tDetails('properties.earthAnimal')}:{" "}
+        <span className="animal-properties">{boolVal(earthAnimal)}</span>
       </li>
       <li className="card-item">
-        Feline:{" "}
-        <span className="animal-properties">{feline ? "yes" : "no"}</span>
+        {tDetails('properties.feline')}:{" "}
+        <span className="animal-properties">{boolVal(feline)}</span>
       </li>
     </ul>
   );

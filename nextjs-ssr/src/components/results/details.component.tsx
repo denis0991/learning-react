@@ -1,7 +1,11 @@
-import { useParams, useSearchParams, useRouter } from "next/navigation";
+'use client'
+
+import { useParams } from "next/navigation";
 import { useAnimalDetails } from "../../hooks/useAnimalQueries";
 import { ErrorDisplay } from "../common/errorDisplay";
 import { useTranslations } from 'next-intl';
+import { useSearchParams } from "next/navigation";
+import { useRouter } from '../../../i18n/navigation';
 
 export function Details() {
   const { uid } = useParams<{ uid: string }>();

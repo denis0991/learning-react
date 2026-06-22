@@ -1,6 +1,7 @@
 import { useCallback, type JSX } from 'react';
 import type { Props, Status } from './search.interfaces';
 import { useTranslations } from 'next-intl';
+import { useRouter } from '../../../i18n/navigation';
 import './index.css';
 
 const renderSpinner = (status: Status): JSX.Element => {  
@@ -26,11 +27,20 @@ const renderSpinner = (status: Status): JSX.Element => {
 
 export function Search(props: Props): JSX.Element {
   const t = useTranslations('search');
+  const router = useRouter();
+
   const handleSearchClick = useCallback(() => {
     if (props.onSearch) {
       props.onSearch(props.value);
     }
-  }, [props.onSearch, props.value]);
+
+    const params = new URLSearchParams();
+   if (props.value.trim()) {
+     params.set('q', props.value.trim());
+   }
+   router.push(`/?${params.toString()}`);
+  }, [props.onSearch, props.value, router]);
+
 
   const handleKeyPress = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -45,25 +55,21 @@ export function Search(props: Props): JSX.Element {
       props.setInputValue(e.target.value);
       props.resetPage();
 
-      if (e.target.value === '') {
-        props.setSearchState([], 0);
-        props.setStatus('default');
-      }
     },
     [
       props.setInputValue,
       props.resetPage,
-      props.setSearchState,
-      props.setStatus,
     ]
   );
 
   const handleClear = useCallback(() => {
     props.setInputValue('');
-    props.setSearchState([], 0);
-    props.setStatus('default');
     props.resetPage();
-  }, [props]);
+     if (props.onSearch) {
+    props.onSearch('');
+  }
+  router.push('/');
+  }, [props.setInputValue, props.resetPage, props.onSearch, router]);
 
   return (
     <section className="search-component">

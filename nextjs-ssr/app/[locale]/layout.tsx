@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from 'next-intl';
-import { ThemeProvider } from '@/context/theme-context';
+import { Providers } from '../[locale]/providers';
 import "../global.css";
 
 export const metadata: Metadata = {
@@ -22,9 +22,9 @@ export default async function RootLayout({
   const messages = (await import(`../../messages/${locale}.json`)).default;
   return (
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <ThemeProvider>
+          <Providers>
             {children}
-          </ThemeProvider>
+          </Providers>
         </NextIntlClientProvider>
   );
 }

@@ -13,7 +13,7 @@ export function useSearchAnimals(name: string, page: number) {
     queryKey: animalKeys.search(name, page),
     queryFn: () => animalApi.searchAnimals(name, page),
     enabled: false,
-    staleTime: Number(import.meta.env.VITE_CACHE_TTL) || 300000,
+    staleTime: Number(process.env.NEXT_PUBLIC_CACHE_TTL) || 300000,
     placeholderData: (previousData) => previousData,
   });
 }
@@ -28,7 +28,7 @@ export function useAnimalDetails(uid: string | undefined) {
       return animalApi.getAnimalDetails(uid);
     },
     enabled: !!uid,
-    staleTime: Number(import.meta.env.VITE_CACHE_TTL) || 300000,
+    staleTime: Number(process.env.NEXT_PUBLIC_CACHE_TTL) || 300000,
   });
 }
 
@@ -59,7 +59,7 @@ export function usePrefetchAnimalDetails() {
     queryClient.prefetchQuery({
       queryKey: animalKeys.details(uid),
       queryFn: () => animalApi.getAnimalDetails(uid),
-      staleTime: Number(import.meta.env.VITE_CACHE_TTL) || 300000,
+      staleTime: Number(process.env.NEXT_PUBLIC_CACHE_TTL) || 300000,
     });
   };
 

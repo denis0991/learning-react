@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { Animals, Status } from '../index';
+import type { Animals, Status } from '../components/search/search.interfaces';
 
 interface AnimalState {
   inputValue: string;
