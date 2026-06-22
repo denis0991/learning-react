@@ -1,8 +1,9 @@
 import { useCallback, type JSX } from 'react';
 import type { Props, Status } from './search.interfaces';
+import { useTranslations } from 'next-intl';
 import './index.css';
 
-const renderSpinner = (status: Status): JSX.Element => {
+const renderSpinner = (status: Status): JSX.Element => {  
   switch (status) {
     case 'default':
       return <div className="default"></div>;
@@ -24,6 +25,7 @@ const renderSpinner = (status: Status): JSX.Element => {
 };
 
 export function Search(props: Props): JSX.Element {
+  const t = useTranslations('search');
   const handleSearchClick = useCallback(() => {
     if (props.onSearch) {
       props.onSearch(props.value);
@@ -69,7 +71,7 @@ export function Search(props: Props): JSX.Element {
         <input
           id="search-input"
           value={props.value}
-          placeholder="search.."
+          placeholder={t('placeholder')}
           onChange={handleInputChange}
           onKeyPress={handleKeyPress}
         />
@@ -84,7 +86,7 @@ export function Search(props: Props): JSX.Element {
         )}
       </div>
       {renderSpinner(props.status)}
-      <button onClick={handleSearchClick}>Search</button>
+      <button onClick={handleSearchClick}>{t('button')}</button>
     </section>
   );
 }

@@ -1,23 +1,33 @@
 import type { Metadata } from "next";
+import { NextIntlClientProvider } from 'next-intl';
 import { ThemeProvider } from '@/context/theme-context';
 import "../global.css";
 
 export const metadata: Metadata = {
   title: "Star Trek Animals",
   description: "Search and explore Star Trek animals",
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
+  const { locale } = await params;
+  const messages = (await import(`../../messages/${locale}.json`)).default;
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body>
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <ThemeProvider>
+            {children}
+          </ThemeProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

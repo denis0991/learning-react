@@ -1,0 +1,46 @@
+{
+  "navigation": {
+    "home": "Главная",
+    "about": "О проекте"
+  },
+  "search": {
+    "placeholder": "Поиск...",
+    "button": "Найти",
+    "noResults": "Ничего не найдено",
+    "loading": "Загрузка...",
+    "results": "Результаты"
+  },
+  "details": {
+    "title": "Детали животного",
+    "close": "Закрыть",
+    "loading": "Загрузка деталей...",
+    "error": "Ошибка загрузки. Попробуйте снова.",
+    "properties": {
+      "earthAnimal": "Наземное животное",
+      "earthInsect": "Наземное насекомое",
+      "avian": "Птица",
+      "canine": "Псовое",
+      "feline": "Кошачье"
+    }
+  },
+  "selection": {
+    "itemsSelected": "выбрано",
+    "itemSelected": "выбран",
+    "export": "Экспорт",
+    "deselectAll": "Снять все",
+    "noItems": "Ничего не выбрано"
+  },
+  "common": {
+    "yes": "да",
+    "no": "нет",
+    "unknown": "неизвестно"
+  },
+  "notFound": {
+    "title": "Страница не найдена",
+    "description": "Страница, которую вы ищете, не существует.",
+    "goHome": "На главную"
+  },
+  "about": {
+    "title": "О животных Звездного Пути"
+  }
+}

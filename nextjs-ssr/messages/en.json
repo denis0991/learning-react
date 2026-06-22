@@ -1,0 +1,46 @@
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About"
+  },
+  "search": {
+    "placeholder": "Search...",
+    "button": "Search",
+    "noResults": "Nothing found",
+    "loading": "Loading...",
+    "results": "Results"
+  },
+  "details": {
+    "title": "Animal Details",
+    "close": "Close",
+    "loading": "Loading animal details...",
+    "error": "Error loading details. Please try again.",
+    "properties": {
+      "earthAnimal": "Earth animal",
+      "earthInsect": "Earth insect",
+      "avian": "Avian",
+      "canine": "Canine",
+      "feline": "Feline"
+    }
+  },
+  "selection": {
+    "itemsSelected": "items selected",
+    "itemSelected": "item selected",
+    "export": "Export",
+    "deselectAll": "Deselect all",
+    "noItems": "No items selected"
+  },
+  "common": {
+    "yes": "yes",
+    "no": "no",
+    "unknown": "unknown"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "The page you are looking for does not exist.",
+    "goHome": "Go Home"
+  },
+  "about": {
+    "title": "About Star Trek Animals"
+  }
+}

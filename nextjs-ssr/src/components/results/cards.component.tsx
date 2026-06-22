@@ -2,6 +2,7 @@ import { type JSX } from 'react';
 import type { PropsCard } from './result.types';
 import type { Animals } from '../search/search.interfaces';
 import { ErrorDisplay } from '../common/errorDisplay';
+import { useTranslations } from 'next-intl';
 
 import { Card } from './card.component';
 
@@ -12,6 +13,8 @@ export function Cards({
   errorMessage,
   onRetry,
 }: PropsCard): JSX.Element {
+  const t = useTranslations('search');
+
   if (searchError) {
     return (
       <ErrorDisplay
@@ -36,7 +39,7 @@ export function Cards({
   return (
     <div className="empty-message-container">
       <div className="empty-icon">🔍</div>
-      <div className="empty-text">Nothing found</div>
+      <div className="empty-text">{t('noResults')}</div>
     </div>
   );
 }

@@ -1,11 +1,13 @@
 import { useParams, useSearchParams, useRouter } from "next/navigation";
 import { useAnimalDetails } from "../../hooks/useAnimalQueries";
 import { ErrorDisplay } from "../common/errorDisplay";
+import { useTranslations } from 'next-intl';
 
 export function Details() {
   const { uid } = useParams<{ uid: string }>();
   const searchParams = useSearchParams();
   const router = useRouter();
+  const t = useTranslations('details');
 
   const { data, isLoading, isFetching, error, refetch } = useAnimalDetails(uid);
 
@@ -21,20 +23,20 @@ export function Details() {
       <div className="details-panel">
         <div className="content-loader">
           <div className="loader"></div>
-          <div className="content-loader-text">Loading animal details...</div>
+          <div className="content-loader-text">{t('loading')}</div>
         </div>
       </div>
     );
   }
 
   if (error) {
-    let errorMessage = "Error loading details. Please try again.";
+    let errorMessage = t('error');
     if (
       error.message?.includes("Network error") ||
       error.message?.includes("Failed to fetch")
     ) {
       errorMessage =
-        "Unable to connect to the server. Please check your internet connection.";
+        t('error');
     } else if (error.message?.includes("404")) {
       errorMessage = "Animal not found.";
     }
@@ -42,7 +44,7 @@ export function Details() {
       <div className="details-panel">
         <ErrorDisplay message={errorMessage} onRetry={refetch} />
         <button onClick={handleClose} className="close-btn">
-          ✕ Close
+          ✕ {t('close')}
         </button>
       </div>
     );
@@ -58,44 +60,44 @@ export function Details() {
 
   return (
     <>
-      <h2 className="details-title">Animal Details</h2>
+      <h2 className="details-title">{t('title')}</h2>
       <div className="details-panel">
         {item && (
           <div className="details-content">
             <h3>{item.name}</h3>
             <p className="details-property">
-              <span className="property-label">Earth animal:</span>
+              <span className="property-label">{t('properties.earthAnimal')}:</span>
               <span className="animal-properties">
                 {formatValue(item.earthAnimal)}
               </span>
             </p>
             <p className="details-property">
-              <span className="property-label">Earth insect:</span>
+              <span className="property-label">{t('properties.earthInsect')}:</span>
               <span className="animal-properties">
                 {formatValue(item.earthInsect)}
               </span>
             </p>
             <p className="details-property">
-              <span className="property-label">Avian:</span>
+              <span className="property-label">{t('properties.avian')}:</span>
               <span className="animal-properties">
                 {formatValue(item.avian)}
               </span>
             </p>
             <p className="details-property">
-              <span className="property-label">Canine:</span>
+              <span className="property-label">{t('properties.canine')}:</span>
               <span className="animal-properties">
                 {formatValue(item.canine)}
               </span>
             </p>
             <p className="details-property">
-              <span className="property-label">Feline:</span>
+              <span className="property-label">{t('properties.feline')}:</span>
               <span className="animal-properties">
                 {formatValue(item.feline)}
               </span>
             </p>
           </div>
         )}
-        <button onClick={handleClose}>✕ Close</button>
+        <button onClick={handleClose}>✕ {t('close')}</button>
       </div>
     </>
   );
