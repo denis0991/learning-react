@@ -1,4 +1,6 @@
-import { type JSX, useCallback } from 'react';
+'use client';
+
+import { type JSX, useCallback, useState } from 'react';
 import { useSelectionStore } from '../../stores/useSelectionStore';
 import type { Animals } from '../search/search.interfaces';
 import './selection.css';
@@ -12,104 +14,63 @@ export function SelectionActions({
 }: SelectionActionsProps): JSX.Element | null {
   const { getSelectedCount, getSelectedItems, clearSelection } =
     useSelectionStore();
-
+const [isExporting, setIsExporting] = useState(false);
   const selectedCount = getSelectedCount();
   const selectedItems = getSelectedItems();
 
-  const convertToCSV = (items: Animals[]): string => {
-    const headers = [
-      'Name',
-      'UID',
-      'Avian',
-      'Earth Animal',
-      'Feline',
-      'Type',
-      'Description',
-      'Details URL',
-      'Selected At',
-    ];
 
-    const rows = items.map((item) => {
-      let type = 'Unknown';
-      if (item.avian && item.feline) type = 'Avian Feline';
-      else if (item.avian) type = 'Bird';
-      else if (item.feline) type = 'Feline';
-      else if (item.earthAnimal) type = 'Earth Animal';
-
-      const characteristics = [];
-      if (item.avian) characteristics.push('avian');
-      if (item.earthAnimal) characteristics.push('earth animal');
-      if (item.feline) characteristics.push('feline');
-
-      const description =
-        characteristics.length > 0
-          ? `${item.name} is ${characteristics.join(', ')}.`
-          : `${item.name} has no special characteristics.`;
-
-      const detailsUrl = `${window.location.origin}/details/${item.uid}`;
-
-      const selectedAt = (() => {
-        const value = item.selectedAt;
-
-        if (value instanceof Date) {
-          return value.toLocaleString();
-        }
-
-        if (typeof value === 'string' || typeof value === 'number') {
-          return new Date(value).toLocaleString();
-        }
-
-        return 'N/A';
-      })();
-
-      return [
-        `"${item.name.replace(/"/g, '""')}"`,
-        item.uid,
-        item.avian ? 'Yes' : 'No',
-        item.earthAnimal ? 'Yes' : 'No',
-        item.feline ? 'Yes' : 'No',
-        type,
-        `"${description.replace(/"/g, '""')}"`,
-        detailsUrl,
-        selectedAt,
-      ];
-    });
-
-    const csvContent = [
-      headers.join(','),
-      ...rows.map((row) => row.join(',')),
-    ].join('\n');
-
-    return '\uFEFF' + csvContent;
-  };
-
-  const downloadCSV = useCallback((items: Animals[]) => {
-    if (items.length === 0) return;
-
-    const csv = convertToCSV(items);
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-
-    const date = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
-    const fileName = `${items.length}_items_${date}.csv`;
-
-    link.href = url;
-    link.setAttribute('download', fileName);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    URL.revokeObjectURL(url);
-  }, []);
-
-  const handleExport = useCallback(() => {
+  const handleExport = useCallback(async () => {
     if (onExport) {
       onExport(selectedItems);
-    } else {
-      downloadCSV(selectedItems);
+      return;
     }
-  }, [onExport, selectedItems, downloadCSV]);
+
+    if (selectedItems.length === 0 || isExporting) return;
+     setIsExporting(true);
+
+     try {
+      const animalIds = selectedItems.map((item) => item.uid);
+
+      const response = await fetch('/api/export-csv', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ animalIds }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Export failed');
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+
+      const contentDisposition = response.headers.get('Content-Disposition');
+      let filename = `${selectedItems.length}_items_${Date.now()}.csv`;
+
+      if (contentDisposition) {
+        const match = contentDisposition.match(/filename="(.+)"/);
+        if (match) {
+          filename = match[1];
+        }
+      }
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', filename);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Export error:', error);
+      alert(error instanceof Error ? error.message : 'Failed to export. Please try again.');
+    } finally {
+      setIsExporting(false);
+    }
+  }, [selectedItems, isExporting, onExport]);
 
   const handleDeselectAll = useCallback(() => {
     clearSelection();
@@ -121,8 +82,8 @@ export function SelectionActions({
 
   return (
     <div className="selection-actions">
-      <button className="action-button export-button" onClick={handleExport}>
-        📋 Export ({selectedCount})
+      <button className="action-button export-button" onClick={handleExport} disabled={isExporting}>
+        {isExporting ? '⏳ Exporting...' : `📋 Export (${selectedCount})`}
       </button>
       <button
         className="action-button deselect-button"
