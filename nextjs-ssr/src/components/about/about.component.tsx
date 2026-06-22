@@ -1,29 +1,28 @@
+'use client';
+
+import { useTranslations } from 'next-intl';
 import type { JSX } from 'react';
 import './about.styles.css';
 
 export function About(): JSX.Element {
+  const t = useTranslations('about');
   return (
     <section className="about">
       <div className="about__container">
-        <h1 className="about__title">About Star Trek Explorer</h1>
+        <h1 className="about__title">{t('title')}</h1>
 
         <div className="about__content">
           <div className="about__section">
-            <h2 className="about__subtitle">Our Application</h2>
+            <h2 className="about__subtitle">{t('section1.title')}</h2>
             <p className="about__text">
-              Star Trek Explorer is a comprehensive search application that
-              allows you to explore the vast universe of Star Trek characters
-              and animals. Whether you&apos;re a dedicated Trekkie or just your
-              journey through the final frontier, our app provides an intuitive
-              way to discover and learn about the diverse creatures that inhabit
-              the Star Trek universe.
+             {t('section1.content')}
             </p>
           </div>
 
           <div className="about__section">
-            <h2 className="about__subtitle">Powered by STAPI</h2>
+            <h2 className="about__subtitle">{t('section2.title')}</h2>
             <p className="about__text">
-              Our application leverages the powerful{' '}
+              {t('section2.content1')}{' '}
               <a
                 href="https://stapi.co"
                 target="_blank"
@@ -32,36 +31,32 @@ export function About(): JSX.Element {
               >
                 Star Trek API (STAPI)
               </a>{' '}
-              — the first public RESTful API dedicated to Star Trek data. STAPI
-              provides access to a comprehensive database of Star Trek lore,
-              including characters, species, animals, and much more from across
-              all Star Trek series and movies.
+              {t('section2.content2')}
             </p>
           </div>
 
           <div className="about__section">
-            <h2 className="about__subtitle">Key Features</h2>
+            <h2 className="about__subtitle">{t('section3.title')}</h2>
             <ul className="about__features">
               <li className="about__feature-item">
                 <span className="about__feature-icon">🔍</span>
-                Real-time search across thousands of Star Trek animals and
-                creatures
+                {t('section3.feature1')}
               </li>
               <li className="about__feature-item">
                 <span className="about__feature-icon">📄</span>
-                Detailed information cards with species classification
+                {t('section3.feature2')}
               </li>
               <li className="about__feature-item">
                 <span className="about__feature-icon">⚡</span>
-                Fast and efficient pagination for browsing large datasets
+                {t('section3.feature3')}
               </li>
             </ul>
           </div>
 
           <div className="about__section">
-            <h2 className="about__subtitle">Development</h2>
+            <h2 className="about__subtitle">{t('section4.title')}</h2>
             <p className="about__text">
-              This application was built as part of the{' '}
+              {t('section4.content1')}{' '}
               <a
                 href="https://rs.school/courses/reactjs"
                 target="_blank"
@@ -70,18 +65,14 @@ export function About(): JSX.Element {
               >
                 RS School React Course
               </a>{' '}
-              — a free, community-based education program conducted by The
-              Rolling Scopes Community. The course covers modern React
-              development practices, including TypeScript, routing, state
-              management, and testing.
+              {t('section4.content2')}
             </p>
           </div>
 
           <div className="about__section">
-            <h2 className="about__subtitle">Author</h2>
+            <h2 className="about__subtitle">{t('section5.title')}</h2>
             <p className="about__text">
-              Developed with passion for both Star Trek and modern web
-              technologies.
+              {t('section5.content')}
             </p>
             <div className="about__socials">
               <p className="about__social-placeholder">
