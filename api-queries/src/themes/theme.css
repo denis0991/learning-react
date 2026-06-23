@@ -1,0 +1,38 @@
+:root,
+.light-theme {
+  --bg-color: #ffffff;
+  --bg-secondary: #f0e6d8;
+  --text-color: #5c4b3c;
+  --text-secondary: #a8927a;
+  --border-color: #e8dcc8;
+  --card-bg: #fff8ed;
+  --card-hover-bg: #ffffff;
+  --primary-color: #c2894f;
+  --primary-hover: #c2a575;
+  --success-color: #4caf50;
+  --error-color: #ff4444;
+  --input-bg: #fffaf0;
+  --button-bg: #e8dcc8;
+  --button-hover-bg: #dfd0b7;
+  --shadow-color: rgba(107, 76, 59, 0.08);
+  --shadow-hover: rgba(107, 76, 59, 0.12);
+}
+
+.dark-theme {
+  --bg-color: #1a1a1a;
+  --bg-secondary: #2c2c2c;
+  --text-color: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --border-color: #404040;
+  --card-bg: #2d2d2d;
+  --card-hover-bg: #3a3a3a;
+  --primary-color: #d4945a;
+  --primary-hover: #c2894f;
+  --success-color: #66bb6a;
+  --error-color: #ff6666;
+  --input-bg: #3a3a3a;
+  --button-bg: #404040;
+  --button-hover-bg: #4a4a4a;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --shadow-hover: rgba(0, 0, 0, 0.4);
+}

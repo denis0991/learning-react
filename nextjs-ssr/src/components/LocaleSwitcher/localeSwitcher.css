@@ -1,0 +1,68 @@
+.locale-switcher {
+  position: relative;
+  display: inline-block;
+}
+
+.locale-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background-color: var(--button-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: all 0.3s ease;
+}
+
+.locale-button:hover {
+  background-color: var(--button-hover-bg);
+  border-color: var(--primary-color);
+}
+
+.arrow {
+  font-size: 0.7em;
+  transition: transform 0.3s ease;
+}
+
+.arrow.open {
+  transform: rotate(180deg);
+}
+
+.locale-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 120px;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.locale-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-align: left;
+}
+
+.locale-option:hover {
+  background-color: var(--button-hover-bg);
+}
+
+.locale-option.active {
+  background-color: var(--primary-color);
+  color: white;
+}

@@ -1,0 +1,70 @@
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About"
+  },
+  "search": {
+    "placeholder": "Search...",
+    "button": "Search",
+    "noResults": "Nothing found",
+    "loading": "Loading...",
+    "results": "Results"
+  },
+  "details": {
+    "title": "Animal Details",
+    "close": "Close",
+    "loading": "Loading animal details...",
+    "error": "Error loading details. Please try again.",
+    "properties": {
+      "earthAnimal": "Earth animal",
+      "earthInsect": "Earth insect",
+      "avian": "Avian",
+      "canine": "Canine",
+      "feline": "Feline"
+    }
+  },
+  "selection": {
+    "itemsSelected": "items selected",
+    "itemSelected": "item selected",
+    "export": "Export",
+    "deselectAll": "Deselect all",
+    "noItems": "No items selected"
+  },
+  "common": {
+    "yes": "yes",
+    "no": "no",
+    "unknown": "unknown"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+     "description": "The page you are looking for does not exist or has been moved to another sector of the galaxy. Please check your coordinates and try again.",
+    "goHome": "Return to Main Page"
+  },
+  "about": {
+    "title": "About Star Trek Animals",
+    "section1": {
+      "title": "Our Application",
+      "content": "Star Trek Explorer is a comprehensive search application that allows you to explore the vast universe of Star Trek characters and animals. Whether you're a dedicated Trekkie or just beginning your journey through the final frontier, our app provides an intuitive way to discover and learn about the diverse creatures that inhabit the Star Trek universe."
+    },
+    "section2": {
+      "title": "Powered by STAPI",
+      "content1": "Our application leverages the powerful",
+      "content2": "— the first public RESTful API dedicated to Star Trek data. STAPI provides access to a comprehensive database of Star Trek lore, including characters, species, animals, and much more from across all Star Trek series and movies."
+    },
+    "section3": {
+      "title": "Key Features",
+      "feature1": "Real-time search across thousands of Star Trek animals and creatures",
+      "feature2": "Detailed information cards with species classification",
+      "feature3": "Fast and efficient pagination for browsing large datasets"
+    },
+    "section4": {
+      "title": "Development",
+      "content1": "This application was built as part of the",
+      "content2": "— a free, community-based education program conducted by The Rolling Scopes Community. The course covers modern React development practices, including TypeScript, routing, state management, and testing."
+    },
+    "section5": {
+      "title": "Author",
+      "content": "Developed with passion for both Star Trek and modern web technologies."
+    }
+  }
+}
